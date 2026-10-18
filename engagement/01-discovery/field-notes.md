@@ -78,34 +78,80 @@ The COO says his numbers come from what he has "seen come through" and he does n
 
 ### Top 3 surprises
 
-1.
-2.
-3.
+1. **Insurer constraints rule out the COO's autonomy threshold.** Any claim over the cargo-insurance deductible (believed to be ~$25k, unconfirmed) must be reported to the insurer within 30 days, and the insurer must agree before settlement. Pay first and the insurer can walk away (`T2:L16`, `T2:L48`, `T2:L62`). This already happened: a key-account claim was paid early by an account manager, the insurer was told late, and cover was declined. Two other large claims had late notice because the file sat in the queue, and the insurer reserved its rights (`T2:L16`). The COO's proposal to auto-pay up to $50k (`T1:L12`) would breach this.
+2. **The finance pre-approval looks like the step to eliminate, at least below a threshold.** Every claim goes through it: any amount, any outcome, including denial letters (`T2:L18`, `T2:L60`). It sits "a week, maybe more", then waits for a weekly Thursday payment run (`T2:L26`). In the claims lead's experience it has changed the outcome only a handful of times, always on large claims (`T2:L56`). It was introduced after a single fraud case (`T2:L56`).
+3. **Temperature (reefer) claims carry a hidden, time-critical edge case.** The evidence is the reefer unit's temperature download, which carriers keep for only ~72 hours after delivery. It must be requested by phone the same day the customer calls, or the carrier claim is lost (`T2:L44`). Three customers have cold-chain contract terms that make Northline liable regardless of the carrier, so those claims are paid almost regardless (`T2:L44`). None of this is written down; new staff learn it by getting it wrong (`T2:L46`).
+
+Also notable:
+- There is no written claims policy. Approval levels exist only in an old email (`T2:L14`, `T2:L36`).
+- Undocumented rule: clean-POD shortages are never filed with the carrier, because carriers always deny them (`T2:L20`, `T2:L64`).
+- Account-manager early payments, made before evidence is collected, kill carrier recovery (`T2:L14`, `T2:L30`, `T2:L64`).
+- The claims lead sees routine work (intake, chasing, a first draft of the decision) as reasonable to automate (`T2:L58`).
 
 ### Stated numbers to verify
 
 | Number as stated | Transcript line | How to verify |
 |---|---|---|
-| | | |
+| ~4 weeks from customer call to close | `T2:L12`, `T2:L66` | `received_at` → `closed_at` in released data; median and p90 |
+| ~3 hours of hands-on work per claim | `T2:L26`, `T2:L66` | Estimate only ("nobody times it"); triangulate with team capacity and volume; confirm loaded cost with the CFO |
+| ~⅓ of payouts recovered from carriers | `T2:L12`, `T2:L64` | `amount_recovered` / `amount_paid`; also against filed claims only. "Sense of it rather than a report" (`T2:L64`) |
+| $10k approval line (specialists below, lead above) | `T2:L14`, `T2:L62` | The approval-levels email (`T2:L36`); handler vs `amount_claimed` in data |
+| Insurance deductible ~$25k ("I think?") | `T2:L16` | CFO; insurance policy document |
+| 30-day insurer notice; consent required before settlement | `T2:L16`, `T2:L48` | Insurance policy document (CFO) |
+| ~72-hour reefer download window | `T2:L44` | Carrier terms; not in claims data |
+| Finance pre-approval sits "a week, maybe more"; payment run weekly (Thursdays) | `T2:L18`, `T2:L26` | Decision date → paid date in released data; day-of-week of payments |
+| Pre-approval changed something "on one hand" in "four years"; started 2019 | `T2:L56` | Finance records (CFO); dates conflict internally (see Contradictions) |
+| Typical claim "a couple of thousand"; "a dozen or so" per half-year over $25k | `T2:L48` | Distribution of `amount_claimed`; count over $25k |
+| Mix ~60% damage, ~30% shortage, ~10% loss | `T2:L50` | `claim_type` counts (loss is excluded from the release; check IT's exclusion count) |
+| 3 specialists + lead; lead ~60% claims / 40% dispatch | `T2:L24` | Capacity input for business case; confirm with COO |
+| Two duplicate payments last year, ~$9,400 combined; one written off | `T2:L68` | Finance write-off records (CFO) |
+| Three customers with cold-chain liability terms | `T2:L44` | Contracts (COO / account managers) |
 
 ### Contradictions
 
-Within this interview, and against T1.
+**Within this interview:**
 
--
+- **Pre-approval timeline:** it "started in 2019" but "in four years" it has rarely changed anything (`T2:L56`). 2019 to now is about seven years. Either the claims lead's tenure is ~4 years, or one figure is off. Clarify.
+- **Escalation:** described as "mostly by value", but specialists also informally walk over and ask (`T2:L40`). Neither is recorded as an escalation, so escalation volume cannot be measured from data.
+
+**Against T1:**
+
+- **Carrier recovery:** COO says ~70%, "basically fine" (`T1:L18`) vs claims lead ~⅓, "less than it should be" (`T2:L12`, `T2:L64`). This is the largest gap so far; data can settle it.
+- **Where the time goes:** COO says most of the month is hands-on work, "whole days on a single file" (`T1:L8`, `T1:L24`) vs the claims lead's ~3 hours of work, with the rest waiting on documents and finance (`T2:L12`, `T2:L26`, `T2:L66`).
+- **Finance check:** COO says "a day or two at most… a sensible control" (`T1:L26`) vs claims lead "a week, maybe more", rarely changing anything (`T2:L26`, `T2:L56`).
+- **Account-manager payments:** COO says "that's how it should be" (`T1:L10`) vs the claims lead, who says they kill recoveries and have cost insurance cover; her one change would be to stop them (`T2:L14`, `T2:L16`, `T2:L78`). This is an ownership dispute the sponsor will need to rule on.
+- **Agent autonomy:** COO wants auto-approve, pay and deny under $50k (`T1:L12`, `T1:L34`) vs the claims lead, for whom denials, insurer-touching claims and temperature claims always go to a person (`T2:L16`, `T2:L58`). The insurer-consent rule above the deductible makes the $50k line unworkable as stated.
+- **Disagreements:** COO says none come to mind (`T1:L32`) vs a specific, unresolved account-manager/insurer case that "is still a sore point" with the CFO (`T2:L16`).
 
 ### Hypotheses
 
 | ID | Gained / lost / no change | Evidence (transcript line) |
 |---|---|---|
-| H1 | | |
-| H2 | | |
-| H3 | | |
-| H4 | | |
-| H5 | | |
+| H1 | Gained (strong) | ~3 hours of work in ~4 weeks (`T2:L26`, `T2:L66`); waits on customer documents and finance pre-approval plus the weekly payment run (`T2:L18`, `T2:L26`); chasing lives in inboxes, not the tracker (`T2:L22`) |
+| H2 | Gained | Finance pre-approves every claim and letter, any amount (`T2:L18`, `T2:L60`); rarely changes anything, only on big ones (`T2:L56`); content of the check unknown to the claims team (`T2:L54`). Needs data and the CFO to confirm |
+| H3 | Gained | No written policy; rules learned on the job (`T2:L36`, `T2:L46`); missing-document fallback is "judgment" (`T2:L34`); account managers pay key customers outside the rules (`T2:L14`, `T2:L38`) |
+| H4 | Gained (strong) | Account managers pay outside the process, and the team finds out afterwards (`T2:L14`, `T2:L52`, `T2:L54`); write-offs owned by finance and opaque to the claims team (`T2:L68`); claims lead claims payout ownership (`T2:L14`, `T2:L78`) |
+| H5 | Gained | Recovery ~⅓, "less than it should be" (`T2:L12`, `T2:L64`); recoveries lost to early payments without evidence (`T2:L14`, `T2:L64`), late insurer notice (`T2:L16`) and missed reefer windows (`T2:L44`); labour comparatively small at ~3 hours per claim (`T2:L66`) |
 
 ### Follow-ups
 
+**Questions for the CFO (Day 3):**
+
+- Deductible amount, notice period and consent terms in the cargo insurance policy (`T2:L16`, `T2:L76`)
+- What the AP pre-approval checks, how often it changes or stops a payment, and its turnaround (`T2:L54`, `T2:L56`)
+- How recovery is measured, if at all, and what the COO's 70% refers to (`T1:L18`, `T2:L64`)
+- How write-offs are decided and recorded, including the duplicate-payment case (`T2:L68`)
+- The declined insurer claim: amount, and whether it was written off (`T2:L16`)
+
 **Fields for the follow-up data request:**
 
--
+- Paid-by role and payment date, so early account-manager payments can be compared with the docs-complete date (`T2:L14`, `T2:L54`)
+- Carrier claim filed (Y/N), filed date, and reason not filed (e.g., clean POD, no evidence) (`T2:L20`, `T2:L64`)
+- Insurer notice date, consent date and insurer outcome, for claims over the deductible (`T2:L16`, `T2:L48`)
+- Pre-approval sent and returned dates, and whether anything changed (`T2:L18`, `T2:L56`)
+- Temperature/reefer flag, download-requested date, and cold-chain customer flag (`T2:L44`)
+- Withdrawn indicator or closing note (`T2:L70`)
+- Denial reversals (`T2:L60`)
+- Documents: copy of the approval-levels email (`T2:L36`); insurance policy terms (CFO)
+
+**Scope decision needed:** loss claims (~10%) run through the same team and process (`T2:L50`). Rule on whether to keep them out of scope (SOW §3), and log the ruling in `docs/consultant-decisions.md`.
