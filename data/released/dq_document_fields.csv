@@ -1,0 +1,17 @@
+document,flag,docs_complete_date,claims
+photos,N,date set,73
+photos,N,no date,34
+photos,Y,date set,227
+photos,Y,no date,29
+invoice,N,no date,21
+invoice,Y,date set,300
+invoice,Y,no date,42
+bol,N,no date,11
+bol,Y,date set,300
+bol,Y,no date,52
+temp_log,N,date set,13
+temp_log,N,no date,3
+temp_log,N/A,date set,271
+temp_log,N/A,no date,59
+temp_log,Y,date set,16
+temp_log,Y,no date,1

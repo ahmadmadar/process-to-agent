@@ -170,7 +170,7 @@ data request I actually write.
 - Claude does not break character to coach me.
 - Claude saves the transcript with numbered lines to
   `engagement/01-discovery/transcripts/T<n>-<persona>.md`.
-- The interview ends when I type `/end`.
+- The interview ends when I type `end interview` in plain text. (`/end` does not work: Claude Code reads a leading slash as a command.)
 
 ### `claims-agent`
 - The prototype agent, built only from the current requirements version.
@@ -239,7 +239,7 @@ process-to-agent/
 │   ├── ground-truth.md      # planted findings; unread until reveal
 │   └── data/claims_full.csv
 ├── .claude/skills/
-│   ├── interview/           # /interview <persona>, /end to close
+│   ├── interview/           # /interview <persona>; type "end interview" to close
 │   └── claims-agent/        # SKILL.md is the single source of the agent prompt
 ├── engagement/
 │   ├── 01-discovery/        # SOW, guide, transcripts/, field notes
@@ -266,8 +266,21 @@ process-to-agent/
 - Writing is consulting-grade: lead with the conclusion, short sections, no
   filler.
 - Python 3.11+. Dependencies go in `requirements.txt`, with pinned versions.
-- Commit at the end of each work block. Messages use the form
-  `day<n>: <what changed>`.
+- **Git is the consultant's.** Claude never commits, branches, pushes or tags.
+  The consultant does all git work in GitHub Desktop.
+- One branch per session, named `day<n>/<theme>` (e.g. `day1/discovery`),
+  created by the consultant. One PR per session into `main`.
+- At the end of each work block, Claude provides a commit summary and
+  description. Summaries use conventional-commit types:
+  `<type>: <what changed>`, where type is `feat`, `fix`, `docs`, `chore`,
+  `refactor` or `test`. The day is carried by the branch name. At the end of each session,
+  Claude provides the PR title and description.
+- Suggested tags (applied by the consultant): `seal-day1` on the commit that
+  adds `SEAL.sha256`; `requirements-v1` when v1 is frozen (before the
+  cold-FDE test); `requirements-v2` after the v2 revision; `seal-reveal` on
+  the Day 3 commit that un-ignores `sealed/`.
+- Whenever a drafted commit must be tagged, Claude says so next to that
+  commit, with the tag name.
 - At the start of each session, Claude reads this file, both logs, and the
   latest outputs. Then it states which day and step we're on before doing
   anything.
