@@ -15,6 +15,9 @@ We need claims data to test what stakeholders tell us against what actually
 happens, and to set baselines for the business case. We are asking only for
 fields that serve a stated hypothesis or a business-case input.
 
+One follow-up request may be issued after the stakeholder interviews, limited
+to fields the interviews show are needed.
+
 ## 2. Working hypotheses
 
 These are things to test, not conclusions. Each requested field maps to at
