@@ -94,39 +94,40 @@ Full rules: [`CLAUDE.md`](CLAUDE.md).
 
 ## Current status
 
-**Day 1, redesign step.** Branch `day1/discovery`.
+**Day 1 complete.** Branch `day1/discovery`. Next: Day 2, requirements and spike.
 
-### Done
+### Day 1 deliverables
 
 - [x] Repo scaffold, sealed world and seal (`SEAL.sha256`, tag `seal-day1`)
 - [x] `/interview` skill (closes on "end interview" in plain text)
 - [x] [SOW](engagement/01-discovery/sow.md), with stakeholder map, baselines and acceptance criteria
-- [x] [Data request](engagement/01-discovery/data-request.md), with hypotheses H1–H5 mapped to fields; one follow-up request allowed
-- [x] [IT data release 1](data/released/README.md): damage and shortage claims plus an event log, with a cover note on what could not be supplied
+- [x] [Data request 1](engagement/01-discovery/data-request.md), with hypotheses H1–H5 mapped to fields
+- [x] [IT data release 1](data/released/README.md): damage and shortage claims plus an event log
 - [x] [Interview guide](engagement/01-discovery/interview-guide.md), with shared comparable questions and T1 follow-ups
 - [x] Interviews: [T1, COO](engagement/01-discovery/transcripts/T1-coo.md) and [T2, claims lead](engagement/01-discovery/transcripts/T2-claims-lead.md)
 - [x] [Field notes](engagement/01-discovery/field-notes.md)
 - [x] [Data-vs-claims checks](analysis/data_checks.py) → [results](analysis/results.md) (Q1–Q14)
-- [x] [Discovery synthesis](engagement/01-discovery/synthesis.md): findings F1–F8, an 18-claim data check, contradictions, data gaps
-- [x] Draft [current-state swimlane](engagement/02-redesign/current-state-swimlane.md)
-- [x] Consultant rulings C1–C6 (contradictions) and E1–E6 (eliminate or redesign), logged in [`consultant-decisions.md`](docs/consultant-decisions.md)
-- [x] [Future-state inputs](engagement/02-redesign/future-state-inputs.md): checklist and open dependencies D1–D8
+- [x] [Discovery synthesis](engagement/01-discovery/synthesis.md): findings F1–F8, contradictions, data gaps
+- [x] [Current-state swimlane](engagement/02-redesign/current-state-swimlane.md)
+- [x] Rulings C1–C6, E1–E6, C5a–c and S1, logged in [`consultant-decisions.md`](docs/consultant-decisions.md)
+- [x] [Data request 2](engagement/01-discovery/data-request-2.md) and [IT data release 2](data/released/README-release-2.md)
+- [x] [Future-state swimlane](engagement/02-redesign/future-state-swimlane.md), [decision tree](engagement/02-redesign/decision-tree.md) and [scope table](engagement/02-redesign/scope-table.md)
+- [x] [Coverage test](engagement/02-redesign/coverage-test.md): 9 of 10 combinations land in one tier; the loss claim lands in none
 
-### Open before Day 1 closes
+### Carried to Day 2
 
-- [ ] Rule on the three C5 open points (partial approvals ≤ $10k, approvals ≤ $10k with incomplete documents, which special flags apply)
-- [ ] Rule on loss-claim scope (SOW §3)
-- [ ] Correct the current-state swimlane
-- [ ] Write the follow-up data request (`data-request-2.md`); Claude cuts release 2
-- [ ] Future-state swimlane, decision tree with confidence thresholds and escalation triggers, three-tier scope table
+- Open gaps G1–G12 in [`open-gaps.md`](engagement/02-redesign/open-gaps.md); G1–G3 break the coverage test
+- Parameters `CONFIDENCE_THRESHOLD` (calibrated in the eval) and `FALLBACK_DEADLINE_DAYS` (set in requirements v1)
+- COO ratification of payout ownership and the expedite path (D5), due before requirements v1 is frozen
+- Data request 2 §5 (claims lead): approval email, filing-window rule, packaging rule, reefer logging, denial reversals, late notices
+- Clean-POD rule (E6): testable with release 2 `pod_exception`
 
 ### Carried to Day 3 (CFO)
 
 Deductible amount, removal of finance pre-approval at or below $10k, the
-recovery-rate definition, the late-notice discrepancy, and any challenge to
-the provisional $10k thresholds. COO ratification of payout ownership is due
-before requirements v1 is frozen. See D1–D8 in
-[`future-state-inputs.md`](engagement/02-redesign/future-state-inputs.md).
+recovery-rate definition, the late-notice discrepancy, any challenge to the
+provisional $10k thresholds, and data request 2 §6 (finance inputs). See
+D1–D8 in [`future-state-inputs.md`](engagement/02-redesign/future-state-inputs.md).
 
 ## Repository map
 
@@ -163,38 +164,16 @@ python analysis/data_checks.py
 
 # Rebuild data release 1 from the sealed extract (needs sealed/; after the reveal for anyone but the owner)
 python data/released/build_release.py
+
+# Rebuild data release 2 (same conditions as release 1)
+python data/released/build_release_2.py
+
+# Re-run the future-state coverage test; regenerates engagement/02-redesign/coverage-test.md
+python engagement/02-redesign/coverage_test.py
 ```
 
 The data checks use only the standard library. `requirements.txt` pins the
 packages the Day 2 spike and Day 3 ROI model will need.
-
-## Suggestions
-
-Ideas Claude raised while drafting this README. None is adopted unless the
-consultant says so.
-
-1. **Commit the citation checker.** Citations were checked during the session
-   with one-off scripts: every `T<n>:L<line>` resolves to an interviewee line,
-   and every `Q<n>` exists in the results. A small committed
-   `analysis/check_citations.py` would make the "cite everything" and "0
-   unsupported numbers" metrics reproducible for anyone reviewing the repo.
-2. **Render-check the Mermaid swimlanes.** The current-state diagram has not
-   been rendered. GitHub's preview or `mmdc` would catch syntax errors before
-   the future-state version builds on it.
-3. **One `make check` target.** Seal verification, data checks and the
-   citation check in one command, so a reviewer can confirm the repo's state
-   in one step.
-4. **State the main session's exposure plainly.** The sealed-world design
-   limits what the main session saw, but it did read each persona brief while
-   playing that persona, and the full dataset's columns and field values when
-   cutting the release. The delivery log records this. Repeating it in the Day
-   3 miss review would make the scoring more credible.
-5. **Time-box the remaining Day 1 rulings.** The future-state swimlane, decision
-   tree and scope table all depend on the C5 open points and the loss-claim
-   ruling. Settling those first unblocks everything else on the list.
-6. **Plan for the eval set's size.** About 20 claims gives a directional
-   result (SOW deliverable #4). Choosing the eval claims to cover every C5
-   tier and every escalation trigger matters more than adding claims.
 
 ## License
 

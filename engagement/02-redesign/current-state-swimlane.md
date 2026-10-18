@@ -2,10 +2,8 @@
 
 > Fictional engagement for portfolio purposes. The client, stakeholders and data are synthetic.
 
-The process as it runs today, drawn from T1, T2 and release 1. Claude's draft
-was corrected after consultant review on 2026-10-18: edits 1–25 were applied
-except 11 and 14 (see `docs/consultant-decisions.md`). No redesign ruling
-appears in this diagram. Every step cites its source. Stage waits on the
+The process as it runs today, drawn from T1, T2 and release 1. No redesign
+ruling appears in this diagram. Every step cites its source. Stage waits on the
 edges are Q4 medians and p90s from `analysis/results.md`.
 
 System tags: `[tracker]` = claims tracker workbook, `[email]` = email,
