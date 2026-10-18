@@ -102,17 +102,16 @@ Opening (1 min) and shared questions S1–S3 (4 min) first.
 
 Opening (1 min) and shared questions S1–S3 (4 min) first.
 
-### B1. Role and process walkthrough (8 min)
+### B1. Role and process walkthrough (7 min)
 
 | # | Prompt | Tag |
 |---|---|---|
 | B1.1 ★ | Walk me through the last claim you handled, from the moment it arrived to the moment it closed. | H1, H2 |
 | B1.2 | *Probe at each step:* Who does it? Which system or tool? What decision is made, and on what rule? | H3, H4 |
 | B1.3 ★ | Which of those steps aren't recorded in the system? | H1 |
-| B1.4 | Who performs each step other than the final decision? | H4 |
-| B1.5 | Which roles handle claims, and how does a claim get assigned to someone? | H4 |
+| B1.4 | Which roles handle claims, and how does a claim get assigned to someone? | H4 |
 
-### B2. Waiting, documents and rework (4 min)
+### B2. Waiting, documents and rework (3 min)
 
 | # | Prompt | Tag |
 |---|---|---|
@@ -120,7 +119,7 @@ Opening (1 min) and shared questions S1–S3 (4 min) first.
 | B2.2 | When do documents usually arrive relative to the claim? What happens when something is missing? | H1, H3 |
 | B2.3 | *Probe, per step:* Why does this step exist? What would happen if it were skipped? When was it last overturned? | H2 |
 
-### B3. Rules and exceptions (6 min)
+### B3. Rules and exceptions (4 min)
 
 | # | Prompt | Tag |
 |---|---|---|
@@ -133,23 +132,38 @@ Opening (1 min) and shared questions S1–S3 (4 min) first.
 | B3.7 | What's the rarest kind of claim you've handled in the last six months? How did you handle it? | Edge cases |
 | B3.8 | Are loss claims handled differently from damage and shortage claims? Is that the right boundary? | Scope |
 
-### B4. Data and record-keeping (if time allows)
+### B4. Follow-ups from T1 (4 min)
+
+Added after the COO interview (see field notes, T1 follow-ups). Ask in
+neutral words: never quote the COO or his figures, so the claims lead's
+answers stay independent and can be compared. Document timing (`T1:L26`) is
+already covered by B2.2.
+
+| # | Prompt | Source | Tag |
+|---|---|---|---|
+| B4.1 | Does anyone outside the claims team approve or pay claims? How is that recorded, and does your team see it? | `T1:L10` | H4 |
+| B4.2 | *If a check before payment came up in B1:* What does it look at? When did it last change or stop a payment? | `T1:L26` | H2 |
+| B4.3 | Which claims need a person's judgment, and why? | `T1:L12`, `T1:L34` | Scope |
+| B4.4 | How are denials decided and written? When was a denial last reversed? | `T1:L36` | H3, Acceptance |
+| B4.5 | Who approves large claims? Is there a value threshold? | `T1:L12` | H4, Scope |
+| B4.6 | How do you decide whether to pursue the carrier for recovery? How much do you recover, and how is that measured? | `T1:L18` | H5 |
+
+### B5. Data and record-keeping (if time allows)
 
 | # | Prompt | Tag |
 |---|---|---|
-| B4.1 | From receipt to close, how long does a typical claim take? How much of that is someone actually working on it, by role? How do you know? | H1, BC |
-| B4.2 | How are write-offs decided, by whom, and where are they recorded? | H4, H5 |
-| B4.3 | How do you decide whether to pursue the carrier for recovery? | H5 |
-| B4.4 | Is a claim ever withdrawn? How is that recorded? | Data quality |
-| B4.5 | Any process, system or coding changes in the last 6 months? | Data quality |
-| B4.6 | Are any claims handled outside the system, for example by email or spreadsheet? | H1, Data quality |
+| B5.1 | From receipt to close, how long does a typical claim take? How much of that is someone actually working on it, by role? How do you know? | H1, BC |
+| B5.2 | How are write-offs decided, by whom, and where are they recorded? | H4, H5 |
+| B5.3 | Is a claim ever withdrawn? How is that recorded? | Data quality |
+| B5.4 | Any process, system or coding changes in the last 6 months? | Data quality |
+| B5.5 | Are any claims handled outside the system, for example by email or spreadsheet? | H1, Data quality |
 
-### B5. Close (2 min)
+### B6. Close (2 min)
 
 | # | Prompt | Tag |
 |---|---|---|
-| B5.1 ★ | What should I have asked that I didn't? | — |
-| B5.2 | If you could change one thing about the process tomorrow, what would it be? | H2 |
+| B6.1 ★ | What should I have asked that I didn't? | — |
+| B6.2 | If you could change one thing about the process tomorrow, what would it be? | H2 |
 
 ---
 
