@@ -1,0 +1,31 @@
+claim_id,claim_type,customer_id,carrier_id,amount_claimed,amount_paid,outcome,denial_reason,decided_by_role,delivered_at,received_at,docs_completed_at,photos_received,invoice_received,bol_received,temp_log_obtained,pod_exception,reefer_flag,key_account,shipment_ref,recovery_filed,recovery_outcome
+NLC-26-0016,damage,C010,CR08,1613.68,1613.68,approved,,claims_specialist,2026-03-03,2026-03-08,2026-03-16,Y,Y,Y,N/A,Y,N,N,SHP-0016,Y,paid
+NLC-26-0020,damage,C003,CR03,481.00,481.00,approved,,account_manager,2026-03-04,2026-03-09,2026-03-13,Y,Y,Y,N/A,Y,N,Y,SHP-0020,Y,paid
+NLC-26-0022,damage,C005,CR03,1552.83,1552.83,approved,,claims_specialist,2026-03-06,2026-03-10,2026-03-17,Y,Y,Y,N/A,Y,N,N,SHP-0022,Y,denied
+NLC-26-0028,damage,C006,CR01,1562.18,0.00,denied,insufficient documentation,claims_specialist,2026-03-01,2026-03-11,,Y,N,Y,N/A,N,N,N,SHP-0028,N,not_filed
+NLC-26-0052,shortage,C005,CR08,6565.08,6565.08,approved,,claims_specialist,2026-03-17,2026-03-22,2026-03-25,N,Y,Y,N/A,Y,N,N,SHP-0052,Y,paid
+NLC-26-0053,shortage,C012,CR05,4404.26,4404.26,approved,,claims_specialist,2026-03-17,2026-03-22,2026-03-30,N,Y,Y,N/A,Y,N,N,SHP-0053,N,not_filed
+NLC-26-0125,damage,C007,CR06,1144.49,1144.49,approved,,claims_specialist,2026-04-16,2026-04-21,2026-05-07,Y,Y,Y,N,N,Y,Y,SHP-0125,N,not_filed
+NLC-26-0139,damage,C008,CR02,7992.60,0.00,denied,outside customer filing window,claims_specialist,2026-04-14,2026-04-27,2026-05-07,Y,Y,Y,N/A,N,N,N,SHP-0139,N,not_filed
+NLC-26-0141,damage,C012,CR01,1173.42,932.60,partially_approved,partial - salvage or depreciation applied,claims_specialist,2026-04-11,2026-04-27,2026-04-29,Y,Y,Y,N/A,N,N,N,SHP-0141,Y,denied
+NLC-26-0163,shortage,C002,CR07,1955.89,0.00,denied,insufficient documentation,claims_specialist,2026-05-05,2026-05-05,,N,Y,N,N/A,Y,Y,Y,SHP-0163,N,not_filed
+NLC-26-0164,shortage,C009,CR04,1500.81,1500.81,approved,,claims_specialist,2026-05-06,2026-05-06,2026-05-16,Y,Y,Y,N/A,N,N,N,SHP-0164,N,not_filed
+NLC-26-0170,shortage,C011,CR01,1947.06,1947.06,approved,,claims_specialist,2026-05-06,2026-05-08,2026-05-10,N,Y,Y,N/A,N,N,N,SHP-0170,N,not_filed
+NLC-26-0224,damage,C002,CR06,450.00,450.00,approved,,claims_specialist,2026-05-31,2026-06-06,2026-06-15,N,Y,Y,N,N,Y,Y,SHP-0224,Y,denied
+NLC-26-0226,shortage,C002,CR03,4688.72,2425.91,partially_approved,partial - salvage or depreciation applied,claims_specialist,2026-06-07,2026-06-08,2026-06-14,N,Y,Y,N/A,Y,N,Y,SHP-0226,Y,paid
+NLC-26-0231,shortage,C002,CR08,10339.85,5682.93,partially_approved,partial - salvage or depreciation applied,claims_lead,2026-05-31,2026-06-09,2026-06-19,N,Y,Y,N/A,N,N,Y,SHP-0231,N,not_filed
+NLC-26-0245,damage,C003,CR02,1392.41,812.30,partially_approved,partial - salvage or depreciation applied,claims_specialist,2026-06-01,2026-06-19,2026-06-27,Y,Y,Y,N/A,N,N,Y,SHP-0245,Y,paid
+NLC-26-0246,shortage,C001,CR05,3463.74,3463.74,approved,,account_manager,2026-06-13,2026-06-19,2026-07-03,N,Y,Y,N/A,N,N,Y,SHP-0246,Y,partial
+NLC-26-0275,damage,C006,CR05,2294.96,0.00,denied,outside customer filing window,claims_specialist,2026-06-22,2026-07-05,2026-07-06,Y,Y,Y,N/A,N,N,N,SHP-0275,N,not_filed
+NLC-26-0305,damage,C003,CR02,2716.90,2378.86,partially_approved,partial - salvage or depreciation applied,claims_specialist,2026-07-08,2026-07-17,2026-07-19,Y,Y,Y,N/A,N,N,Y,SHP-0305,Y,paid
+NLC-26-0310,damage,C001,CR03,2360.07,2360.07,approved,,claims_specialist,2026-07-11,2026-07-19,2026-08-04,Y,Y,Y,N/A,N,N,Y,SHP-0310,Y,pending
+NLC-26-0313,shortage,C011,CR03,4484.84,4484.84,approved,,claims_specialist,2026-07-15,2026-07-19,2026-07-30,N,Y,Y,N/A,N,N,N,SHP-0313,N,not_filed
+NLC-26-0335,damage,C004,CR01,1566.36,1566.36,approved,,claims_specialist,2026-07-10,2026-07-26,2026-08-06,Y,Y,Y,N/A,N,N,N,SHP-0335,Y,pending
+NLC-26-0357,shortage,C001,CR01,1762.66,1762.66,approved,,account_manager,2026-08-03,2026-08-07,,Y,Y,Y,N/A,Y,N,Y,SHP-0357,N,not_filed
+NLC-26-0359,damage,C003,CR01,316.10,199.93,partially_approved,partial - salvage or depreciation applied,claims_specialist,2026-07-25,2026-08-07,2026-08-12,Y,Y,Y,N/A,N,N,Y,SHP-0359,Y,pending
+NLC-26-0374,damage,C009,CR01,752.03,0.00,denied,insufficient documentation,claims_specialist,2026-07-31,2026-08-12,,Y,Y,N,N/A,N,N,N,SHP-0374,N,not_filed
+NLC-26-0380,damage,C008,CR02,1650.00,1650.00,approved,,claims_specialist,2026-08-16,2026-08-16,2026-08-19,Y,Y,Y,N/A,Y,N,N,SHP-0380,Y,pending
+NLC-26-0382,damage,C007,CR06,1486.74,1486.74,approved,,account_manager,2026-08-12,2026-08-17,2026-09-06,Y,Y,Y,N,N,Y,Y,SHP-0382,Y,pending
+NLC-26-0392,shortage,C005,CR04,819.92,0.00,denied,not on shipment record,claims_specialist,2026-08-21,2026-08-23,2026-08-29,Y,Y,Y,N/A,N,N,N,SHP-0392,N,not_filed
+NLC-26-0407,damage,C002,CR07,1813.89,1813.89,approved,,account_manager,2026-08-20,2026-08-30,,Y,Y,Y,N/A,N,Y,Y,SHP-0407,N,not_filed
+NLC-26-0412,damage,C002,CR03,666.61,,open,,,2026-08-30,2026-08-31,,N,Y,Y,N/A,Y,N,Y,SHP-0412,,

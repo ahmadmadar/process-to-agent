@@ -1,0 +1,13 @@
+measure,value
+count received 2026-03,6
+count received 2026-04,14
+count received 2026-05,7
+count received 2026-06,8
+count received 2026-07,9
+count received 2026-08,5
+count total,49
+closed claims,47
+median days received to closed (closed claims),26
+total claimed,263252.64
+total paid,211973.42
+total recovered,132327.92

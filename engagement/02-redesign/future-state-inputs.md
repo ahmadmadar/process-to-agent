@@ -3,9 +3,9 @@
 > Fictional engagement for portfolio purposes. The client, stakeholders and data are synthetic.
 
 Checklist for the consultant's future-state swimlane, drawn from the Day 1
-rulings in `docs/consultant-decisions.md` ("Discovery rulings"). The swimlane
-is not drawn yet. Items marked **⚠** depend on something still open (see
-Open dependencies).
+rulings in `docs/consultant-decisions.md` ("Discovery rulings" and "Redesign
+rulings"). The swimlane is not drawn yet. Items marked **⚠** depend on
+something still open (see Open dependencies D1–D8 and Open parameters P1–P2).
 
 ## Lanes
 
@@ -17,20 +17,26 @@ Open dependencies).
 - [ ] Carrier
 - [ ] Cargo insurer
 
+## Claim types (S1)
+
+- [ ] Redesigned steps apply to the shared process, so loss claims go through them too (S1; T2:L50). No loss-specific steps are designed
+- [ ] Mark where the agent pilot excludes loss claims; loss is the phase-2 candidate (S1)
+
 ## Intake and documents
 
 - [ ] Intake requests every required document up front, using a structured checklist and a deadline (E5)
 - [ ] Automated reminders replace manual email chasing (E5)
-- [ ] Written fallback rule for deciding on incomplete documents replaces "judgment" (E5; T2:L34). **Requirement to be specified** by the consultant in requirements v1
+- [ ] Written fallback rule replaces "judgment" (E5; T2:L34): the agent holds the claim and sends reminders; at `FALLBACK_DEADLINE_DAYS` it routes to human sign-off (C5b) **⚠ P2**
 - [ ] Temperature/reefer claims escalate to a person at intake, never queued (C5; T2:L44, T2:L58)
 - [ ] Account-manager expedite requests enter at intake and route to a person, never auto-approved (C4, E4) **⚠ D5**
 
 ## Decision routing (C5)
 
-- [ ] **Autonomous:** approvals at or below $10k with complete documents and no special flags **⚠ D3, D6**
-- [ ] **Human sign-off:** all denials; claims above $10k and at or below the deductible **⚠ D1, D3**
-- [ ] **Always escalate:** claims above the deductible; temperature/reefer claims; expedite requests **⚠ D1**
-- [ ] Every path ends in exactly one route (SOW deliverable #2) **⚠ D6** (C5 open points leave some claims unrouted)
+- [ ] **Autonomous:** approvals at or below $10k with complete documents, no special flags and confidence ≥ `CONFIDENCE_THRESHOLD` (C5, C5b, C5c) **⚠ D3, P1**
+- [ ] **Human sign-off:** all denials; partials at or below $10k (C5a); claims above $10k and at or below the deductible; incomplete documents at `FALLBACK_DEADLINE_DAYS` (C5b); key-account denials or partials, possible duplicates, invoice mismatches, out-of-window claims, low confidence (C5c) **⚠ D1, D3, P1, P2**
+- [ ] **Always escalate:** claims above the deductible; temperature/reefer claims; expedite requests; cold-chain contract customers (C5c) **⚠ D1**
+- [ ] Insurer 30-day notice clock shown as an urgency alert on escalated claims, not a routing flag (C5c)
+- [ ] Every path ends in exactly one route (SOW deliverable #2); check against C5a–c
 
 ## After the decision
 
@@ -65,6 +71,16 @@ Show these as removed, with the ruling ID:
 | D3 | CFO challenge on the $10k thresholds; revisions logged as new decisions | CFO | C2, C5, E1 | Day 3 |
 | D4 | Confirm the recovery definition and the source of the COO's ~70% (T1:L18) | CFO | C3 | Day 3 |
 | D5 | Ratify claims-team ownership of payouts and the expedite path (SOW §8) | COO (sponsor) | C4, E4 | Before requirements v1 is frozen |
-| D6 | Rule on C5 open points: partial approvals ≤ $10k, approvals ≤ $10k with incomplete documents, and which special flags apply | Consultant | C5 | Before the future-state swimlane |
+| D6 | ~~Rule on C5 open points~~ **Resolved 2026-10-18:** see C5a (partials), C5b (incomplete documents), C5c (special flags) | Consultant | C5 | Done |
 | D7 | POD-exception field to test the clean-POD rule | Follow-up data request | E6 | Release 2 |
 | D8 | Late-notice discrepancy: "two other" late notices (T2:L16) vs one in Q12 | CFO | C6 | Day 3 |
+
+## Open parameters
+
+Consultant-owned and unset (see "Consultant-owned parameters" in
+`docs/consultant-decisions.md`).
+
+| # | Parameter | Affects | When |
+|---|---|---|---|
+| P1 | `CONFIDENCE_THRESHOLD`: provisional, calibrated in the Day 2 eval | Autonomous tier (C5), C5c | Day 2 |
+| P2 | `FALLBACK_DEADLINE_DAYS` | C5b, E5 | Requirements v1 |

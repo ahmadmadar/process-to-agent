@@ -10,6 +10,7 @@ Claude drafts entries; the consultant confirms the wording.
 | 2026-10-16 | Day 1 / workflow | Claude makes the commits; one branch per session with a PR at the end | One branch per session. The consultant does all git work in GitHub Desktop. Claude only drafts commit and PR text. Claude's commit on `main` was reversed and the changes moved to `day1/discovery`. | I prefer to own the version control. Keeps me honest and accountable about reviewing all the changes made by Claude throughout the session. |
 | 2026-10-17 | Day 1 / SOW | Turn governance meetings that have no session in the plan into written steps, or reframe them as the consultant's rulings pending sponsor ratification | Kept the daily sponsor summary. Removed the Day 1 COO playback and the Day 3 COO/CFO readout. Accepted all other SOW fixes. | A short engagement benefits from daily visibility and clarity for the client; a longer one would use weekly summaries. The Day 3 CFO defence already covers the readout. |
 | 2026-10-17 | Day 1 / data request | Keep the event log optional, with fallback fields in the claims table for H2 | Event log made required; fallback fields removed | A required event log reduces guessing on our end. |
+| 2026-10-18 | Day 1 / current-state swimlane | 25 corrections to the current-state draft, including #11 (dotted "sometimes filed" edge from the AM path to carrier filing, from Q11 data only) and #14 (annotate the three cold-chain contract customers as paid almost regardless, T2:L44) | Approved and applied 1–10, 12, 13 and 15–25. Rejected #11 and #14. | _Claude draft, for consultant wording:_ #11 has no transcript support and would draw a data pattern as a process step. #14 is not on the consultant's correction list; cold-chain terms are carried into the future state through C5c. |
 
 ---
 
@@ -159,3 +160,85 @@ to revision if the CFO challenges them on Day 3.
 - **Rationale:** The claims lead states that carriers deny clean-POD shortages every time (T2:L20, T2:L64). Release 1 cannot test this: there is no POD-exception field, and filed shortage claims in Q10 cannot be split by POD status.
 - **Citations:** T2:L20, T2:L64; Q10
 - **Dependencies:** POD-exception field in the follow-up data request
+
+---
+
+## Redesign rulings (Day 1): C5 open points and loss-claim scope
+
+These rulings settle the three open points in C5 (dependency D6) and the
+loss-claim scope question in SOW §3. Each decision is the consultant's,
+recorded as given. Rejected options and rationale are Claude drafts, waiting
+for the consultant to edit or confirm. C5 itself is not edited; these
+entries refine it.
+
+Two clarifications were agreed before logging (2026-10-18):
+- **S1** is recorded as a clarification, reworded so it does not widen SOW §3.
+- **C5a** cites the release-1 reason for partials (salvage or depreciation,
+  Q14) instead of packaging and filing window, which are denial reasons in Q14.
+
+### C5a. Partial approvals at or below $10k
+
+- **Date / step:** 2026-10-18, Day 1 / redesign
+- **Type:** Design ruling
+- **Refines:** C5, open point 1
+- **Decision:** Human sign-off.
+- **Rejected options:** (a) Autonomous, treating partials like approvals at or below $10k. (b) Autonomous when the reduction follows a fixed salvage or depreciation formula, otherwise sign-off.
+- **Rationale (draft):** A partial is a partial denial. Sending it to a person matches "all denials to human sign-off" (C5) and the COO's red line, a wrongful denial to a key account (T1:L36). Every partial in release 1 is a salvage or depreciation reduction (Q14), and the size of that reduction is a judgment call. Revisit after the Day 2 eval if partials turn out to be mostly mechanical.
+- **Citations:** T1:L36; Q14
+- **Dependencies:** Day 2 eval result on partials
+
+### C5b. Approvals at or below $10k with incomplete documents
+
+- **Date / step:** 2026-10-18, Day 1 / redesign
+- **Type:** Design ruling
+- **Refines:** C5, open point 2; specifies the fallback in E5
+- **Decision:** The agent never decides on incomplete documents. It holds the claim at intake and sends automated reminders (E5). At the fallback deadline (`FALLBACK_DEADLINE_DAYS`, set in requirements v1), the claim routes to human sign-off. "Documents complete" is a precondition for the autonomous tier.
+- **Rejected options:** (a) The agent decides on the documents it has at the deadline. (b) The agent approves low-value claims without full documents to save time. (c) The claim is closed automatically at the deadline.
+- **Rationale (draft):** Deciding or paying before documents are complete is the account-manager failure pattern: those claims are paid before documents are complete far more often and recover far less (Q11). Without photos or a delivery receipt there is nothing to file with the carrier (T2:L30). Today the stopping point is unwritten judgment (T2:L34); a fixed deadline that routes to a person replaces it without letting the agent guess.
+- **Citations:** T2:L30, T2:L34; Q11, Q13
+- **Dependencies:** `FALLBACK_DEADLINE_DAYS` set in requirements v1
+
+### C5c. Special flags
+
+- **Date / step:** 2026-10-18, Day 1 / redesign
+- **Type:** Design ruling
+- **Refines:** C5, open point 3
+- **Decision:** In addition to temperature/reefer claims and expedite requests (C5, always escalate), these flags apply:
+
+  | Flag | Route | Citation |
+  |---|---|---|
+  | Cold-chain contract customer | Always escalate | T2:L44 |
+  | Key-account customer | Human sign-off for any denial or partial; a straight approval may stay autonomous | T1:L10, T1:L36 |
+  | Possible duplicate: same shipment or claim already paid | Human sign-off | T2:L68 |
+  | Claimed amount does not match the invoice | Human sign-off | T2:L42 |
+  | Outside the customer filing window | Human sign-off | Q14 |
+  | Agent confidence below `CONFIDENCE_THRESHOLD` | Human sign-off | Consultant parameter |
+
+  Not special flags:
+  - **Amount above the deductible.** It is already an always-escalate trigger under C5.
+  - **The insurer's 30-day notice clock.** It is an urgency alert on escalated claims, not a routing flag (T2:L16, T2:L48).
+- **Rejected options:** (a) No flags beyond C5; rely on the confidence score alone. (b) Route every key-account claim to sign-off, including straight approvals. (c) Treat the 30-day insurer clock as a routing flag.
+- **Rationale (draft):** Each flag marks a known failure or liability exposure. Cold-chain customers are paid "almost no matter what" under contract terms, so the claim is about liability and recovery, not a decision the agent should own (T2:L44). Key accounts carry the COO's red line on wrongful denials (T1:L36), but a correct approval does not create that risk, so approvals can stay autonomous. Duplicate payments have happened and one was written off (T2:L68). The claimed amount is checked against the invoice today (T2:L42). Filing-window denials occur in the data (Q14). A low-confidence decision should not go out unreviewed.
+- **Citations:** T1:L10, T1:L36, T2:L16, T2:L42, T2:L44, T2:L48, T2:L68; Q14
+- **Dependencies:** `CONFIDENCE_THRESHOLD` calibrated in the Day 2 eval
+
+### S1. Loss-claim scope
+
+- **Date / step:** 2026-10-18, Day 1 / redesign
+- **Type:** Design ruling. **Clarification of SOW §3, not a scope change.**
+- **Decision:** Split scope.
+  - **Process redesign:** loss claims go through the same team and process as damage and shortage claims (T2:L50). The redesigned steps (E1–E5) change that shared process, so they also apply to loss claims as a side effect. No loss-specific steps or evidence rules are designed.
+  - **Agent pilot:** excludes loss claims. Their evidence differs (nothing delivered to photograph, T2:L50), and they are not in release 1. Loss claims are the phase-2 expansion candidate.
+  - The SOW text is unchanged. Damage and shortage remain the designed scope.
+- **Rejected options:** (a) Design loss-specific redesign steps now. (b) Include loss claims in the agent pilot. (c) Draw the redesign as damage and shortage only, ignoring that the process is shared.
+- **Rationale (draft):** The claims lead describes one process for all claim types (T2:L50). Drawing a future state that applies only to damage and shortage would misstate how the team works, and the redesigned steps affect every claim that passes through them. The agent needs claim-type-specific evidence rules, and release 1 has no loss claims to test against, so loss claims wait for phase 2.
+- **Citations:** T2:L50; SOW §3; release 1 cover note (`data/released/README.md`)
+
+### Consultant-owned parameters
+
+Set by the consultant. Claude does not set or change them.
+
+| Parameter | Used in | Status | Set when |
+|---|---|---|---|
+| `CONFIDENCE_THRESHOLD` | C5c; autonomous tier (C5) | Unset; provisional value to be calibrated in the Day 2 eval | Day 2 |
+| `FALLBACK_DEADLINE_DAYS` | C5b, E5 | Unset | Requirements v1 |
