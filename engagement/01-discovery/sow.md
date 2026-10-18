@@ -108,7 +108,7 @@ and the claims data.
 
 ## 7. Assumptions
 
-- The client provides 6 months of claims data in CSV format, with personal information removed.
+- The client provides 6 months of claims data in CSV format, with personally identifiable information (PII) removed.
 - Stakeholders are available for interviews of about 25 minutes each.
 - The CFO is available to review the business case on Day 3.
 - Claims data reflects actual practice closely enough to test stated rules and volumes.
@@ -126,7 +126,7 @@ and the claims data.
 ## 9. Data handling
 
 - Data is released by IT against a written data request, limited to fields that serve a stated hypothesis or business case input.
-- Data is held in the project repository.
+- Data is held in the project repository, and deleted or returned at engagement close.
 - API credentials are stored outside version control, and model usage runs under a capped budget.
 
 ## 10. Governance
