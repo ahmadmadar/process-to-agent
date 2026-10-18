@@ -1,6 +1,6 @@
 ---
 name: interview
-description: Run a live stakeholder interview in character as a Northline Freight persona (coo, claims-lead, cfo) and save a line-numbered transcript. Invoke as /interview <persona>; end with /end or "end interview".
+description: Run a live stakeholder interview in character as a Northline Freight persona (coo, claims-lead, cfo) and save a line-numbered transcript. Invoke as /interview <persona>; end by typing "end interview" in plain text.
 argument-hint: <coo | claims-lead | cfo>
 disable-model-invocation: true
 ---
@@ -71,7 +71,11 @@ L2 | <Persona role> | <your answer, verbatim>
 
 ## Ending
 
-When the consultant types `/end` or `end interview` (any case):
+Do not rely on `/end`: Claude Code treats a leading slash as a command, so it
+never reaches the session.
+
+When the consultant types `end interview` in plain text (any case, with or
+without trailing words, e.g. "END INTERVIEW — save the transcript"):
 
 1. Append `--- end of interview ---` to the transcript.
 2. Step out of character with only: the transcript path, the number of

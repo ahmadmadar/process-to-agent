@@ -170,7 +170,7 @@ data request I actually write.
 - Claude does not break character to coach me.
 - Claude saves the transcript with numbered lines to
   `engagement/01-discovery/transcripts/T<n>-<persona>.md`.
-- The interview ends when I type `/end`.
+- The interview ends when I type `end interview` in plain text. (`/end` does not work: Claude Code reads a leading slash as a command.)
 
 ### `claims-agent`
 - The prototype agent, built only from the current requirements version.
@@ -239,7 +239,7 @@ process-to-agent/
 │   ├── ground-truth.md      # planted findings; unread until reveal
 │   └── data/claims_full.csv
 ├── .claude/skills/
-│   ├── interview/           # /interview <persona>, /end to close
+│   ├── interview/           # /interview <persona>; type "end interview" to close
 │   └── claims-agent/        # SKILL.md is the single source of the agent prompt
 ├── engagement/
 │   ├── 01-discovery/        # SOW, guide, transcripts/, field notes
