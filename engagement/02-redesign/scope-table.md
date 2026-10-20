@@ -6,7 +6,7 @@ Rows match `coverage_test.py` (R1–R16), and the coverage results are in
 `coverage-test.md`. Open gaps are listed in `open-gaps.md`.
 
 Thresholds: $10k provisional (D3); deductible assumed $25k (D1). Both are measured on the claimed amount (G4).
-Parameters: `CONFIDENCE_THRESHOLD` (P1; two thresholds under G11, rubric and self-report), `FALLBACK_DEADLINE_DAYS` (P2), all unset.
+Parameters: `CONFIDENCE_THRESHOLD` (P1; two thresholds under G11, rubric and self-report), `FALLBACK_DEADLINE_DAYS` = 14 days from receipt (P2; Q19). The confidence thresholds are unset.
 
 **Precedence (G2).** Rows are not mutually exclusive. When a claim matches
 more than one row, the highest wins: always escalate > hold > human sign-off >
@@ -44,6 +44,7 @@ the "awaiting documents" list until its documents are complete or
 | Claim above the deductible, before payment | Hard gate: no payment instruction until insurer consent is recorded on the claim | T2:L16; Q12 | G9b |
 | Approval above $10k after sign-off | Finance pre-approval | T2:L56; Q5 | C2, E1 |
 | Denial after sign-off | No finance pre-approval | T2:L56, T2:L60; Q5 | E2 |
+| Possible duplicate at intake | Flag raised on the claim, visible on the "awaiting documents" list; routing stays at R7 after documents are complete | T2:L68 | G13 |
 | Key-account claim in the sign-off or escalation queue | Worked first in that queue | T1:L10 | G6 |
 | Key-account claim decided | Account manager notified of the outcome; no approval or payment rights | T1:L10; C4 | G6 |
 

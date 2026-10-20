@@ -27,10 +27,10 @@ flowchart LR
     subgraph AG["Claims agent (new; pilot: damage and shortage)"]
         G0{"Loss claim?<br/>(S1, G1)"}
         G1{"Hard escalation?<br/>reefer equipment or temp allegation ·<br/>cold-chain · expedite ·<br/>claimed > deductible<br/>(C5, C5c, E4, G4, G5)"}
-        G2["Send structured checklist<br/>with deadline (E5)"]
+        G2["Send structured checklist<br/>with deadline (E5);<br/>duplicate flag raised (G13)"]
         G3{"Documents complete?<br/>(C5b, E5)"}
         G4["Hold: 'awaiting documents'<br/>list (state, no route), owned<br/>by specialists; automated<br/>reminders (E5, G3a, G3b, G7e)"]
-        G5{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
+        G5{"FALLBACK_DEADLINE_DAYS<br/>(14 days) reached? (C5b; P2)"}
         G6{"Rule checks: duplicate ·<br/>invoice mismatch ·<br/>filing window (C5c)"}
         G7["Form decision; rubric +<br/>self-reported confidence<br/>(C5c, G11; P1)"]
         G8{"Approval ≤ $10k and<br/>both confidence gates pass?<br/>(C5, C5a, C5c, G11)"}

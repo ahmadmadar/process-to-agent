@@ -70,7 +70,7 @@ Show these as removed, with the ruling ID:
 | D2 | Agree removal of pre-approval at or below $10k and for denials, and the payment-run change | CFO (control owner) | C2, E1, E2, E3 | Day 3 |
 | D3 | CFO challenge on the $10k thresholds; revisions logged as new decisions | CFO | C2, C5, E1 | Day 3 |
 | D4 | Confirm the recovery definition and the source of the COO's ~70% (T1:L18) | CFO | C3 | Day 3 |
-| D5 | Ratify claims-team ownership of payouts and the expedite path (SOW §8) | COO (sponsor) | C4, E4 | Before requirements v1 is frozen |
+| D5 | Ratify claims-team ownership of payouts and the expedite path (SOW §8). Route: Day 2 sponsor summary, then a COO `/interview` session | COO (sponsor) | C4, E4 | Before requirements v1 is frozen |
 | D6 | ~~Rule on C5 open points~~ **Resolved 2026-10-18:** see C5a (partials), C5b (incomplete documents), C5c (special flags) | Consultant | C5 | Done |
 | D7 | ~~POD-exception field to test the clean-POD rule~~ **Resolved:** release 2; tested in Q18; E6 reversed by E6a | Follow-up data request | E6, E6a | Done |
 | D8 | Late-notice discrepancy: "two other" late notices (T2:L16) vs one in Q12 | CFO | C6 | Day 3 |
@@ -84,4 +84,4 @@ Consultant-owned and unset (see "Consultant-owned parameters" in
 | # | Parameter | Affects | When |
 |---|---|---|---|
 | P1 | `CONFIDENCE_THRESHOLD`: two thresholds under G11 (rubric score, self-reported confidence); calibrated in the Day 2 eval | Autonomous tier (C5), C5c, G11 | Day 2 |
-| P2 | `FALLBACK_DEADLINE_DAYS` | C5b, E5 | Requirements v1 |
+| P2 | `FALLBACK_DEADLINE_DAYS`: **14 days** (set 2026-10-19; Q19) | C5b, E5 | Done |

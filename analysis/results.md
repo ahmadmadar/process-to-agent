@@ -318,3 +318,17 @@ Eval sample only (`temp_log_obtained` is N/A where no temperature log is require
 | damage | POD exception | 31 | 12 | 15 | 25 | 18 |
 
 `pod_exception` from release 2: `N` is a clean POD. Paid claims only in the response table.
+
+## Q19. Days from receipt to documents complete (FALLBACK_DEADLINE_DAYS; C5b, E5; T2:L28, T2:L34)
+
+| Documents complete | Claims | Share of claims that completed |
+|---|---|---|
+| Within 7 days | 203 | 68% |
+| Within 10 days | 243 | 81% |
+| Within 14 days | 275 | 92% |
+| Within 21 days | 296 | 99% |
+| Within 30 days | 300 | 100% |
+| Within 45 days | 300 | 100% |
+| Longest, days | 29 |  |
+
+Claims that completed: 300. Claims never complete: 63 (Q13).

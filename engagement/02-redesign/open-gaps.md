@@ -46,11 +46,11 @@ agree (`coverage-test.md`). G4–G12 are resolved.
 
 ## Smaller points
 
-- **Rule-check order:** duplicates are checked only after documents are
-  complete (step 3 follows step 2), so a duplicate waits through the hold.
-  Consider checking duplicates at intake.
+- **Rule-check order: resolved, G13.** The duplicate check runs at intake
+  and raises a flag; routing stays at step 3.
 - **Loss claims outside the agent** still need the insurer and reefer rules
   applied by people. The swimlane shows the team handling them through
   redesigned steps but doesn't repeat those triggers.
-- **D5 (COO ratification of C4 and E4)** is still open. The account-manager
-  lane assumes it.
+- **D5 (COO ratification of C4 and E4):** handling ruled (Day 2 sponsor
+  summary, then a COO `/interview` session before the v1 freeze). Ratification
+  itself is still open. The account-manager lane assumes it.

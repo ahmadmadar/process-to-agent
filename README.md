@@ -94,7 +94,9 @@ Full rules: [`CLAUDE.md`](CLAUDE.md).
 
 ## Current status
 
-**Day 1 complete.** Branch `day1/discovery`. Next: Day 2, requirements and spike.
+**Day 2 in progress.** Branch `day2/requirements`. The redesign is complete
+and tested; requirements v1 and the spike have not started. Next: COO
+ratification session, then requirements v1.
 
 ### Day 1 deliverables
 
@@ -112,22 +114,30 @@ Full rules: [`CLAUDE.md`](CLAUDE.md).
 - [x] Rulings C1–C6, E1–E6, C5a–c and S1, logged in [`consultant-decisions.md`](docs/consultant-decisions.md)
 - [x] [Data request 2](engagement/01-discovery/data-request-2.md) and [IT data release 2](data/released/README-release-2.md)
 - [x] [Future-state swimlane](engagement/02-redesign/future-state-swimlane.md), [decision tree](engagement/02-redesign/decision-tree.md) and [scope table](engagement/02-redesign/scope-table.md)
-- [x] [Coverage test](engagement/02-redesign/coverage-test.md): 9 of 10 combinations land in one tier; the loss claim lands in none
+- [x] [Coverage test](engagement/02-redesign/coverage-test.md): at Day 1 close, 9 of 10 combinations landed in one tier; the loss claim landed in none
 
-### Carried to Day 2
+### Day 2 progress
 
-- Open gaps G1–G12 in [`open-gaps.md`](engagement/02-redesign/open-gaps.md); G1–G3 break the coverage test
-- Parameters `CONFIDENCE_THRESHOLD` (calibrated in the eval) and `FALLBACK_DEADLINE_DAYS` (set in requirements v1)
-- COO ratification of payout ownership and the expedite path (D5), due before requirements v1 is frozen
-- Data request 2 §5 (claims lead): approval email, filing-window rule, packaging rule, reefer logging, denial reversals, late notices
-- Clean-POD rule (E6): testable with release 2 `pod_exception`
+- [x] Rulings G1–G13 close every open gap in [`open-gaps.md`](engagement/02-redesign/open-gaps.md): loss claims, tier precedence, the documents hold, threshold basis, the reefer trigger, key accounts, tier operations, autonomous actions, insurer controls, re-routing, confidence gates, withdrawals and the duplicate check
+- [x] [Coverage test](engagement/02-redesign/coverage-test.md): 0 gaps across 10 combinations and 7 probes
+- [x] Data checks Q15–Q19: threshold basis, reefer vs temperature claims, insurer clock start, clean-POD recovery, document completion times
+- [x] **Clean-POD rule reversed (E6a).** The stated rule that carriers deny clean-POD shortages every time is contradicted by release 2 (Q18)
+- [x] `FALLBACK_DEADLINE_DAYS` set to 14 days (Q19)
+- [x] Sponsor summaries: [Day 1](engagement/00-governance/sponsor-summary-day1.md) (issued a day late) and [Day 2](engagement/00-governance/sponsor-summary-day2.md)
+- [ ] COO ratification of payout ownership and the expedite path (D5), via `/interview coo`, before the v1 freeze
+- [ ] Data request 2 §5 (claims lead), still unanswered: approval email, filing-window rule, packaging rule, reefer logging, denial reversals, late notices
+- [ ] Requirements v1 and eval set; freeze (tag `requirements-v1`)
+- [ ] Cold-FDE handoff test on v1
+- [ ] `claims-agent` Skill, eval harness, two-model run, confidence-threshold calibration
+- [ ] Requirements v2 and second handoff test (tag `requirements-v2`)
 
 ### Carried to Day 3 (CFO)
 
 Deductible amount, removal of finance pre-approval at or below $10k, the
 recovery-rate definition, the late-notice discrepancy, any challenge to the
-provisional $10k thresholds, and data request 2 §6 (finance inputs). See
-D1–D8 in [`future-state-inputs.md`](engagement/02-redesign/future-state-inputs.md).
+provisional $10k thresholds, when the insurer's 30-day notice period starts,
+and data request 2 §6 (finance inputs). See D1–D9 in
+[`future-state-inputs.md`](engagement/02-redesign/future-state-inputs.md).
 
 ## Repository map
 
@@ -140,6 +150,7 @@ process-to-agent/
 │   ├── interview/            # /interview <persona>; "end interview" to close
 │   └── claims-agent/         # Day 2: single source of the agent prompt
 ├── engagement/
+│   ├── 00-governance/        # daily sponsor summaries
 │   ├── 01-discovery/         # SOW, data request, guide, transcripts, field notes, synthesis
 │   ├── 02-redesign/          # swimlanes, future-state inputs, decision logic, scope table
 │   ├── 03-requirements/      # Day 2: v1/, v2/, handoff tests

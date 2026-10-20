@@ -10,7 +10,7 @@ Open gaps are listed in `open-gaps.md`.
 - Deductible: assumed $25k until the CFO confirms it (D1; T2:L16).
 - Both thresholds are measured on the claimed amount (G4).
 - `CONFIDENCE_THRESHOLD`: two thresholds, rubric score and self-reported confidence; both must pass (G11). Unset; calibrated in the Day 2 eval (P1).
-- `FALLBACK_DEADLINE_DAYS`: unset; to be set in requirements v1 (P2).
+- `FALLBACK_DEADLINE_DAYS`: 14 calendar days from receipt (P2; Q19).
 
 **Precedence (G2):** the first step that matches decides. This gives
 always escalate > hold > human sign-off > autonomous. **Hold is a state, not a
@@ -25,7 +25,7 @@ flowchart TD
     ESC -. "amount > deductible" .-> ALERT["Urgency alert: insurer 30-day<br/>notice (delivery + receipt dates;<br/>no countdown until CFO, G9a)<br/>Payment gated on consent (G9b)"]
     S1 -- no --> S2{"2. Documents complete?<br/>(C5b, E5)"}
     S2 -- no --> HOLD["HOLD (state, no route):<br/>'awaiting documents' list;<br/>automated reminders<br/>(C5b, E5, G3a, G3b)"]
-    HOLD --> S2D{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
+    HOLD --> S2D{"FALLBACK_DEADLINE_DAYS<br/>(14 days) reached? (C5b; P2)"}
     S2D -- "no, documents arrive" --> S2
     S2D -- yes --> SIGN["HUMAN SIGN-OFF"]
     S2 -- yes --> S3{"3. Rule checks:<br/>possible duplicate · invoice mismatch ·<br/>outside filing window<br/>(C5c)"}
@@ -86,6 +86,11 @@ Each one routes to **always escalate**.
 | H7 | Claimed amount above $10k, at or below the deductible | C5, G4 | T2:L14, T2:L62; Q8 |
 | H8 | *Removed from routing (G6).* Key-account denials and partials reach sign-off through H5–H7; key accounts get queue priority and account-manager notice instead | C5c, G6 | T1:L10, T1:L36 |
 | H9 | Either confidence gate fails (rubric or self-report below its threshold) | C5c, G11 | P1 |
+
+## Duplicate flag at intake
+
+The duplicate check runs at intake and raises a flag that specialists see on
+the "awaiting documents" list. Routing on the flag stays at step 3 (G13).
 
 ## Re-routing and withdrawals
 

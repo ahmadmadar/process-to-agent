@@ -402,12 +402,24 @@ def q_clean_pod(claims):
     ])
 
 
+def q_docs_deadline(claims):
+    lag = [days(c["received_at"], c["docs_completed_at"]) for c in claims if c["docs_completed_at"]]
+    never = sum(1 for c in claims if not c["docs_completed_at"])
+    rows = [(f"Within {n} days", sum(1 for x in lag if x <= n), pct(sum(1 for x in lag if x <= n), len(lag)))
+            for n in (7, 10, 14, 21, 30, 45)]
+    rows.append(("Longest, days", max(lag), ""))
+    return ("Q19. Days from receipt to documents complete (FALLBACK_DEADLINE_DAYS; C5b, E5; T2:L28, T2:L34)", [
+        table(["Documents complete", "Claims", "Share of claims that completed"], rows),
+        f"Claims that completed: {len(lag)}. Claims never complete: {never} (Q13).",
+    ])
+
+
 def main():
     claims = load()
     load_r2(claims)
     sections = [q(claims) for q in (q_volume, q_mix, q_cycle, q_stages, q_finance, q_weekday,
                                     q_size, q_approval, q_recovery, q_recovery_by_type, q_am,
-                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod)]
+                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod, q_docs_deadline)]
     parts = [
         "# Data-vs-claims results (releases 1 and 2)",
         "> Fictional engagement for portfolio purposes. All data is synthetic.",

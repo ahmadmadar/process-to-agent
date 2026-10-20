@@ -242,7 +242,7 @@ Set by the consultant. Claude does not set or change them.
 | Parameter | Used in | Status | Set when |
 |---|---|---|---|
 | `CONFIDENCE_THRESHOLD` | C5c; autonomous tier (C5) | Unset; provisional value to be calibrated in the Day 2 eval | Day 2 |
-| `FALLBACK_DEADLINE_DAYS` | C5b, E5 | Unset | Requirements v1 |
+| `FALLBACK_DEADLINE_DAYS` | C5b, E5 | **14 days** (set 2026-10-19; see P2 below) | Requirements v1 |
 
 ---
 
@@ -518,3 +518,42 @@ drafted by Claude and confirmed by the consultant without edits on
 - **Caveats:** Small sample, with some carrier responses still pending (Q18). The filed clean-POD shortages may have been selected because they had other evidence, so they may not represent the unfiled ones.
 - **Citations:** T2:L20, T2:L64; Q10, Q18; E6, G8a
 - **Consequences:** Step 7 of the decision tree no longer branches on POD status. The business case can count recovery on clean-POD shortages, using Q18 as the basis.
+
+---
+
+## Pre-freeze rulings (Day 2): fallback deadline, duplicate check, D5
+
+Recorded as given on 2026-10-19. Rejected options and rationale were
+drafted by Claude and confirmed by the consultant without edits on
+2026-10-19.
+
+### P2. `FALLBACK_DEADLINE_DAYS` = 14
+
+- **Date / step:** 2026-10-19, Day 2 / pre-freeze
+- **Type:** Parameter ruling
+- **Sets:** P2 (C5b, E5, G3a, G7e)
+- **Decision:** `FALLBACK_DEADLINE_DAYS` is 14 calendar days from receipt. A claim whose documents are still incomplete on day 14 routes to human sign-off.
+- **Rejected options:** (a) 21 days. (b) 30 days.
+- **Rationale:** 92% of the claims whose documents were completed had completed them within 14 days (Q19). Claims whose documents never complete reach a person after two weeks rather than waiting indefinitely (Q13). The cost is that some slow claims whose documents would have arrived go to sign-off with documents still due. Under G10a, they stay with that person, who sees the documents when they arrive.
+- **Citations:** T2:L28, T2:L34; Q13, Q19; C5b, E5, G10a
+
+### G13. Duplicate check: flag at intake, route at step 3
+
+- **Date / step:** 2026-10-19, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Resolves:** "Rule-check order" in `open-gaps.md`
+- **Refines:** C5c (duplicate flag)
+- **Decision:** The duplicate check runs at intake and raises a flag on the claim, visible to the specialists who own the "awaiting documents" list (G7e). Routing on the flag stays at step 3, after documents are complete, so G2 (hold > sign-off) is unchanged.
+- **Rejected options:** (a) Route a possible duplicate to sign-off at intake, as an exception to G2. (b) Keep the check at step 3 only.
+- **Rationale:** Duplicate payments have happened and one was written off (T2:L68). Flagging at intake lets a specialist see a likely duplicate before documents are chased, without making an exception to the precedence rule.
+- **Citations:** T2:L68; release 2 (`shipment_ref`, `prior_payment_same_shipment`); C5c, G2, G7e
+
+### D5 handling: sponsor summary and COO ratification session
+
+- **Date / step:** 2026-10-19, Day 2 / pre-freeze
+- **Type:** Governance ruling
+- **Resolves:** how dependency D5 (COO ratification of C4, E4) is met before the v1 freeze
+- **Decision:** C4 and E4 are reported to the sponsor in a Day 2 summary, following the route in SOW §8 and §10. A short `/interview` session with the COO then ratifies or rejects them. Requirements v1 is frozen on the outcome.
+- **Rejected options:** (a) Report in the Day 2 summary and freeze v1 with C4/E4 marked pending. (b) Freeze v1 with C4/E4 pending and take ratification into Day 3.
+- **Rationale:** SOW §8 makes the sponsor summary the route for ratifying conflict rulings. A live session tests the ruling against the sponsor's stated preference for account-manager authority (T1:L10) before engineering builds on it. Freezing on a pending ruling would risk a v2 change driven by governance rather than by the cold-FDE test.
+- **Citations:** T1:L10; SOW §8, §10; C4, E4
