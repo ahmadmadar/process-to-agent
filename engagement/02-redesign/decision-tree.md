@@ -36,10 +36,8 @@ flowchart TD
     S5 -- "no (approval)" --> S6{"6. Claimed amount ≤ $10k and<br/>both confidence gates pass?<br/>(C5, C5c, G4, G11; P1)"}
     S6 -- yes --> AUTO["AUTONOMOUS"]
     S6 -- no --> SIGN
-    AUTO --> S7{"7. Shortage with clean POD?<br/>(E6, UNTESTED)"}
-    SIGN --> S7
-    S7 -- yes --> NOFILE["Do not file with carrier<br/>(E6; T2:L20, T2:L64)"]
-    S7 -- no --> FILE["Carrier filing as normal<br/>(E5, E6)"]
+    AUTO --> FILE["7. Carrier filing for every<br/>paid claim with evidence,<br/>clean-POD shortages included<br/>(E5, E6a; Q18)"]
+    SIGN --> FILE
 ```
 
 Step 7 is an action on paid claims, not a route. It applies after either an
@@ -61,7 +59,7 @@ autonomous or a signed-off approval.
 | 4 | Agent forms decision (approve, partial, deny), rubric score and self-reported confidence | — | — | C5c, G11 | P1 |
 | 5 | Decision is denial or partial (any amount, key accounts included) | Human sign-off | Step 6 | C5, C5a, C5c | T1:L36, T2:L16, T2:L58; Q14 |
 | 6 | Approval, claimed amount at or below $10k, with confidence ≥ `CONFIDENCE_THRESHOLD` | Autonomous | Human sign-off | C5, C5c, G4 | T2:L14, T2:L62; Q8 |
-| 7 | Shortage with clean POD (paid claims) | Do not file with carrier | Carrier filing as normal | E6 (UNTESTED) | T2:L20, T2:L64; Q10 |
+| 7 | Paid claim with evidence (clean-POD shortages included) | Carrier filing | — | E5, E6a | T2:L20, T2:L64; Q10, Q18 |
 
 ## Escalation triggers
 

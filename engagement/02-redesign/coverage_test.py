@@ -92,7 +92,7 @@ def tree(c):
 def actions(c):
     out = []
     if c["clean_pod"] and c["type"] == "shortage":
-        out.append("do not file with carrier (E6, UNTESTED)")
+        out.append("file with carrier; clean POD is no bar (E6a)")
     if c["amount"] > DEDUCTIBLE:
         out.append("insurer 30-day clock alert")
     return "; ".join(out)

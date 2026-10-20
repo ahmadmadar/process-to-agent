@@ -224,4 +224,4 @@ above are unchanged.
 | [E3](../../docs/consultant-decisions.md#e3-weekly-thursday-payment-batch) | Eliminate the weekly batch (recommendation to finance) | Design | CFO / finance agreement | F1 |
 | [E4](../../docs/consultant-decisions.md#e4-account-manager-early-payment-path) | Eliminate the AM early-payment path; expedite requests to a person | Design | COO ratification | F4 |
 | [E5](../../docs/consultant-decisions.md#e5-document-chasing) | Redesign document chasing; written fallback rule to be specified | Design | Requirement to specify | F1, F6 |
-| [E6](../../docs/consultant-decisions.md#e6-filing-clean-pod-shortages-with-carriers) | Do not file clean-POD shortages; codified as a rule | Design | Untested (Q10) | F6 |
+| [E6](../../docs/consultant-decisions.md#e6-filing-clean-pod-shortages-with-carriers) | Do not file clean-POD shortages; codified as a rule | Design | **Reversed by [E6a](../../docs/consultant-decisions.md#e6a-file-clean-pod-shortages-with-the-carrier) (Q18)** | F6 |

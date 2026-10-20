@@ -498,3 +498,23 @@ consultant without edits on 2026-10-19. C5c is not edited; G11 refines it.
 - **Rejected options:** (a) Every withdrawal goes to a person to confirm and close. (b) Withdrawals stay manual and outside the pilot.
 - **Rationale:** Withdrawals happen "now and then" with no code, so they are closed with at most a note (T2:L70), and the system has no withdrawn status (release 2 cover note §2). A status makes them countable. A paid claim cannot simply be closed, so it goes to a person. Open claims without a decision are already covered by the hold state (G3a; Q14).
 - **Citations:** T2:L70; Q14; release 2 cover note §2; G3a
+
+---
+
+## Redesign revision (Day 2): clean-POD filing E6a
+
+Recorded as given on 2026-10-19. Rejected options and rationale were
+drafted by Claude and confirmed by the consultant without edits on
+2026-10-19. E6 is not edited; E6a supersedes it.
+
+### E6a. File clean-POD shortages with the carrier
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling. **Revision of E6.**
+- **Supersedes:** E6, and the "do not file" marking in G8a
+- **Decision:** REVERSE E6. Clean-POD shortages are filed with the carrier like any other paid claim that has evidence. A clean POD is not a bar to filing. On the autonomous route the agent prepares the filing package and a specialist submits it (G8a).
+- **Rejected options:** (a) File clean-POD shortages only above an amount set by the consultant. (b) The agent prepares the package with a lower-recovery note and the specialist decides whether to file. (c) Keep E6 and raise Q18 with the CFO on Day 3.
+- **Rationale:** E6 was ruled UNTESTED on the claims lead's account that carriers deny clean-POD shortages "every single time" (T2:L20, T2:L64). Release 2's `pod_exception` field tests it: of the clean-POD shortages filed and answered by the carrier, most were accepted, and filed clean-POD shortages recovered money (Q18). Recovery is lower than on POD-exception shortages, but not zero. Most paid clean-POD shortages were never filed (Q18), so the current practice gives up recoverable money.
+- **Caveats:** Small sample, with some carrier responses still pending (Q18). The filed clean-POD shortages may have been selected because they had other evidence, so they may not represent the unfiled ones.
+- **Citations:** T2:L20, T2:L64; Q10, Q18; E6, G8a
+- **Consequences:** Step 7 of the decision tree no longer branches on POD status. The business case can count recovery on clean-POD shortages, using Q18 as the basis.

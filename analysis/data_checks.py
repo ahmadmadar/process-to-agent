@@ -239,7 +239,7 @@ def q_recovery_by_type(claims):
         resp = Counter(c["recovery_outcome"] for c in group)
         out.append(table(["Carrier response", "Claims"], resp.most_common()))
     out.append("Release 1 has no POD-exception field, so the clean-POD shortage "
-               "rule (T2:L20, T2:L64) cannot be tested directly.")
+               "rule (T2:L20, T2:L64) cannot be tested here. It is tested in Q18 (release 2).")
     return ("Q10. Carrier recovery by claim type (H5; T2:L20, T2:L64)", out)
 
 
@@ -379,12 +379,35 @@ def q_insurer_clock(claims):
     ])
 
 
+def q_clean_pod(claims):
+    responses = ["paid", "partial", "denied", "pending", "not_filed"]
+    rows, resp_rows = [], []
+    for t in ("shortage", "damage"):
+        for pod, label in (("N", "clean POD"), ("Y", "POD exception")):
+            g = [c for c in claims if c["claim_type"] == t and c.get("pod_exception") == pod]
+            paid = [c for c in g if c["amount_paid"] > 0]
+            filed = [c for c in paid if c["recovery_filed"] == "Y"]
+            answered = [c for c in filed if c["recovery_outcome"] in ("paid", "partial", "denied")]
+            accepted = [c for c in answered if c["recovery_outcome"] in ("paid", "partial")]
+            rec = sum(c["amount_recovered"] for c in filed)
+            rows.append((t, label, len(g), len(paid), len(filed), len(answered), len(accepted),
+                         money(rec), pct(rec, sum(c["amount_paid"] for c in filed))))
+            r = Counter(c["recovery_outcome"] for c in paid)
+            resp_rows.append((t, label, *(r.get(x, 0) for x in responses)))
+    return ("Q18. Clean-POD rule: carrier response by POD status (E6; T2:L20, T2:L64)", [
+        table(["Type", "POD", "Claims", "Paid", "Filed", "Carrier answered", "Carrier accepted (paid or partial)",
+               "Recovered (filed)", "Recovered ÷ paid (filed)"], rows),
+        table(["Type", "POD", *responses], resp_rows),
+        "`pod_exception` from release 2: `N` is a clean POD. Paid claims only in the response table.",
+    ])
+
+
 def main():
     claims = load()
     load_r2(claims)
     sections = [q(claims) for q in (q_volume, q_mix, q_cycle, q_stages, q_finance, q_weekday,
                                     q_size, q_approval, q_recovery, q_recovery_by_type, q_am,
-                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock)]
+                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod)]
     parts = [
         "# Data-vs-claims results (releases 1 and 2)",
         "> Fictional engagement for portfolio purposes. All data is synthetic.",

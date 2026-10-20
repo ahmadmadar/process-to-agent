@@ -22,7 +22,7 @@ confidence is at or above `CONFIDENCE_THRESHOLD`.
 | 3. $12k, incomplete documents (at deadline) | R6, R13 | human sign-off | human sign-off | human sign-off (2) | — | OK: one tier |
 | 4. $8k approval, duplicate flag | R7 | human sign-off | human sign-off | human sign-off (3) | — | OK: one tier |
 | 5. $26k damage claim | R4 | always escalate | always escalate | always escalate (1) | insurer 30-day clock alert | OK: one tier |
-| 6. $4k clean-POD shortage | R15 | autonomous | autonomous | autonomous (6) | do not file with carrier (E6, UNTESTED) | OK: one tier |
+| 6. $4k clean-POD shortage | R15 | autonomous | autonomous | autonomous (6) | file with carrier; clean POD is no bar (E6a) | OK: one tier |
 | 7. $6k loss claim | R16 | always escalate | always escalate | always escalate (0) | — | OK: one tier |
 | 8. $2k claim, expedite request | R3 | always escalate | always escalate | always escalate (1) | — | OK: one tier |
 | 9. $7k approval, confidence below threshold | R14 | human sign-off | human sign-off | human sign-off (6) | — | OK: one tier |

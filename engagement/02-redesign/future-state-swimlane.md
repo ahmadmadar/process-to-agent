@@ -44,9 +44,7 @@ flowchart LR
         T3["Lead phones reefer carrier<br/>dispatcher same day<br/>(C5; T2:L44)"]
         T4["Notify insurer within 30 days;<br/>record consent: payment gated<br/>until recorded (C5, G9b; T2:L16)"]
         T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1, G1; agent pilot excludes)"]
-        T6{"Shortage with clean POD?<br/>(E6, UNTESTED)"}
-        T7["Do not file<br/>(E6; T2:L20, T2:L64)"]
-        T8["File with carrier with evidence<br/>(E5, E6; T2:L18)"]
+        T8["File with carrier with evidence,<br/>clean-POD shortages included<br/>(E5, E6a; T2:L18; Q18)"]
     end
 
     subgraph RD["Reefer carrier dispatcher"]
@@ -94,11 +92,10 @@ flowchart LR
     G8 -- yes --> G9
     G8 -- "no (denial, partial, > $10k, low confidence)" --> T1
     T4 --> I1
-    G9 --> T6
-    T1 --> T6
-    T2 --> T6
-    T6 -- yes --> T7
-    T6 -- no --> T8 --> R1
+    G9 --> T8
+    T1 --> T8
+    T2 --> T8
+    T8 --> R1
     T1 -- "approval > $10k" --> F1 --> P1
     T2 -- "approval > $10k" --> F1
     G9 -- "approval ≤ $10k: no pre-approval (E1)" --> P1
@@ -111,7 +108,8 @@ flowchart LR
 ## Notes
 
 - **Every E ruling is visible:** E1 to E4 as changes and in the "Removed"
-  lane, E5 at intake, E6 at carrier filing (marked UNTESTED).
+  lane, E5 at intake. E6 was reversed by E6a (Q18): clean-POD shortages are
+  filed with the carrier.
 - **E3 is a recommendation to finance**, not an agent step (E3).
 - **Account managers** only submit expedite requests, which always escalate
   (C4, E4). C4 and E4 still need the COO's ratification (D5).

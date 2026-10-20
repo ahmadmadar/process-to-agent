@@ -38,7 +38,7 @@ agree (`coverage-test.md`). G4–G12 are resolved.
 
 | # | Rule | Status in the released data |
 |---|---|---|
-| D-a | Clean-POD (E6) | `pod_exception` is now in release 2. **E6 can be tested before requirements v1 is frozen.** Until then the autonomous tier applies an untested rule. |
+| D-a | Clean-POD (E6) | **Tested (Q18) and reversed (E6a):** clean-POD shortages are filed. |
 | D-b | Invoice mismatch (C5c) | `invoice_amount` is not held (release 2). The check depends on the agent reading the invoice document; eval inputs will be labelled assumptions. |
 | D-c | Filing window (C5c) | The rule is unknown; it is asked of the claims lead in data request 2 §5, which is unanswered. |
 | D-d | Cold-chain customer (C5c) | Not held (release 2). T2:L44 names the customers, but the release uses anonymised IDs. |

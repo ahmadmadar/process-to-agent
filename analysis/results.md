@@ -166,7 +166,7 @@ The rate depends on the denominator. Neither interviewee stated one (T1:L20, T2:
 | denied | 9 |
 | pending | 8 |
 
-Release 1 has no POD-exception field, so the clean-POD shortage rule (T2:L20, T2:L64) cannot be tested directly.
+Release 1 has no POD-exception field, so the clean-POD shortage rule (T2:L20, T2:L64) cannot be tested here. It is tested in Q18 (release 2).
 
 ## Q11. Account-manager decisions vs claims team (H4, H5; T1:L10, T2:L14, T2:L52, T2:L54)
 
@@ -300,3 +300,21 @@ Eval sample only (`temp_log_obtained` is N/A where no temperature log is require
 | NLC-26-0267 | 5 | 5 | N | N | consent_to_settle |
 | NLC-26-0298 | 37 | 37 | Y | Y | reservation_of_rights |
 | NLC-26-0299 | 27 | 16 | N | N | consent_to_settle |
+
+## Q18. Clean-POD rule: carrier response by POD status (E6; T2:L20, T2:L64)
+
+| Type | POD | Claims | Paid | Filed | Carrier answered | Carrier accepted (paid or partial) | Recovered (filed) | Recovered ÷ paid (filed) |
+|---|---|---|---|---|---|---|---|---|
+| shortage | clean POD | 70 | 61 | 17 | 12 | 8 | $20,442 | 50% |
+| shortage | POD exception | 50 | 40 | 29 | 26 | 21 | $37,331 | 66% |
+| damage | clean POD | 109 | 87 | 51 | 32 | 16 | $128,877 | 38% |
+| damage | POD exception | 134 | 101 | 83 | 58 | 43 | $122,625 | 37% |
+
+| Type | POD | paid | partial | denied | pending | not_filed |
+|---|---|---|---|---|---|---|
+| shortage | clean POD | 4 | 4 | 4 | 5 | 44 |
+| shortage | POD exception | 13 | 8 | 5 | 3 | 11 |
+| damage | clean POD | 13 | 3 | 16 | 19 | 36 |
+| damage | POD exception | 31 | 12 | 15 | 25 | 18 |
+
+`pod_exception` from release 2: `N` is a clean POD. Paid claims only in the response table.

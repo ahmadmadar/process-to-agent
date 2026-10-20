@@ -44,7 +44,7 @@ something still open (see Open dependencies D1–D8 and Open parameters P1–P2)
 - [ ] No pre-approval for denial letters (E2) **⚠ D2**
 - [ ] Payment on approval or a more frequent run, shown as a **finance recommendation**, not an agent step (E3) **⚠ D2**
 - [ ] Insurer notified within 30 days and consent obtained before settlement, for claims above the deductible (C5; T2:L16) **⚠ D1**
-- [ ] Clean-POD shortages are not filed with the carrier; rule marked **UNTESTED** (E6; Q10) **⚠ D7**
+- [x] ~~Clean-POD shortages are not filed with the carrier (E6)~~ Reversed by E6a: clean-POD shortages are filed (Q18)
 - [ ] Carrier filing for all other paid claims with evidence (E5, E6)
 
 ## Removed from the current state
@@ -72,7 +72,7 @@ Show these as removed, with the ruling ID:
 | D4 | Confirm the recovery definition and the source of the COO's ~70% (T1:L18) | CFO | C3 | Day 3 |
 | D5 | Ratify claims-team ownership of payouts and the expedite path (SOW §8) | COO (sponsor) | C4, E4 | Before requirements v1 is frozen |
 | D6 | ~~Rule on C5 open points~~ **Resolved 2026-10-18:** see C5a (partials), C5b (incomplete documents), C5c (special flags) | Consultant | C5 | Done |
-| D7 | POD-exception field to test the clean-POD rule | Follow-up data request | E6 | Release 2 |
+| D7 | ~~POD-exception field to test the clean-POD rule~~ **Resolved:** release 2; tested in Q18; E6 reversed by E6a | Follow-up data request | E6, E6a | Done |
 | D8 | Late-notice discrepancy: "two other" late notices (T2:L16) vs one in Q12 | CFO | C6 | Day 3 |
 | D9 | Confirm when the insurer's 30-day notice period starts (policy wording; Q17) | CFO | G9a | Day 3 |
 
