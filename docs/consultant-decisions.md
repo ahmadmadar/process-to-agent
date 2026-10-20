@@ -326,3 +326,74 @@ not edited; these entries define its terms.
 - **Rationale:** The temperature download is kept about 72 hours and must be requested the same day (T2:L44, T2:L58), so a missed trigger cannot be recovered. The equipment flag is deterministic and held in the data (release 2). The allegation matches the claims lead's own definition (T2:L44) and catches a temperature claim if the equipment flag is wrong or missing. In the released data, temperature logs are required only on reefer claims (Q16), so the equipment flag drives the volume: 48 of 363 claims, including damage and shortage claims with no temperature allegation.
 - **Citations:** T2:L44, T2:L58; Q16; release 2 (`reefer_flag`)
 - **Consequences:** Higher escalation volume than an allegation-only trigger (Q16). Non-temperature claims on reefer equipment, such as a crushed pallet, also escalate. The eval inputs carry both `reefer_flag` and a temperature-allegation field.
+
+---
+
+## Redesign rulings (Day 2): key accounts and tier operations G6–G7
+
+These rulings close gaps G6 and G7 in `engagement/02-redesign/open-gaps.md`.
+Each decision is the consultant's, recorded as given on 2026-10-19.
+Rejected options and rationale were drafted by Claude and confirmed by the
+consultant without edits on 2026-10-19. C5 and C5c are not edited; these
+entries refine them.
+
+### G6. Key-account flag: priority and account-manager notice, not routing
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5c (key-account flag)
+- **Decision:** The key-account flag is removed from routing (scope-table R12). It becomes two actions: (1) key-account claims are worked first within the sign-off and escalation queues; (2) the account manager is notified of the outcome when the claim is decided. The notice carries no approval or payment rights (C4).
+- **Rejected options:** (a) Keep R12 as a guard row in case C5a is revisited. (b) Guard row plus priority and notice. (c) Drop the flag entirely, keeping it only as a trace attribute.
+- **Rationale:** Every key-account denial or partial already reaches sign-off through the denial and partial rules (C5, C5a), so R12 never decided a route (coverage #1). Priority and notice answer the COO's concern that key-account problems are fixed quickly (T1:L10) and keep the account manager informed, without bringing back account-manager authority (C4, E4). The red line, a wrongful key-account denial (T1:L36), stays covered because every denial goes to a person.
+- **Citations:** T1:L10, T1:L36; C4, C5, C5a, C5c, E4; coverage test #1
+- **Consequences:** If C5a is revisited after the Day 2 eval and partials become autonomous, key-account partials would no longer reach a person. Any C5a revision must address key accounts explicitly.
+
+### G7a. Human sign-off: full draft to approve
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5 (human sign-off tier)
+- **Decision:** For every sign-off claim, the agent drafts the decision, amount, rule applied, rationale and customer letter. The person approves, edits or overrides. Every edit or override is logged with a reason.
+- **Rejected options:** (a) Decision draft without the letter; the person writes the letter. (b) Summary only, with no proposed decision.
+- **Rationale:** The claims lead sees the agent helping with "a first draft of the decision" (T2:L58). Letters are part of the team's hands-on time today (T2:L60, T2:L66). Logged overrides give the data needed to calibrate `CONFIDENCE_THRESHOLD` (P1) and to revisit C5a.
+- **Citations:** T2:L58, T2:L60, T2:L66; C5, C5a; P1
+
+### G7b. Always escalate: fact pack, no decision
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5 (always-escalate tier)
+- **Decision:** For every escalated claim, the agent produces a fact pack: the trigger(s) that fired, the document checklist status, and any running clock (the 72-hour reefer window, the insurer 30-day notice). It proposes no decision and no amount.
+- **Rejected options:** (a) Fact pack plus an advisory draft decision. (b) Alert only, with no pack.
+- **Rationale:** Escalated claims are the ones ruled outside the agent's scope: loss, temperature/reefer, cold-chain, expedite requests and claims above the deductible (C5, C5c, G1). An advisory draft would have the agent deciding them in practice. The clocks are the reason these claims cannot wait (T2:L16, T2:L44, T2:L58), so the pack leads with them.
+- **Citations:** T2:L16, T2:L44, T2:L48, T2:L58; C5, C5c, G1
+
+### G7c. Queue ownership: the $10k split, with an escalation backup
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5 (queue ownership)
+- **Decision:** Specialists work sign-off claims with a claimed amount at or below $10k (G4). The claims lead works sign-off claims above $10k and all escalations. The senior specialist covers escalations when the lead is unavailable.
+- **Rejected options:** (a) The $10k split with no backup. (b) A single pool; anyone works any item.
+- **Rationale:** The split is the authority line the team already works to (T2:L14, T2:L24, T2:L62), and C2 and C5 are aligned to it. The lead also handles reefer calls personally (T2:L44) and splits time between claims and dispatch (T2:L24), so without a backup the 72-hour reefer window depends on one person's availability.
+- **Citations:** T2:L14, T2:L24, T2:L44, T2:L62; C2, C5, G4
+- **Backup role:** named by the consultant on 2026-10-19 as **senior specialist**. The team has no senior specialist title today (T2:L24), so requirements v1 defines the role as a designation within the existing specialist team.
+
+### G7d. Response time: reefer same day only
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Decision:** Reefer and temperature escalations (G5) are picked up on the day the claim is received. No other queue has a response-time target in v1. Wait times in the other queues are measured in the pilot and targets are set from that data.
+- **Rejected options:** (a) Set targets for every queue now, as labelled assumptions. (b) No targets in v1, including reefer.
+- **Rationale:** The only time limit in the evidence is the reefer download, which must be requested the same day (T2:L44, T2:L58). There is no source for other targets, and there are no recorded escalations today (T2:L40), so any other number would be invented.
+- **Citations:** T2:L40, T2:L44, T2:L58; G5
+
+### G7e. Owner of the "awaiting documents" list
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** G3a
+- **Decision:** Claims specialists own the "awaiting documents" list. The agent sends the reminders (E5). At `FALLBACK_DEADLINE_DAYS`, a held claim routes to sign-off under the G7c split.
+- **Rejected options:** (a) The claims lead owns it. (b) No human owner; the agent runs reminders and the deadline alone.
+- **Rationale:** Specialists handle intake and chasing today (T2:L20, T2:L24). A human owner can see claims stuck in hold. Giving the list to the lead would add to a role already split with dispatch (T2:L24).
+- **Citations:** T2:L20, T2:L24; E5, G3a, G7c

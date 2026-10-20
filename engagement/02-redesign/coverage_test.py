@@ -50,7 +50,6 @@ ROWS = [
     ("R9", "Outside customer filing window", SIGN, "C5c", lambda c: c["outside_window"]),
     ("R10", "Denial, any amount", SIGN, "C5", lambda c: c["decision"] == "deny"),
     ("R11", "Partial at or below $10k", SIGN, "C5a", lambda c: c["decision"] == "partial" and c["amount"] <= TEN_K),
-    ("R12", "Key account, denial or partial", SIGN, "C5c", lambda c: c["key_account"] and c["decision"] in {"deny", "partial"}),
     ("R13", "Amount above $10k, at or below deductible", SIGN, "C5", lambda c: TEN_K < c["amount"] <= DEDUCTIBLE),
     ("R14", "Confidence below threshold", SIGN, "C5c", lambda c: not c["confidence_ok"]),
     ("R15", "Approval at or below $10k, docs complete, no flags, confidence at or above threshold", AUTO, "C5, C5b, C5c",

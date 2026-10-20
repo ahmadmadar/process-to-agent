@@ -17,7 +17,7 @@ confidence is at or above `CONFIDENCE_THRESHOLD`.
 
 | Combination | Scope-table rows matched | Tiers matched | Resolved (G2) | Decision tree (step) | Actions | Result |
 |---|---|---|---|---|---|---|
-| 1. $9k partial, key account | R11, R12 | human sign-off | human sign-off | human sign-off (5) | — | OK: one tier |
+| 1. $9k partial, key account | R11 | human sign-off | human sign-off | human sign-off (5) | — | OK: one tier |
 | 2. $3k reefer claim | R1 | always escalate | always escalate | always escalate (1) | — | OK: one tier |
 | 3. $12k, incomplete documents (at deadline) | R6, R13 | human sign-off | human sign-off | human sign-off (2) | — | OK: one tier |
 | 4. $8k approval, duplicate flag | R7 | human sign-off | human sign-off | human sign-off (3) | — | OK: one tier |
@@ -34,7 +34,7 @@ Gaps: 0 of 10
 
 | Combination | Scope-table rows matched | Tiers matched | Resolved (G2) | Decision tree (step) | Actions | Result |
 |---|---|---|---|---|---|---|
-| P1. $9k denial, reefer, key account | R1, R10, R12 | always escalate; human sign-off | always escalate | always escalate (1) | — | OK: precedence (G2) |
+| P1. $9k denial, reefer, key account | R1, R10 | always escalate; human sign-off | always escalate | always escalate (1) | — | OK: precedence (G2) |
 | P2. $30k denial | R4, R10 | always escalate; human sign-off | always escalate | always escalate (1) | insurer 30-day clock alert | OK: precedence (G2) |
 | P3. $12k, incomplete documents (before deadline) | R5, R13 | hold (state, no route); human sign-off | hold (state, no route) | hold (state, no route) (2) | — | OK: precedence (G2) |
 | P4. $10,000 exactly, clean approval | R15 | autonomous | autonomous | autonomous (6) | — | OK: one tier |

@@ -21,6 +21,7 @@ flowchart LR
 
     subgraph AM["Account manager"]
         A1["Submits expedite request only;<br/>cannot approve or pay<br/>(C4, E4)"]
+        A2["Notified of key-account<br/>outcomes (G6)"]
     end
 
     subgraph AG["Claims agent (new; pilot: damage and shortage)"]
@@ -28,7 +29,7 @@ flowchart LR
         G1{"Hard escalation?<br/>reefer equipment or temp allegation ·<br/>cold-chain · expedite ·<br/>claimed > deductible<br/>(C5, C5c, E4, G4, G5)"}
         G2["Send structured checklist<br/>with deadline (E5)"]
         G3{"Documents complete?<br/>(C5b, E5)"}
-        G4["Hold: 'awaiting documents'<br/>list (state, no route);<br/>automated reminders<br/>(E5, G3a, G3b)"]
+        G4["Hold: 'awaiting documents'<br/>list (state, no route), owned<br/>by specialists; automated<br/>reminders (E5, G3a, G3b, G7e)"]
         G5{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
         G6{"Rule checks: duplicate ·<br/>invoice mismatch ·<br/>filing window (C5c)"}
         G7["Form decision<br/>and confidence (C5c; P1)"]
@@ -38,8 +39,8 @@ flowchart LR
     end
 
     subgraph CT["Claims team: sign-off and escalation queue (C4, C5)"]
-        T1["Human sign-off:<br/>review agent draft; decide<br/>(C5, C5a–c)"]
-        T2["Escalation: person takes<br/>the claim immediately<br/>(C5, C5c)"]
+        T1["Human sign-off: approve, edit<br/>or override the agent's full draft;<br/>reason logged (G7a)<br/>specialists ≤ $10k, lead > $10k (G7c)<br/>key accounts first (G6)"]
+        T2["Escalation: lead (backup:<br/>senior specialist) works<br/>the agent's fact pack (G7b, G7c)<br/>reefer: same day (G7d)"]
         T3["Lead phones reefer carrier<br/>dispatcher same day<br/>(C5; T2:L44)"]
         T4["Notify insurer within 30 days;<br/>consent before settling<br/>(C5; T2:L16, T2:L48)"]
         T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1, G1; agent pilot excludes)"]
@@ -103,6 +104,8 @@ flowchart LR
     G9 -- "approval ≤ $10k: no pre-approval (E1)" --> P1
     T1 -- "denial: no pre-approval (E2)" --> C3
     P1 --> C3
+    T1 -. "key account" .-> A2
+    T2 -. "key account" .-> A2
 ```
 
 ## Notes

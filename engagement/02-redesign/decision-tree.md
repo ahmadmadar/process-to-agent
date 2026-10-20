@@ -86,8 +86,13 @@ Each one routes to **always escalate**.
 | H5 | Any denial | C5 | T1:L36, T2:L16, T2:L58 |
 | H6 | Partial at or below $10k (and above, via H7) | C5a | T1:L36; Q14 |
 | H7 | Claimed amount above $10k, at or below the deductible | C5, G4 | T2:L14, T2:L62; Q8 |
-| H8 | Key-account denial or partial | C5c | T1:L10, T1:L36 |
+| H8 | *Removed from routing (G6).* Key-account denials and partials reach sign-off through H5–H7; key accounts get queue priority and account-manager notice instead | C5c, G6 | T1:L10, T1:L36 |
 | H9 | Confidence below `CONFIDENCE_THRESHOLD` | C5c | P1 |
+
+## Operations by tier
+
+What the agent produces in each tier, who works it and the response time are
+set out in `scope-table.md` ("Operations by tier"; G7a–G7e).
 
 ## Urgency alert (not a route)
 

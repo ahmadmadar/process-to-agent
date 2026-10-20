@@ -10,7 +10,7 @@ needs a consultant ruling; the options listed are not recommendations.
 
 After rulings G1, G2, G3a and G3b (2026-10-19), all 10 combinations and
 all 5 probes resolve to one tier, and the scope table and the decision tree
-agree (`coverage-test.md`). G4 and G5 are resolved; G6–G12 remain open.
+agree (`coverage-test.md`). G4–G7 are resolved; G8–G12 remain open.
 
 ## Gaps that broke the coverage test (resolved)
 
@@ -26,8 +26,8 @@ agree (`coverage-test.md`). G4 and G5 are resolved; G6–G12 remain open.
 |---|---|---|---|
 | G4 | **Resolved, G4: claimed amount for both thresholds (Q15).** Which amount meets the thresholds: the claimed amount, or the proposed payout? Step 1 runs before any decision, so it can only use the claimed amount. Step 6 runs after, so it could use either. | Decides the route for a $12k claim partially approved at $9k, or a $26k claim proposed at $20k | C5; T2:L16 |
 | G5 | **Resolved, G5: reefer equipment or a temperature allegation (Q16).** Definition of the temperature/reefer trigger: a temperature-excursion claim, or any claim on reefer equipment? Release 2 `reefer_flag` is equipment mode. Under the equipment definition, a crushed pallet on a reefer load escalates. | Escalation volume and the eval inputs | C5; T2:L44; release 2 |
-| G6 | **The key-account flag never changes a tier.** Key-account denials and partials are already sign-off under R10, R11 and R13 (coverage #1 matches two rows in the same tier). | It is redundant as a routing rule. Decide whether it does anything else (priority, notifying the account manager) or is dropped from routing. | C5c |
-| G7 | **What each tier means in operation.** Sign-off: does the agent draft and a person approves or edits? Escalate: does the agent draft anything? Who owns each queue? Does the specialist/lead split at $10k carry over? Is there a response time? | Requirements v1 cannot specify the queues without this | C5; T2:L14, T2:L44 |
+| G6 | **Resolved, G6: removed from routing; queue priority and account-manager notice instead.** The key-account flag never changes a tier. Key-account denials and partials are already sign-off under R10, R11 and R13 (coverage #1 matches two rows in the same tier). | It is redundant as a routing rule. Decide whether it does anything else (priority, notifying the account manager) or is dropped from routing. | C5c |
+| G7 | **Resolved, G7a–G7e: see "Operations by tier" in `scope-table.md`.** What each tier means in operation. Sign-off: does the agent draft and a person approves or edits? Escalate: does the agent draft anything? Who owns each queue? Does the specialist/lead split at $10k carry over? Is there a response time? | Requirements v1 cannot specify the queues without this | C5; T2:L14, T2:L44 |
 | G8 | **What autonomous covers.** Approve only, or also the payment instruction, the customer letter and the carrier filing? The swimlane draws the letter and filing with the team (no change ruled). | C4 gives payout ownership to the claims team; the agent acting for them needs a stated limit | C4, C5 |
 | G9 | **Insurer clock start and consent gate.** "Within 30 days" of what: receipt, delivery or loss? Q12 measures from receipt. The swimlane shows the insurer step but no gate on the payment edge. | Escalation SLA and payment control | T2:L16, T2:L48; Q12 |
 | G10 | **Re-routing on new information.** An expedite request after routing; documents that arrive after the deadline; a reefer claim after the download is secured: does it return to the agent? | Without a rule, claims stall or are routed twice | C5, E4, C5b |

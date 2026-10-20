@@ -29,7 +29,7 @@ the "awaiting documents" list until its documents are complete or
 | R9 | Outside the customer filing window | Human sign-off | Filing-window denials occur in the data | Q14 | C5c |
 | R10 | Denial, any amount | Human sign-off | A wrongful denial to a key account is the COO's red line; the claims lead wants a person on every denial | T1:L36, T2:L16, T2:L58 | C5 |
 | R11 | Partial at or below $10k | Human sign-off | A partial is a partial denial; salvage or depreciation amounts are judgment calls | T1:L36; Q14 | C5a |
-| R12 | Key-account customer, denial or partial | Human sign-off | COO red line on wrongful key-account denials | T1:L10, T1:L36 | C5c |
+| R12 | *Removed from routing (G6).* Key-account denials and partials reach sign-off through R10, R11 and R13 | — | Never decided a route; replaced by priority and account-manager notice (see Actions) | T1:L10, T1:L36 | C5c, G6 |
 | R13 | Claimed amount above $10k, at or below the deductible | Human sign-off | Matches the existing specialist/lead approval line | T2:L14, T2:L62; Q8 | C5 |
 | R14 | Agent confidence below `CONFIDENCE_THRESHOLD` | Human sign-off | A low-confidence decision should not go out unreviewed | — (consultant parameter, P1) | C5c |
 | R15 | Damage or shortage approval, claimed amount at or below $10k, documents complete, no flags (R1–R3, R7–R9), confidence ≥ `CONFIDENCE_THRESHOLD` | Autonomous | Routine, documented, low-value approvals; key-account approvals may stay autonomous | T2:L14, T2:L58; Q8 | C5, C5b, C5c |
@@ -43,3 +43,14 @@ the "awaiting documents" list until its documents are complete or
 | Escalated claim above the deductible | Urgency alert: insurer 30-day notice clock; consent before settlement | T2:L16, T2:L48 | C5c |
 | Approval above $10k after sign-off | Finance pre-approval | T2:L56; Q5 | C2, E1 |
 | Denial after sign-off | No finance pre-approval | T2:L56, T2:L60; Q5 | E2 |
+| Key-account claim in the sign-off or escalation queue | Worked first in that queue | T1:L10 | G6 |
+| Key-account claim decided | Account manager notified of the outcome; no approval or payment rights | T1:L10; C4 | G6 |
+
+## Operations by tier
+
+| Tier | Agent produces | Who works it | Response time | Ruling |
+|---|---|---|---|---|
+| Autonomous | Decision and letter; no person in the loop | — | — | C5 |
+| Human sign-off | Full draft: decision, amount, rule applied, rationale, customer letter. The person approves, edits or overrides; every edit or override is logged with a reason | Specialists: claimed amount ≤ $10k. Claims lead: > $10k | No target in v1; measured in the pilot | G7a, G7c, G7d |
+| Always escalate | Fact pack: trigger(s), document checklist status, running clocks (72h reefer, insurer 30-day). No decision, no amount | Claims lead; the senior specialist as backup | Reefer/temperature: same day as receipt. Others: no target in v1 | G7b, G7c, G7d |
+| Hold (state, no route) | Automated reminders; at `FALLBACK_DEADLINE_DAYS`, routes to sign-off | Claims specialists own the "awaiting documents" list | — | G3a, G7e, E5 |
