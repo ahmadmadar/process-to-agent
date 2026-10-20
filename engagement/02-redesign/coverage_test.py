@@ -10,7 +10,7 @@ Checks that each claim combination lands in exactly one tier. Two checks run:
 The two must agree. Hold is a state, not a route (G3a).
 
 Thresholds are provisional: $10k (C2, C5; D3) and the deductible, assumed
-$25k until the CFO confirms it (D1). Confidence is a yes/no against
+$25k until the CFO confirms it (D1). Amounts are claimed amounts (G4). Confidence is a yes/no against
 CONFIDENCE_THRESHOLD, which is unset (P1).
 Run from the repo root: python engagement/02-redesign/coverage_test.py
 """
@@ -29,7 +29,7 @@ def claim(label, amount, decision="approve", **flags):
     c = {
         "label": label, "amount": amount, "decision": decision, "type": "damage",
         "docs_complete": True, "at_deadline": False, "reefer": False,
-        "cold_chain": False, "expedite": False, "key_account": False,
+        "temp_allegation": False, "cold_chain": False, "expedite": False, "key_account": False,
         "duplicate": False, "invoice_mismatch": False, "outside_window": False,
         "confidence_ok": True, "clean_pod": False,
     }
@@ -39,7 +39,7 @@ def claim(label, amount, decision="approve", **flags):
 
 # (row id, condition, tier, ruling, predicate). Mirrors scope-table.md.
 ROWS = [
-    ("R1", "Temperature/reefer claim", ESC, "C5", lambda c: c["reefer"]),
+    ("R1", "Reefer equipment or temperature allegation", ESC, "C5, G5", lambda c: c["reefer"] or c["temp_allegation"]),
     ("R2", "Cold-chain contract customer", ESC, "C5c", lambda c: c["cold_chain"]),
     ("R3", "Account-manager expedite request", ESC, "C5, E4", lambda c: c["expedite"]),
     ("R4", "Amount above the deductible", ESC, "C5", lambda c: c["amount"] > DEDUCTIBLE),
@@ -55,7 +55,7 @@ ROWS = [
     ("R14", "Confidence below threshold", SIGN, "C5c", lambda c: not c["confidence_ok"]),
     ("R15", "Approval at or below $10k, docs complete, no flags, confidence at or above threshold", AUTO, "C5, C5b, C5c",
      lambda c: c["type"] != "loss" and c["decision"] == "approve" and c["amount"] <= TEN_K and c["docs_complete"] and c["confidence_ok"]
-     and not any(c[f] for f in ("reefer", "cold_chain", "expedite", "duplicate", "invoice_mismatch", "outside_window"))),
+     and not any(c[f] for f in ("reefer", "temp_allegation", "cold_chain", "expedite", "duplicate", "invoice_mismatch", "outside_window"))),
     ("R16", "Loss claim (agent pilot excludes)", ESC, "S1, G1", lambda c: c["type"] == "loss"),
 ]
 
@@ -77,7 +77,7 @@ def tree(c):
     # The consultant's step order, decision-tree.md. Step 7 is an action, not a route.
     if c["type"] == "loss":
         return ESC, "0"
-    if c["reefer"] or c["cold_chain"] or c["expedite"] or c["amount"] > DEDUCTIBLE:
+    if c["reefer"] or c["temp_allegation"] or c["cold_chain"] or c["expedite"] or c["amount"] > DEDUCTIBLE:
         return ESC, "1"
     if not c["docs_complete"]:
         return (SIGN, "2") if c["at_deadline"] else (HOLD, "2")
@@ -117,6 +117,8 @@ PROBES = [
     claim("P3. $12k, incomplete documents (before deadline)", 12_000, docs_complete=False),
     claim("P4. $10,000 exactly, clean approval", 10_000),
     claim("P5. $25,000 exactly, clean approval", 25_000),
+    claim("P6. $4k damage, temperature allegation, no reefer flag", 4_000, temp_allegation=True),
+    claim("P7. $33k claimed, agent would partial at $18k (as NLC-26-0061, Q15)", 33_000, "partial"),
 ]
 
 

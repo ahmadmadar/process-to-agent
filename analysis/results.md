@@ -1,4 +1,4 @@
-# Data-vs-claims results (release 1)
+# Data-vs-claims results (releases 1 and 2)
 
 > Fictional engagement for portfolio purposes. All data is synthetic.
 
@@ -245,3 +245,37 @@ Release 1 has no POD-exception field, so the clean-POD shortage rule (T2:L20, T2
 | not on shipment record | 6 |
 
 Claims with no `closed_at` (still open): 9.
+
+## Q15. Threshold basis: claimed vs paid amount (G4; T2:L14, T2:L16, T2:L62)
+
+| Threshold | Claims with claimed amount above it | Paid claims claimed above, paid at or below |
+|---|---|---|
+| $10k approval line ($10,000) | 30 | 5 |
+| assumed deductible ($25,000) | 11 | 1 |
+
+| Claim | Threshold crossed | Claimed | Paid | Outcome |
+|---|---|---|---|---|
+| NLC-26-0231 | $10k approval line | $10,340 | $5,683 | partially_approved |
+| NLC-26-0237 | $10k approval line | $10,555 | $8,306 | partially_approved |
+| NLC-26-0248 | $10k approval line | $10,106 | $5,744 | partially_approved |
+| NLC-26-0296 | $10k approval line | $10,018 | $5,087 | partially_approved |
+| NLC-26-0346 | $10k approval line | $10,147 | $7,169 | partially_approved |
+| NLC-26-0061 | assumed deductible | $33,080 | $18,043 | partially_approved |
+
+## Q16. Reefer equipment vs temperature claims (G5; T2:L44, T2:L58)
+
+| Measure | Value |
+|---|---|
+| Claims on reefer equipment (`reefer_flag` = Y) | 48 of 363 |
+| …damage | 39 |
+| …shortage | 9 |
+| Reefer claims with a temperature log missing (required, not obtained) | 16 |
+| Non-reefer claims with a temperature log missing | 0 |
+
+Eval sample only (`temp_log_obtained` is N/A where no temperature log is required):
+
+| `reefer_flag` | Temperature log required | Claims |
+|---|---|---|
+| N | no | 25 |
+| Y | no | 2 |
+| Y | yes | 3 |

@@ -295,3 +295,34 @@ consultant. C5b and S1 are not edited; G1 and G3b refine them.
 - **Rejected options:** (a) Hold claims at or below $10k only; claims above $10k go straight to sign-off with the documents they have.
 - **Rationale:** The hold happens at intake, before the agent forms a decision, so whether a claim will be an approval is not yet known. Sending larger claims to sign-off with incomplete documents would bring manual chasing back for those claims (E5). Deciding on incomplete documents is the failure pattern C5b exists to prevent (Q11).
 - **Citations:** T2:L30, T2:L34; Q11, Q13; C5b, E5; coverage probe P3
+
+---
+
+## Redesign rulings (Day 2): definitions G4–G5
+
+These rulings close definition gaps G4 and G5 in
+`engagement/02-redesign/open-gaps.md`. Each decision is the consultant's,
+recorded as given on 2026-10-19. Rejected options and rationale were drafted
+by Claude and confirmed by the consultant without edits on 2026-10-19. C5 is
+not edited; these entries define its terms.
+
+### G4. Threshold basis: claimed amount
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Definition ruling
+- **Refines:** C5 ($10k line and deductible)
+- **Decision:** Both thresholds, the $10k line and the deductible, are measured on the claimed amount.
+- **Rejected options:** (a) Claimed amount at step 1 (deductible), proposed payout at step 6 ($10k line). (b) The higher of the claimed amount and the proposed payout.
+- **Rationale:** The deductible check runs at step 1, before the agent forms a decision, so only the claimed amount is known there. The claims lead states the insurer rule as "any claim over the deductible" (T2:L16). At the $10k line, the basis changes no route in the released data, because every claim paid below its claimed amount is a partial and partials go to sign-off (C5a; Q15). One definition for both thresholds keeps the requirements unambiguous. The one paid claim claimed above the assumed deductible and paid below it escalates under this ruling (Q15).
+- **Citations:** T2:L14, T2:L16, T2:L62; Q15; C5, C5a
+
+### G5. Temperature/reefer trigger: either signal
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Definition ruling
+- **Refines:** C5 (temperature/reefer escalation)
+- **Decision:** The temperature/reefer escalation fires on either signal: the shipment ran on reefer equipment (`reefer_flag` = Y), or the customer alleges a temperature excursion. Either one escalates at intake.
+- **Rejected options:** (a) Temperature allegation only, on any equipment. (b) Reefer equipment only.
+- **Rationale:** The temperature download is kept about 72 hours and must be requested the same day (T2:L44, T2:L58), so a missed trigger cannot be recovered. The equipment flag is deterministic and held in the data (release 2). The allegation matches the claims lead's own definition (T2:L44) and catches a temperature claim if the equipment flag is wrong or missing. In the released data, temperature logs are required only on reefer claims (Q16), so the equipment flag drives the volume: 48 of 363 claims, including damage and shortage claims with no temperature allegation.
+- **Citations:** T2:L44, T2:L58; Q16; release 2 (`reefer_flag`)
+- **Consequences:** Higher escalation volume than an allegation-only trigger (Q16). Non-temperature claims on reefer equipment, such as a crushed pallet, also escalate. The eval inputs carry both `reefer_flag` and a temperature-allegation field.

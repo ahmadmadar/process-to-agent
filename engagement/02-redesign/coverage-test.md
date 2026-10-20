@@ -39,5 +39,7 @@ Gaps: 0 of 10
 | P3. $12k, incomplete documents (before deadline) | R5, R13 | hold (state, no route); human sign-off | hold (state, no route) | hold (state, no route) (2) | — | OK: precedence (G2) |
 | P4. $10,000 exactly, clean approval | R15 | autonomous | autonomous | autonomous (6) | — | OK: one tier |
 | P5. $25,000 exactly, clean approval | R13 | human sign-off | human sign-off | human sign-off (6) | — | OK: one tier |
+| P6. $4k damage, temperature allegation, no reefer flag | R1 | always escalate | always escalate | always escalate (1) | — | OK: one tier |
+| P7. $33k claimed, agent would partial at $18k (as NLC-26-0061, Q15) | R4 | always escalate | always escalate | always escalate (1) | insurer 30-day clock alert | OK: one tier |
 
-Gaps: 0 of 5
+Gaps: 0 of 7

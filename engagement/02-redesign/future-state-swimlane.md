@@ -25,7 +25,7 @@ flowchart LR
 
     subgraph AG["Claims agent (new; pilot: damage and shortage)"]
         G0{"Loss claim?<br/>(S1, G1)"}
-        G1{"Hard escalation?<br/>reefer · cold-chain ·<br/>expedite · > deductible<br/>(C5, C5c, E4)"}
+        G1{"Hard escalation?<br/>reefer equipment or temp allegation ·<br/>cold-chain · expedite ·<br/>claimed > deductible<br/>(C5, C5c, E4, G4, G5)"}
         G2["Send structured checklist<br/>with deadline (E5)"]
         G3{"Documents complete?<br/>(C5b, E5)"}
         G4["Hold: 'awaiting documents'<br/>list (state, no route);<br/>automated reminders<br/>(E5, G3a, G3b)"]
