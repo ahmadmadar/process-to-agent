@@ -3,25 +3,22 @@
 > Fictional engagement for portfolio purposes. The client, stakeholders and data are synthetic.
 
 Open gaps in `future-state-swimlane.md`, `decision-tree.md` and
-`scope-table.md`, with the coverage results in `coverage-test.md`. Each gap
+`scope-table.md`, with the coverage results in `coverage-test.md`. Each open gap
 needs a consultant ruling; the options listed are not recommendations.
 
 ## Coverage result
 
-- **Consultant's 10 combinations:** 9 land in exactly one tier. **#7, the $6k
-  loss claim, lands in no ruled tier**, and the tree as ordered would route it
-  to autonomous (G1).
-- **5 additional probes:** P1 and P2 match two tiers in the scope table
-  (G2). In P3, the scope table and the tree disagree (G3). P4 and P5, the
-  boundary amounts, are clean.
+After rulings G1, G2, G3a and G3b (2026-10-19), all 10 combinations and
+all 5 probes resolve to one tier, and the scope table and the decision tree
+agree (`coverage-test.md`). G4–G12 remain open.
 
-## Gaps that break the coverage test
+## Gaps that broke the coverage test (resolved)
 
-| # | Gap | Evidence | Options |
+| # | Gap | Evidence | Ruling |
 |---|---|---|---|
-| G1 | **Loss claims have no tier.** S1 excludes them from the agent, but no step in the tree catches them. A $6k loss approval passes every check and reaches autonomous. | Coverage #7; S1 | (a) Step 0: loss → always escalate, per the CLAUDE.md claims-agent rule "anything outside scope goes to escalate". (b) A filter before the agent sends loss claims to the claims team, outside the three tiers. |
-| G2 | **No precedence rule in the scope table.** A $9k reefer key-account denial matches escalate (R1) and sign-off (R10, R12). C5 itself overlaps: "all denials → sign-off" and "above the deductible → escalate" both match a $30k denial. The tree's step order implies the highest tier wins, but no ruling says so. | Probes P1, P2; C5 | (a) State in the scope table that the decision-tree order governs (escalate > sign-off > autonomous). (b) Make the rows mutually exclusive. |
-| G3 | **Hold is a state, not a tier.** A $12k claim waiting for documents matches R13 (sign-off) in the table but is held in the tree. Also, C5b is worded for approvals at or below $10k; the tree applies the hold to every claim. | Probe P3; C5b | Rule whether held claims are visible in a queue, and confirm that the hold applies above $10k. |
+| G1 | **Loss claims have no tier.** S1 excludes them from the agent, but no step in the tree catches them. A $6k loss approval passes every check and reaches autonomous. | Coverage #7; S1 | **Resolved, G1:** step 0, loss → always escalate. |
+| G2 | **No precedence rule in the scope table.** A $9k reefer key-account denial matches escalate (R1) and sign-off (R10, R12). C5 itself overlaps: "all denials → sign-off" and "above the deductible → escalate" both match a $30k denial. The tree's step order implies the highest tier wins, but no ruling says so. | Probes P1, P2; C5 | **Resolved, G2:** highest tier wins; escalate > hold > sign-off > autonomous. |
+| G3 | **Hold is a state, not a tier.** A $12k claim waiting for documents matches R13 (sign-off) in the table but is held in the tree. Also, C5b is worded for approvals at or below $10k; the tree applies the hold to every claim. | Probe P3; C5b | **Resolved, G3a:** hold is a state, not a route, in a visible "awaiting documents" list. **G3b:** the hold applies at every amount. |
 
 ## Definitions the rulings leave open
 

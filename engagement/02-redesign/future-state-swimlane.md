@@ -7,8 +7,9 @@ Routing detail is in `decision-tree.md` and `scope-table.md`. Open gaps are
 listed in `open-gaps.md`.
 
 The redesign applies to all claim types, because loss claims share the
-process (S1; T2:L50). The agent pilot handles damage and shortage only; loss
-claims go to the claims team through the same redesigned steps (S1).
+process (S1; T2:L50). The agent pilot handles damage and shortage only; the
+agent escalates loss claims at step 0, and the claims team handles them
+through the same redesigned steps (S1, G1).
 
 ```mermaid
 flowchart LR
@@ -23,11 +24,11 @@ flowchart LR
     end
 
     subgraph AG["Claims agent (new; pilot: damage and shortage)"]
-        G0{"Loss claim?<br/>(S1)"}
+        G0{"Loss claim?<br/>(S1, G1)"}
         G1{"Hard escalation?<br/>reefer · cold-chain ·<br/>expedite · > deductible<br/>(C5, C5c, E4)"}
         G2["Send structured checklist<br/>with deadline (E5)"]
         G3{"Documents complete?<br/>(C5b, E5)"}
-        G4["Automated reminders<br/>(E5)"]
+        G4["Hold: 'awaiting documents'<br/>list (state, no route);<br/>automated reminders<br/>(E5, G3a, G3b)"]
         G5{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
         G6{"Rule checks: duplicate ·<br/>invoice mismatch ·<br/>filing window (C5c)"}
         G7["Form decision<br/>and confidence (C5c; P1)"]
@@ -41,7 +42,7 @@ flowchart LR
         T2["Escalation: person takes<br/>the claim immediately<br/>(C5, C5c)"]
         T3["Lead phones reefer carrier<br/>dispatcher same day<br/>(C5; T2:L44)"]
         T4["Notify insurer within 30 days;<br/>consent before settling<br/>(C5; T2:L16, T2:L48)"]
-        T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1; agent pilot excludes)"]
+        T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1, G1; agent pilot excludes)"]
         T6{"Shortage with clean POD?<br/>(E6, UNTESTED)"}
         T7["Do not file<br/>(E6; T2:L20, T2:L64)"]
         T8["File with carrier with evidence<br/>(E5, E6; T2:L18)"]
@@ -76,7 +77,7 @@ flowchart LR
     end
 
     C1 --> G0
-    G0 -- "yes: outside pilot" --> T5
+    G0 -- "yes: always escalate (G1)" --> T2 -. loss .-> T5
     G0 -- no --> G1
     A1 --> G1
     G1 -- yes --> T2

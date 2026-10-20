@@ -11,13 +11,19 @@ Open gaps are listed in `open-gaps.md`.
 - `CONFIDENCE_THRESHOLD`: unset; to be calibrated in the Day 2 eval (P1).
 - `FALLBACK_DEADLINE_DAYS`: unset; to be set in requirements v1 (P2).
 
+**Precedence (G2):** the first step that matches decides. This gives
+always escalate > hold > human sign-off > autonomous. **Hold is a state, not a
+route (G3a)**, and applies at every amount (G3b).
+
 ```mermaid
 flowchart TD
-    IN(["Claim received<br/>(damage or shortage; S1)"]) --> S1{"1. Hard escalation?<br/>temperature/reefer · cold-chain customer ·<br/>expedite request · amount > deductible<br/>(C5, C5c, E4)"}
+    IN(["Claim received"]) --> S0{"0. Loss claim?<br/>(S1, G1)"}
+    S0 -- yes --> ESC
+    S0 -- no --> S1{"1. Hard escalation?<br/>temperature/reefer · cold-chain customer ·<br/>expedite request · amount > deductible<br/>(C5, C5c, E4)"}
     S1 -- yes --> ESC["ALWAYS ESCALATE<br/>to a person immediately"]
     ESC -. "amount > deductible" .-> ALERT["Urgency alert: insurer<br/>30-day notice clock;<br/>consent before settlement<br/>(C5c; T2:L16, T2:L48)"]
     S1 -- no --> S2{"2. Documents complete?<br/>(C5b, E5)"}
-    S2 -- no --> HOLD["Hold at intake;<br/>automated reminders<br/>(C5b, E5)"]
+    S2 -- no --> HOLD["HOLD (state, no route):<br/>'awaiting documents' list;<br/>automated reminders<br/>(C5b, E5, G3a, G3b)"]
     HOLD --> S2D{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
     S2D -- "no, documents arrive" --> S2
     S2D -- yes --> SIGN["HUMAN SIGN-OFF"]
@@ -42,11 +48,12 @@ autonomous or a signed-off approval.
 
 | Step | Check | If true | If false | Ruling | Citation |
 |---|---|---|---|---|---|
+| 0 | Loss claim | Always escalate | Step 1 | S1, G1 | T2:L50 |
 | 1 | Temperature/reefer claim | Always escalate | Next check | C5 | T2:L44, T2:L58 |
 | 1 | Cold-chain contract customer | Always escalate | Next check | C5c | T2:L44 |
 | 1 | Account-manager expedite request | Always escalate | Next check | C5, E4 | T1:L10, T2:L14 |
 | 1 | Amount above the deductible | Always escalate, with insurer clock alert | Step 2 | C5 | T2:L16, T2:L48; Q7, Q12 |
-| 2 | Documents complete | Step 3 | Hold and remind; at `FALLBACK_DEADLINE_DAYS` → human sign-off | C5b, E5 | T2:L30, T2:L34; Q11, Q13 |
+| 2 | Documents complete (any amount) | Step 3 | Hold (state, no route) and remind; at `FALLBACK_DEADLINE_DAYS` → human sign-off | C5b, E5, G3a, G3b | T2:L30, T2:L34; Q11, Q13 |
 | 3 | Possible duplicate (same shipment or claim already paid) | Human sign-off | Next check | C5c | T2:L68 |
 | 3 | Claimed amount does not match the invoice | Human sign-off | Next check | C5c | T2:L42 |
 | 3 | Outside the customer filing window | Human sign-off | Step 4 | C5c | Q14 |
@@ -65,6 +72,7 @@ Each one routes to **always escalate**.
 | T2 | Cold-chain contract customer | Northline is liable under contract terms regardless of the carrier | C5c | T2:L44 |
 | T3 | Account-manager expedite request | Commercial urgency handled by an accountable person; never auto-approved | C5, C4, E4 | T1:L10, T2:L14, T2:L54 |
 | T4 | Amount above the deductible (assumed $25k) | Insurer notice within 30 days and consent before settlement | C5 | T2:L16, T2:L48, T2:L62; Q12 |
+| T5 | Loss claim (step 0) | Outside the agent pilot; the agent forms no decision | S1, G1 | T2:L50 |
 
 ## Human sign-off triggers
 

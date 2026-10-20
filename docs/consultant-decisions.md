@@ -243,3 +243,55 @@ Set by the consultant. Claude does not set or change them.
 |---|---|---|---|
 | `CONFIDENCE_THRESHOLD` | C5c; autonomous tier (C5) | Unset; provisional value to be calibrated in the Day 2 eval | Day 2 |
 | `FALLBACK_DEADLINE_DAYS` | C5b, E5 | Unset | Requirements v1 |
+
+---
+
+## Redesign rulings (Day 2): coverage-test gaps G1–G3
+
+These rulings close gaps G1–G3 in `engagement/02-redesign/open-gaps.md`,
+which broke the coverage test. Each decision is the consultant's, recorded as
+given on 2026-10-19. Rejected options and rationale were drafted by Claude
+and confirmed by the consultant without edits on 2026-10-19. The position of
+hold in the G2 precedence order was proposed by Claude and confirmed by the
+consultant. C5b and S1 are not edited; G1 and G3b refine them.
+
+### G1. Loss claims reaching the agent
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** S1
+- **Decision:** Step 0 in the decision tree: a loss claim is always escalated. The agent forms no decision on it.
+- **Rejected options:** (a) A filter before the agent sends loss claims to the claims team, so the agent never sees them. (b) The filter plus an agent-side escalation as a backstop.
+- **Rationale:** S1 excludes loss claims from the agent pilot, but no step caught them, so a $6k loss approval reached the autonomous tier (coverage #7). Escalation matches the rule that anything outside the agent's scope goes to escalate (CLAUDE.md, claims-agent). It also keeps the control inside the agent, where the eval can test it, instead of relying on an intake step outside the spike.
+- **Citations:** T2:L50; S1; coverage test #7
+- **Consequences:** Loss claims add volume to the escalation queue. The eval set includes at least one loss claim as a must-escalate case.
+
+### G2. Claims that match more than one tier
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Decision:** The highest tier wins, and the decision-tree order governs: escalate > hold (G3a) > human sign-off > autonomous. The scope table's rows are not mutually exclusive; they are read in this precedence order.
+- **Rejected options:** (a) Rewrite the scope-table rows to be mutually exclusive.
+- **Rationale:** C5 itself overlaps: "all denials → sign-off" and "above the deductible → escalate" both match a $30k denial (P2). A single precedence rule settles every overlap, including P1 (a $9k reefer key-account denial), and keeps the table readable. Exclusive rows would have to be rechecked against every other row each time a row is added.
+- **Citations:** C5, C5c; coverage probes P1, P2
+
+### G3a. Documents hold is a state, not a route
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5b
+- **Decision:** While documents are incomplete and `FALLBACK_DEADLINE_DAYS` has not been reached, the agent returns no route. The claim sits in a visible "awaiting documents" list and automated reminders go out (E5). The route stays limited to three values (`autonomous`, `sign_off`, `escalate`); the hold is carried in a separate status field, to be specified in requirements v1.
+- **Rejected options:** (a) Add `hold` as a fourth route. (b) Put held claims in the sign-off queue, tagged "awaiting documents".
+- **Rationale:** A held claim has no decision yet, so giving it a route would record a routing outcome that has not happened. Keeping three routes holds to the claims-agent output spec (CLAUDE.md). Putting held claims in the sign-off queue would mix waiting work with work that is ready to decide.
+- **Citations:** T2:L30, T2:L34; Q13; C5b, E5; coverage probe P3
+- **Dependencies:** Status field and "awaiting documents" list specified in requirements v1. Who owns the list is open (`open-gaps.md` G7).
+
+### G3b. Documents hold applies at every amount
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5b
+- **Decision:** The documents hold applies to every claim that is not escalated at step 0 or step 1, at any amount. C5b's wording, "approvals at or below $10k", is replaced for routing purposes by "any non-escalated claim".
+- **Rejected options:** (a) Hold claims at or below $10k only; claims above $10k go straight to sign-off with the documents they have.
+- **Rationale:** The hold happens at intake, before the agent forms a decision, so whether a claim will be an approval is not yet known. Sending larger claims to sign-off with incomplete documents would bring manual chasing back for those claims (E5). Deciding on incomplete documents is the failure pattern C5b exists to prevent (Q11).
+- **Citations:** T2:L30, T2:L34; Q11, Q13; C5b, E5; coverage probe P3
