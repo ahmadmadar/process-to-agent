@@ -449,3 +449,52 @@ entries refine them.
 - **Rationale:** The insurer must agree before settlement, or it can walk away (T2:L16). The one claim paid before notice lost cover (Q12; NLC-26-0169). That payment came from outside the claims team's process (Q11), so a control that relies on a person ticking a box in the claims queue would not have stopped it.
 - **Citations:** T2:L16, T2:L48; Q11, Q12; C4, C5, G4
 - **Open (consultant):** who records consent on the claim.
+
+---
+
+## Redesign rulings (Day 2): re-routing, confidence and withdrawals G10–G12
+
+These rulings close gaps G10–G12 in `engagement/02-redesign/open-gaps.md`.
+Each decision is the consultant's, recorded as given on 2026-10-19.
+Rejected options and rationale were drafted by Claude and confirmed by the
+consultant without edits on 2026-10-19. C5c is not edited; G11 refines it.
+
+### G10a. Re-routing on new information: up only
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5, C5b, E4
+- **Decision:** New information (an expedite request, late documents, a new flag) re-runs the decision tree. The claim can move up a tier but never down (autonomous → sign-off → escalate). A claim already with a person stays with that person, who sees the new information. New information after an autonomous decision sends the claim to sign-off.
+- **Rejected options:** (a) Re-run the full tree freely until a decision, so a claim can move up or down. (b) Freeze the route at first routing and attach new information for whoever holds the claim.
+- **Rationale:** Without a rule, claims stall or are routed twice (open-gaps G10). Moving only up means no claim leaves a person's hands on the strength of later information. An expedite request on a claim already under way still reaches a person (E4).
+- **Citations:** C5, C5b, E4, G2
+
+### G10b. No handback from escalation
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Decision:** A person finishes every escalated claim. It is never released back to the sign-off path or to the agent's tree.
+- **Rejected options:** (a) Handback to sign-off, where the agent drafts and a specialist approves. (b) Handback to the agent's tree with the trigger cleared.
+- **Rationale:** Consistent with G10a: claims move only up. Escalated claims are the ones ruled outside the agent's scope (C5, C5c, G1, G7b).
+- **Citations:** C5, C5c, G1, G7b, G10a; Q16
+- **Consequences:** The lead and the senior specialist carry routine work on escalated claims that turn out to be simple, such as non-temperature damage on reefer loads (G5; Q16). Escalation-queue load is measured in the pilot.
+
+### G11. Confidence: two gates
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5c (confidence flag)
+- **Decision:** Confidence is produced two ways: a rubric score from a fixed checklist, and the model's self-reported confidence. Each has its own threshold, and both must pass for the autonomous tier. If either fails, the claim goes to human sign-off. `CONFIDENCE_THRESHOLD` (P1) becomes two parameters.
+- **Rejected options:** (a) Rubric only. (b) Self-report only. (c) Self-consistency: agreement across repeated runs.
+- **Rationale:** The confidence score gates whether a decision goes out with no person in the loop. Requiring both signals to pass means doubt from either one sends the claim to a person. The two are on different scales, so each gets its own threshold rather than being combined. The rubric is explainable in the trace; the self-report is tested in the eval for whether it separates right from wrong decisions. Self-consistency was rejected for cost: it runs the model more than once per claim.
+- **Citations:** C5, C5c; P1; G7a, G8b
+- **Open (consultant):** the rubric checklist (requirements v1); both threshold values (calibrated in the Day 2 eval).
+
+### G12. Withdrawn claims: new status
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Decision:** A customer withdrawal sets a new status, `withdrawn`, with the withdrawal date and reason recorded. The claim leaves any hold or queue with no route. If any payment has already been made, the claim goes to human sign-off instead.
+- **Rejected options:** (a) Every withdrawal goes to a person to confirm and close. (b) Withdrawals stay manual and outside the pilot.
+- **Rationale:** Withdrawals happen "now and then" with no code, so they are closed with at most a note (T2:L70), and the system has no withdrawn status (release 2 cover note §2). A status makes them countable. A paid claim cannot simply be closed, so it goes to a person. Open claims without a decision are already covered by the hold state (G3a; Q14).
+- **Citations:** T2:L70; Q14; release 2 cover note §2; G3a

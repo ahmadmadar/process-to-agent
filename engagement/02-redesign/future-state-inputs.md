@@ -83,5 +83,5 @@ Consultant-owned and unset (see "Consultant-owned parameters" in
 
 | # | Parameter | Affects | When |
 |---|---|---|---|
-| P1 | `CONFIDENCE_THRESHOLD`: provisional, calibrated in the Day 2 eval | Autonomous tier (C5), C5c | Day 2 |
+| P1 | `CONFIDENCE_THRESHOLD`: two thresholds under G11 (rubric score, self-reported confidence); calibrated in the Day 2 eval | Autonomous tier (C5), C5c, G11 | Day 2 |
 | P2 | `FALLBACK_DEADLINE_DAYS` | C5b, E5 | Requirements v1 |

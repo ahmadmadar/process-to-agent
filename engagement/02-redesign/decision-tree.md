@@ -9,7 +9,7 @@ Open gaps are listed in `open-gaps.md`.
 - $10k: provisional (C2, C5; D3).
 - Deductible: assumed $25k until the CFO confirms it (D1; T2:L16).
 - Both thresholds are measured on the claimed amount (G4).
-- `CONFIDENCE_THRESHOLD`: unset; to be calibrated in the Day 2 eval (P1).
+- `CONFIDENCE_THRESHOLD`: two thresholds, rubric score and self-reported confidence; both must pass (G11). Unset; calibrated in the Day 2 eval (P1).
 - `FALLBACK_DEADLINE_DAYS`: unset; to be set in requirements v1 (P2).
 
 **Precedence (G2):** the first step that matches decides. This gives
@@ -30,10 +30,10 @@ flowchart TD
     S2D -- yes --> SIGN["HUMAN SIGN-OFF"]
     S2 -- yes --> S3{"3. Rule checks:<br/>possible duplicate · invoice mismatch ·<br/>outside filing window<br/>(C5c)"}
     S3 -- any flagged --> SIGN
-    S3 -- none --> S4["4. Agent forms decision<br/>and confidence score<br/>(C5c; P1)"]
+    S3 -- none --> S4["4. Agent forms decision,<br/>rubric score and<br/>self-reported confidence<br/>(C5c, G11; P1)"]
     S4 --> S5{"5. Denial or partial?<br/>any amount, incl. key accounts<br/>(C5, C5a, C5c)"}
     S5 -- yes --> SIGN
-    S5 -- "no (approval)" --> S6{"6. Claimed amount ≤ $10k and<br/>confidence ≥ CONFIDENCE_THRESHOLD?<br/>(C5, C5c, G4; P1)"}
+    S5 -- "no (approval)" --> S6{"6. Claimed amount ≤ $10k and<br/>both confidence gates pass?<br/>(C5, C5c, G4, G11; P1)"}
     S6 -- yes --> AUTO["AUTONOMOUS"]
     S6 -- no --> SIGN
     AUTO --> S7{"7. Shortage with clean POD?<br/>(E6, UNTESTED)"}
@@ -58,7 +58,7 @@ autonomous or a signed-off approval.
 | 3 | Possible duplicate (same shipment or claim already paid) | Human sign-off | Next check | C5c | T2:L68 |
 | 3 | Claimed amount does not match the invoice | Human sign-off | Next check | C5c | T2:L42 |
 | 3 | Outside the customer filing window | Human sign-off | Step 4 | C5c | Q14 |
-| 4 | Agent forms decision (approve, partial, deny) and confidence score | — | — | C5c | P1 |
+| 4 | Agent forms decision (approve, partial, deny), rubric score and self-reported confidence | — | — | C5c, G11 | P1 |
 | 5 | Decision is denial or partial (any amount, key accounts included) | Human sign-off | Step 6 | C5, C5a, C5c | T1:L36, T2:L16, T2:L58; Q14 |
 | 6 | Approval, claimed amount at or below $10k, with confidence ≥ `CONFIDENCE_THRESHOLD` | Autonomous | Human sign-off | C5, C5c, G4 | T2:L14, T2:L62; Q8 |
 | 7 | Shortage with clean POD (paid claims) | Do not file with carrier | Carrier filing as normal | E6 (UNTESTED) | T2:L20, T2:L64; Q10 |
@@ -87,7 +87,14 @@ Each one routes to **always escalate**.
 | H6 | Partial at or below $10k (and above, via H7) | C5a | T1:L36; Q14 |
 | H7 | Claimed amount above $10k, at or below the deductible | C5, G4 | T2:L14, T2:L62; Q8 |
 | H8 | *Removed from routing (G6).* Key-account denials and partials reach sign-off through H5–H7; key accounts get queue priority and account-manager notice instead | C5c, G6 | T1:L10, T1:L36 |
-| H9 | Confidence below `CONFIDENCE_THRESHOLD` | C5c | P1 |
+| H9 | Either confidence gate fails (rubric or self-report below its threshold) | C5c, G11 | P1 |
+
+## Re-routing and withdrawals
+
+New information re-runs the tree, and a claim moves only up (G10a). Escalated
+claims are never handed back (G10b). Withdrawn claims take a `withdrawn`
+status with no route, unless a payment was made, in which case they go to
+human sign-off (G12). Detail: `scope-table.md`, "Re-routing and withdrawals".
 
 ## Operations by tier
 

@@ -6,7 +6,7 @@ Rows match `coverage_test.py` (R1–R16), and the coverage results are in
 `coverage-test.md`. Open gaps are listed in `open-gaps.md`.
 
 Thresholds: $10k provisional (D3); deductible assumed $25k (D1). Both are measured on the claimed amount (G4).
-Parameters: `CONFIDENCE_THRESHOLD` (P1), `FALLBACK_DEADLINE_DAYS` (P2), both unset.
+Parameters: `CONFIDENCE_THRESHOLD` (P1; two thresholds under G11, rubric and self-report), `FALLBACK_DEADLINE_DAYS` (P2), all unset.
 
 **Precedence (G2).** Rows are not mutually exclusive. When a claim matches
 more than one row, the highest wins: always escalate > hold > human sign-off >
@@ -31,7 +31,7 @@ the "awaiting documents" list until its documents are complete or
 | R11 | Partial at or below $10k | Human sign-off | A partial is a partial denial; salvage or depreciation amounts are judgment calls | T1:L36; Q14 | C5a |
 | R12 | *Removed from routing (G6).* Key-account denials and partials reach sign-off through R10, R11 and R13 | — | Never decided a route; replaced by priority and account-manager notice (see Actions) | T1:L10, T1:L36 | C5c, G6 |
 | R13 | Claimed amount above $10k, at or below the deductible | Human sign-off | Matches the existing specialist/lead approval line | T2:L14, T2:L62; Q8 | C5 |
-| R14 | Agent confidence below `CONFIDENCE_THRESHOLD` | Human sign-off | A low-confidence decision should not go out unreviewed | — (consultant parameter, P1) | C5c |
+| R14 | Agent confidence fails either gate: rubric score or self-reported confidence below its threshold | Human sign-off | A low-confidence decision should not go out unreviewed; doubt from either signal sends it to a person | — (consultant parameters, P1) | C5c, G11 |
 | R15 | Damage or shortage approval, claimed amount at or below $10k, documents complete, no flags (R1–R3, R7–R9), confidence ≥ `CONFIDENCE_THRESHOLD` | Autonomous | Routine, documented, low-value approvals; key-account approvals may stay autonomous | T2:L14, T2:L58; Q8 | C5, C5b, C5c |
 | R16 | Loss claim | Always escalate | Outside the agent pilot; different evidence; not in release 1; phase-2 candidate | T2:L50 | S1, G1 |
 
@@ -46,6 +46,17 @@ the "awaiting documents" list until its documents are complete or
 | Denial after sign-off | No finance pre-approval | T2:L56, T2:L60; Q5 | E2 |
 | Key-account claim in the sign-off or escalation queue | Worked first in that queue | T1:L10 | G6 |
 | Key-account claim decided | Account manager notified of the outcome; no approval or payment rights | T1:L10; C4 | G6 |
+
+## Re-routing and withdrawals
+
+| Event | Effect | Ruling |
+|---|---|---|
+| New information before a decision (expedite request, late documents, new flag) | Re-run the decision tree; the claim can move up a tier, never down | G10a |
+| New information on a claim already with a person | Stays with that person, who sees the new information | G10a |
+| New information after an autonomous decision | Human sign-off | G10a |
+| Escalated claim found to be simple | No handback; a person finishes it | G10b |
+| Customer withdraws, nothing paid | Status `withdrawn`, date and reason recorded; leaves any hold or queue, no route | G12 |
+| Customer withdraws, payment already made | Human sign-off | G12 |
 
 ## Operations by tier
 

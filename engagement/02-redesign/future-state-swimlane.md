@@ -32,8 +32,8 @@ flowchart LR
         G4["Hold: 'awaiting documents'<br/>list (state, no route), owned<br/>by specialists; automated<br/>reminders (E5, G3a, G3b, G7e)"]
         G5{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
         G6{"Rule checks: duplicate ·<br/>invoice mismatch ·<br/>filing window (C5c)"}
-        G7["Form decision<br/>and confidence (C5c; P1)"]
-        G8{"Approval ≤ $10k and<br/>confidence ≥ threshold?<br/>(C5, C5a, C5c)"}
+        G7["Form decision; rubric +<br/>self-reported confidence<br/>(C5c, G11; P1)"]
+        G8{"Approval ≤ $10k and<br/>both confidence gates pass?<br/>(C5, C5a, C5c, G11)"}
         G9["Approve autonomously: letter +<br/>payment instruction; filing<br/>package prepared (C5, G8a)<br/>pilot: every decision reviewed after (G8b)"]
         G10["Urgency alert: insurer 30-day<br/>notice; dates, no countdown<br/>until CFO (C5c, G9a)"]
     end
@@ -122,3 +122,6 @@ flowchart LR
   instruction, and prepares the carrier filing for a specialist to submit
   (G8a). During the pilot, every autonomous decision is reviewed after it is
   made (G8b).
+- **Re-routing:** new information moves a claim up a tier, never down;
+  escalated claims are never handed back (G10a, G10b). Withdrawals take a
+  `withdrawn` status, or go to sign-off if a payment was made (G12).
