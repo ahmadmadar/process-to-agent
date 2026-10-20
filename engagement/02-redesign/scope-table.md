@@ -40,7 +40,8 @@ the "awaiting documents" list until its documents are complete or
 | Condition | Action | Citation | Ruling |
 |---|---|---|---|
 | Paid shortage claim with a clean POD | Do not file with the carrier. **UNTESTED** | T2:L20, T2:L64; Q10 | E6 |
-| Escalated claim above the deductible | Urgency alert: insurer 30-day notice clock; consent before settlement | T2:L16, T2:L48 | C5c |
+| Escalated claim above the deductible | Urgency alert: insurer 30-day notice. Shows delivery and receipt dates, no countdown, until the CFO confirms the start (G9a) | T2:L16, T2:L48; Q17 | C5c, G9a |
+| Claim above the deductible, before payment | Hard gate: no payment instruction until insurer consent is recorded on the claim | T2:L16; Q12 | G9b |
 | Approval above $10k after sign-off | Finance pre-approval | T2:L56; Q5 | C2, E1 |
 | Denial after sign-off | No finance pre-approval | T2:L56, T2:L60; Q5 | E2 |
 | Key-account claim in the sign-off or escalation queue | Worked first in that queue | T1:L10 | G6 |
@@ -50,7 +51,7 @@ the "awaiting documents" list until its documents are complete or
 
 | Tier | Agent produces | Who works it | Response time | Ruling |
 |---|---|---|---|---|
-| Autonomous | Decision and letter; no person in the loop | — | — | C5 |
+| Autonomous | Decision, customer letter and payment instruction (no pre-approval, E1). Carrier filing package prepared, or "do not file" for clean-POD shortages (E6) | Specialist submits the carrier filing. Pilot: a person reviews every autonomous decision after it is made | — | C5, G8a, G8b |
 | Human sign-off | Full draft: decision, amount, rule applied, rationale, customer letter. The person approves, edits or overrides; every edit or override is logged with a reason | Specialists: claimed amount ≤ $10k. Claims lead: > $10k | No target in v1; measured in the pilot | G7a, G7c, G7d |
-| Always escalate | Fact pack: trigger(s), document checklist status, running clocks (72h reefer, insurer 30-day). No decision, no amount | Claims lead; the senior specialist as backup | Reefer/temperature: same day as receipt. Others: no target in v1 | G7b, G7c, G7d |
+| Always escalate | Fact pack: trigger(s), document checklist status, running clocks (72h reefer; insurer 30-day dates, G9a). No decision, no amount | Claims lead; the senior specialist as backup | Reefer/temperature: same day as receipt. Others: no target in v1 | G7b, G7c, G7d |
 | Hold (state, no route) | Automated reminders; at `FALLBACK_DEADLINE_DAYS`, routes to sign-off | Claims specialists own the "awaiting documents" list | — | G3a, G7e, E5 |

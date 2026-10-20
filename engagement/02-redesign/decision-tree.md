@@ -22,7 +22,7 @@ flowchart TD
     S0 -- yes --> ESC
     S0 -- no --> S1{"1. Hard escalation?<br/>reefer equipment or temperature allegation ·<br/>cold-chain customer · expedite request ·<br/>claimed amount > deductible<br/>(C5, C5c, E4, G4, G5)"}
     S1 -- yes --> ESC["ALWAYS ESCALATE<br/>to a person immediately"]
-    ESC -. "amount > deductible" .-> ALERT["Urgency alert: insurer<br/>30-day notice clock;<br/>consent before settlement<br/>(C5c; T2:L16, T2:L48)"]
+    ESC -. "amount > deductible" .-> ALERT["Urgency alert: insurer 30-day<br/>notice (delivery + receipt dates;<br/>no countdown until CFO, G9a)<br/>Payment gated on consent (G9b)"]
     S1 -- no --> S2{"2. Documents complete?<br/>(C5b, E5)"}
     S2 -- no --> HOLD["HOLD (state, no route):<br/>'awaiting documents' list;<br/>automated reminders<br/>(C5b, E5, G3a, G3b)"]
     HOLD --> S2D{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
@@ -97,6 +97,9 @@ set out in `scope-table.md` ("Operations by tier"; G7a–G7e).
 ## Urgency alert (not a route)
 
 **Insurer 30-day notice clock.** On every escalated claim above the
-deductible, the agent raises an alert showing days remaining to notify the
-insurer, and that consent is needed before settlement. It does not change the
-route (C5c; T2:L16, T2:L48; Q12).
+deductible, the agent raises an alert showing the delivery date and the
+receipt date. It shows no countdown until the CFO confirms when the 30 days
+start (G9a; Q17). It does not change the route (C5c; T2:L16, T2:L48; Q12).
+
+**Consent gate (G9b).** No payment instruction can be issued on a claim above
+the deductible until insurer consent is recorded on the claim (T2:L16; Q12).

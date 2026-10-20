@@ -10,7 +10,7 @@ needs a consultant ruling; the options listed are not recommendations.
 
 After rulings G1, G2, G3a and G3b (2026-10-19), all 10 combinations and
 all 5 probes resolve to one tier, and the scope table and the decision tree
-agree (`coverage-test.md`). G4–G7 are resolved; G8–G12 remain open.
+agree (`coverage-test.md`). G4–G9 are resolved; G10–G12 remain open.
 
 ## Gaps that broke the coverage test (resolved)
 
@@ -28,8 +28,8 @@ agree (`coverage-test.md`). G4–G7 are resolved; G8–G12 remain open.
 | G5 | **Resolved, G5: reefer equipment or a temperature allegation (Q16).** Definition of the temperature/reefer trigger: a temperature-excursion claim, or any claim on reefer equipment? Release 2 `reefer_flag` is equipment mode. Under the equipment definition, a crushed pallet on a reefer load escalates. | Escalation volume and the eval inputs | C5; T2:L44; release 2 |
 | G6 | **Resolved, G6: removed from routing; queue priority and account-manager notice instead.** The key-account flag never changes a tier. Key-account denials and partials are already sign-off under R10, R11 and R13 (coverage #1 matches two rows in the same tier). | It is redundant as a routing rule. Decide whether it does anything else (priority, notifying the account manager) or is dropped from routing. | C5c |
 | G7 | **Resolved, G7a–G7e: see "Operations by tier" in `scope-table.md`.** What each tier means in operation. Sign-off: does the agent draft and a person approves or edits? Escalate: does the agent draft anything? Who owns each queue? Does the specialist/lead split at $10k carry over? Is there a response time? | Requirements v1 cannot specify the queues without this | C5; T2:L14, T2:L44 |
-| G8 | **What autonomous covers.** Approve only, or also the payment instruction, the customer letter and the carrier filing? The swimlane draws the letter and filing with the team (no change ruled). | C4 gives payout ownership to the claims team; the agent acting for them needs a stated limit | C4, C5 |
-| G9 | **Insurer clock start and consent gate.** "Within 30 days" of what: receipt, delivery or loss? Q12 measures from receipt. The swimlane shows the insurer step but no gate on the payment edge. | Escalation SLA and payment control | T2:L16, T2:L48; Q12 |
+| G8 | **Resolved, G8a–b: letter and payment by the agent, filing submitted by a specialist; every autonomous decision reviewed in the pilot.** What autonomous covers. Approve only, or also the payment instruction, the customer letter and the carrier filing? The swimlane draws the letter and filing with the team (no change ruled). | C4 gives payout ownership to the claims team; the agent acting for them needs a stated limit | C4, C5 |
+| G9 | **Resolved, G9a–b: clock start unset until the CFO confirms (Q17); hard consent gate on payment.** Insurer clock start and consent gate. "Within 30 days" of what: receipt, delivery or loss? Q12 measures from receipt. The swimlane shows the insurer step but no gate on the payment edge. | Escalation SLA and payment control | T2:L16, T2:L48; Q12 |
 | G10 | **Re-routing on new information.** An expedite request after routing; documents that arrive after the deadline; a reefer claim after the download is secured: does it return to the agent? | Without a rule, claims stall or are routed twice | C5, E4, C5b |
 | G11 | **The confidence score.** How it is produced (model self-report or a rubric) and how P1 is calibrated. | Step 6 depends on it | C5c; P1 |
 | G12 | **Withdrawn and open claims** have no route. | Edge case for requirements | T2:L70 |

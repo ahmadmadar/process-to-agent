@@ -358,12 +358,33 @@ def q_reefer(claims):
     ])
 
 
+def q_insurer_clock(claims):
+    notified = [c for c in claims if c["insurer_at"]]
+    rows = []
+    for c in sorted(notified, key=lambda c: c["claim_id"]):
+        from_receipt = days(c["received_at"], c["insurer_at"])
+        from_delivery = days(c["delivered_at"], c["insurer_at"])
+        rows.append((c["claim_id"], from_delivery, from_receipt,
+                     "Y" if from_delivery > INSURER_NOTICE_DAYS else "N",
+                     "Y" if from_receipt > INSURER_NOTICE_DAYS else "N", c["insurer_status"]))
+    over = lambda i: [r for r in rows if r[i] == "Y"]
+    return ("Q17. Insurer 30-day clock: from delivery vs from receipt (G9; T2:L16, T2:L48)", [
+        table(["Measure", "From delivery", "From receipt"], [
+            ("Notified more than 30 days after", len(over(3)), len(over(4))),
+            ("…of which insurer consented to settle", sum(r[5] == "consent_to_settle" for r in over(3)),
+             sum(r[5] == "consent_to_settle" for r in over(4))),
+        ]),
+        table(["Claim", "Days delivery → notified", "Days receipt → notified", "> 30 from delivery",
+               "> 30 from receipt", "Insurer status"], rows),
+    ])
+
+
 def main():
     claims = load()
     load_r2(claims)
     sections = [q(claims) for q in (q_volume, q_mix, q_cycle, q_stages, q_finance, q_weekday,
                                     q_size, q_approval, q_recovery, q_recovery_by_type, q_am,
-                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer)]
+                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock)]
     parts = [
         "# Data-vs-claims results (releases 1 and 2)",
         "> Fictional engagement for portfolio purposes. All data is synthetic.",

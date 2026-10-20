@@ -279,3 +279,24 @@ Eval sample only (`temp_log_obtained` is N/A where no temperature log is require
 | N | no | 25 |
 | Y | no | 2 |
 | Y | yes | 3 |
+
+## Q17. Insurer 30-day clock: from delivery vs from receipt (G9; T2:L16, T2:L48)
+
+| Measure | From delivery | From receipt |
+|---|---|---|
+| Notified more than 30 days after | 2 | 2 |
+| …of which insurer consented to settle | 0 | 0 |
+
+| Claim | Days delivery → notified | Days receipt → notified | > 30 from delivery | > 30 from receipt | Insurer status |
+|---|---|---|---|---|---|
+| NLC-26-0061 | 14 | 14 | N | N | consent_to_settle |
+| NLC-26-0082 | 25 | 21 | N | N | consent_to_settle |
+| NLC-26-0123 | 8 | 4 | N | N | consent_to_settle |
+| NLC-26-0136 | 23 | 11 | N | N | consent_to_settle |
+| NLC-26-0162 | 22 | 21 | N | N | consent_to_settle |
+| NLC-26-0169 | 55 | 41 | Y | Y | coverage_declined |
+| NLC-26-0222 | 22 | 12 | N | N | consent_to_settle |
+| NLC-26-0260 | 20 | 19 | N | N | consent_to_settle |
+| NLC-26-0267 | 5 | 5 | N | N | consent_to_settle |
+| NLC-26-0298 | 37 | 37 | Y | Y | reservation_of_rights |
+| NLC-26-0299 | 27 | 16 | N | N | consent_to_settle |

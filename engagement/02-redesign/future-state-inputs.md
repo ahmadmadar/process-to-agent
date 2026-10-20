@@ -74,6 +74,7 @@ Show these as removed, with the ruling ID:
 | D6 | ~~Rule on C5 open points~~ **Resolved 2026-10-18:** see C5a (partials), C5b (incomplete documents), C5c (special flags) | Consultant | C5 | Done |
 | D7 | POD-exception field to test the clean-POD rule | Follow-up data request | E6 | Release 2 |
 | D8 | Late-notice discrepancy: "two other" late notices (T2:L16) vs one in Q12 | CFO | C6 | Day 3 |
+| D9 | Confirm when the insurer's 30-day notice period starts (policy wording; Q17) | CFO | G9a | Day 3 |
 
 ## Open parameters
 

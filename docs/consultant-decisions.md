@@ -397,3 +397,55 @@ entries refine them.
 - **Rejected options:** (a) The claims lead owns it. (b) No human owner; the agent runs reminders and the deadline alone.
 - **Rationale:** Specialists handle intake and chasing today (T2:L20, T2:L24). A human owner can see claims stuck in hold. Giving the list to the lead would add to a role already split with dispatch (T2:L24).
 - **Citations:** T2:L20, T2:L24; E5, G3a, G7c
+
+---
+
+## Redesign rulings (Day 2): autonomous scope and insurer controls G8–G9
+
+These rulings close gaps G8 and G9 in `engagement/02-redesign/open-gaps.md`.
+Each decision is the consultant's, recorded as given on 2026-10-19.
+Rejected options and rationale were drafted by Claude and confirmed by the
+consultant without edits on 2026-10-19. C4, C5 and E6 are not edited; these
+entries refine them.
+
+### G8a. What the agent does on an autonomous approval
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C4, C5 (autonomous tier)
+- **Decision:** On an autonomous approval, the agent sends the customer letter and issues the payment instruction to finance, with no pre-approval (E1). It prepares the carrier filing package, and a claims specialist submits it. For a shortage with a clean POD, the agent marks the claim "do not file" (E6) instead of preparing a package, and the specialist confirms.
+- **Rejected options:** (a) Full straight-through: the agent also submits the carrier filing. (b) The agent drafts the letter and payment instruction, and a specialist releases both.
+- **Rationale:** The claims team owns payouts (C4). An autonomous approval is the team's decision made by its agent within the scope table, so the letter and payment follow from it, and no pre-approval applies at or below $10k (E1). Carrier filing is where recovery is won or lost (Q11), and the clean-POD rule the agent would apply is untested (E6). A person submitting the filing keeps that exposure with the team.
+- **Citations:** T2:L18, T2:L20, T2:L64; Q10, Q11; C4, C5, E1, E6
+
+### G8b. Control on autonomous decisions during the pilot
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Decision:** During the pilot, a person reviews every autonomous decision after it is made. Review moves to a sample once the agent has proved itself.
+- **Rejected options:** (a) A sample audit from the start. (b) No control beyond the trace log.
+- **Rationale:** The autonomous tier pays customers without a person in the loop. Until pilot data shows its error rate, every decision is checked after the fact. This does not slow the customer, because the review follows the payment.
+- **Citations:** C5, G7a
+- **Open (consultant):** who performs the review; the criterion for moving to a sample; the sample rate after that.
+
+### G9a. Insurer 30-day clock start: unset until the CFO confirms
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Status:** PROVISIONAL until the CFO confirms the policy wording (Day 3)
+- **Decision:** The start of the insurer's 30-day notice period is not set. Until the CFO confirms it, the urgency alert on escalated claims above the deductible shows the delivery date and the receipt date, with no countdown.
+- **Rejected options:** (a) Count from the delivery date, falling back to the receipt date. (b) Count from the receipt date.
+- **Rationale:** "Within 30 days" (T2:L16, T2:L48) does not say of what. The released data cannot tell the two dates apart: the same two notices are late on either basis, and those are the only two where the insurer did not consent (Q17). A countdown on the wrong basis would show the wrong time left.
+- **Citations:** T2:L16, T2:L48; Q12, Q17; C5c, G7b
+- **Dependencies:** CFO to confirm when the notice period starts (Day 3).
+
+### G9b. Insurer consent: hard gate on payment
+
+- **Date / step:** 2026-10-19, Day 2 / redesign
+- **Type:** Design ruling
+- **Refines:** C5 (claims above the deductible)
+- **Decision:** No payment instruction can be issued on a claim whose claimed amount is above the deductible (G4) until insurer consent is recorded on the claim.
+- **Rejected options:** (a) Consent as a checklist item in the escalation fact pack.
+- **Rationale:** The insurer must agree before settlement, or it can walk away (T2:L16). The one claim paid before notice lost cover (Q12; NLC-26-0169). That payment came from outside the claims team's process (Q11), so a control that relies on a person ticking a box in the claims queue would not have stopped it.
+- **Citations:** T2:L16, T2:L48; Q11, Q12; C4, C5, G4
+- **Open (consultant):** who records consent on the claim.

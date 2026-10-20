@@ -34,15 +34,15 @@ flowchart LR
         G6{"Rule checks: duplicate ·<br/>invoice mismatch ·<br/>filing window (C5c)"}
         G7["Form decision<br/>and confidence (C5c; P1)"]
         G8{"Approval ≤ $10k and<br/>confidence ≥ threshold?<br/>(C5, C5a, C5c)"}
-        G9["Approve autonomously<br/>(C5)"]
-        G10["Urgency alert: insurer<br/>30-day clock (C5c; T2:L16)"]
+        G9["Approve autonomously: letter +<br/>payment instruction; filing<br/>package prepared (C5, G8a)<br/>pilot: every decision reviewed after (G8b)"]
+        G10["Urgency alert: insurer 30-day<br/>notice; dates, no countdown<br/>until CFO (C5c, G9a)"]
     end
 
     subgraph CT["Claims team: sign-off and escalation queue (C4, C5)"]
         T1["Human sign-off: approve, edit<br/>or override the agent's full draft;<br/>reason logged (G7a)<br/>specialists ≤ $10k, lead > $10k (G7c)<br/>key accounts first (G6)"]
         T2["Escalation: lead (backup:<br/>senior specialist) works<br/>the agent's fact pack (G7b, G7c)<br/>reefer: same day (G7d)"]
         T3["Lead phones reefer carrier<br/>dispatcher same day<br/>(C5; T2:L44)"]
-        T4["Notify insurer within 30 days;<br/>consent before settling<br/>(C5; T2:L16, T2:L48)"]
+        T4["Notify insurer within 30 days;<br/>record consent: payment gated<br/>until recorded (C5, G9b; T2:L16)"]
         T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1, G1; agent pilot excludes)"]
         T6{"Shortage with clean POD?<br/>(E6, UNTESTED)"}
         T7["Do not file<br/>(E6; T2:L20, T2:L64)"]
@@ -115,9 +115,10 @@ flowchart LR
 - **E3 is a recommendation to finance**, not an agent step (E3).
 - **Account managers** only submit expedite requests, which always escalate
   (C4, E4). C4 and E4 still need the COO's ratification (D5).
-- **Insurer consent** must be obtained before payment on claims above the
-  deductible. The diagram shows the insurer step but not a gate on the
-  payment edge; see `open-gaps.md` G9.
-- **Carrier filing, letters and payment instructions** are drawn with the
-  claims team, as today, except for the autonomous route. Which of these the
-  agent performs is not ruled; see `open-gaps.md` G8.
+- **Insurer consent** is a hard gate: no payment instruction on a claim above
+  the deductible until consent is recorded (G9b). The 30-day clock start is
+  unset until the CFO confirms it (G9a).
+- **On the autonomous route** the agent sends the letter and the payment
+  instruction, and prepares the carrier filing for a specialist to submit
+  (G8a). During the pilot, every autonomous decision is reviewed after it is
+  made (G8b).
