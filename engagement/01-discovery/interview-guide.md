@@ -1,7 +1,7 @@
 # Interview Guide: Claims Process Discovery (v1)
 
 **Engagement:** Claims-to-Agent Discovery Sprint (see SOW)
-**Interviews:** COO (sponsor) first, then Claims and dispatch lead (process owner), so the second interview can test what the first one claimed. The CFO section is for Day 3.
+**Interviews:** COO (sponsor) first, then Claims and dispatch lead (process owner), so the second interview can test what the first one claimed. Interview D is the Day 2 COO ratification session. The CFO section is for Day 3.
 **Length:** about 25 minutes each, including the opening
 
 > Fictional engagement for portfolio purposes. All stakeholders are synthetic.
@@ -188,6 +188,83 @@ session; the challenge log records the rest.
 | # | CFO challenge | Our answer | Evidence cited | Structural change to ROI model? (Y/N) |
 |---|---|---|---|---|
 | | | | | |
+
+---
+
+## Interview D: COO ratification of C4 and E4 (Day 2)
+
+Short session before the requirements v1 freeze (D5 handling ruling). The
+sponsor ratifies or rejects C4 and E4, as SOW §8 requires. The ask was put in
+`sponsor-summary-day2.md`. Transcript: `transcripts/T3-coo.md`.
+
+### Inputs (briefing; never read aloud)
+
+**The decision**
+
+- **C4:** the claims team owns all claim payouts. Account managers can request expedited handling but cannot approve or pay.
+- **E4:** the account-manager early-payment path is eliminated. It is replaced by an expedite request, which always routes to a person and is never auto-approved (scope table R3).
+
+**What the COO has said**
+
+| Line | Said |
+|---|---|
+| T1:L10 | Account managers "can approve for their key accounts… that's how it should be"; "I want the AM to fix it today, not wait for claims" |
+| T1:L8 | Improvement means claims close "in days, not weeks" and key accounts stop raising it |
+| T1:L14 | Two key accounts raised claims speed in business reviews; Hollisbrook is "about 9 percent of revenue" |
+| T1:L36 | Red line: a key account wrongly denied by the agent, or the agent not being faster |
+| T1:L32 | Recalls no disagreements: "It doesn't reach me as a fight" |
+
+**What the claims lead has said**
+
+| Line | Said |
+|---|---|
+| T2:L14 | Account managers pay early, before photos or a delivery receipt; "I've got nothing to file"; payouts should be the claims team's decision |
+| T2:L54 | "We usually find out after the money's gone" |
+| T2:L78 | Stopping account managers paying before paperwork "would help recoveries more than anything" |
+
+**Evidence**
+
+| Query | Finding |
+|---|---|
+| Q8 | Account managers decided 35 claims at or below $10k and 2 above |
+| Q11 | Account managers: 37 claims; 22 (61%) paid before documents were complete; 38% filed with the carrier; recovered ÷ paid 3%; median 20 days from receipt to payment |
+| Q11 | Claims team: 324 claims; 0 (0%) paid before documents were complete; 66% filed; recovered ÷ paid 29%; median 28 days from receipt to payment |
+| Q12 | NLC-26-0169, $60,296, decided by an account manager, paid before insurer notice; notified 41 days after receipt; cover declined. The only claim paid before notice |
+| C6 | The conflict does not reach the sponsor (T1:L32), although the claims lead calls the declined claim "still a sore point" (T2:L16) |
+
+**What account managers keep or gain**
+
+- An expedite request goes straight to a person and never waits on the agent (E4; R3).
+- Key-account claims are worked first in the sign-off and escalation queues (G6).
+- The account manager is notified of the outcome when the claim is decided, with no approval or payment rights (G6).
+- Every denial goes to a person, which covers the COO's red line (C5; G6).
+
+**Fallback positions already rejected**
+
+| Ruling | Rejected option |
+|---|---|
+| C4 (a) | Keep account-manager authority for key accounts |
+| C4 (b) | Allow account-manager payouts up to a limit |
+| C4 (c) | Reclassify account-manager payments as goodwill outside the claims process |
+| E4 (a) | Keep the path with a spending limit |
+| E4 (b) | Keep the path but require documents before payment |
+
+**What a rejection or conditional ratification reopens**
+
+| Artifact | Dependency on C4/E4 |
+|---|---|
+| Scope table R3; decision tree step 1 and T3 | Expedite request → always escalate |
+| Future-state swimlane, account-manager lane | "Submits expedite request only; cannot approve or pay" |
+| G6 | Notice carries no approval or payment rights |
+| G9b | Rationale cites account-manager payments outside the claims process (Q11); the gate would have to cover account-manager payments if C4 falls |
+| G10a | An expedite request is new information that re-runs the tree |
+| Requirements v1 | Frozen on the outcome (D5 handling ruling) |
+
+### Prompts
+
+| # | Prompt | Tag |
+|---|---|---|
+| | | |
 
 ---
 
