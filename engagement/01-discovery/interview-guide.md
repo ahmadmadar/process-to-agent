@@ -197,6 +197,9 @@ Short session before the requirements v1 freeze (D5 handling ruling). The
 sponsor ratifies or rejects C4 and E4, as SOW §8 requires. The ask was put in
 `sponsor-summary-day2.md`. Transcript: `transcripts/T3-coo.md`.
 
+**Length:** 25 minutes, hard stop (D5d). If the session does not converge,
+log "not ratified" and proceed under D5a.
+
 ### Inputs (briefing; never read aloud)
 
 **The decision**
@@ -222,7 +225,7 @@ sponsor ratifies or rejects C4 and E4, as SOW §8 requires. The ask was put in
 | T2:L54 | "We usually find out after the money's gone" |
 | T2:L78 | Stopping account managers paying before paperwork "would help recoveries more than anything" |
 
-**Evidence**
+**Evidence** (backup: shown in full only if challenged, D5c)
 
 | Query | Finding |
 |---|---|
@@ -260,11 +263,61 @@ sponsor ratifies or rejects C4 and E4, as SOW §8 requires. The ask was put in
 | G10a | An expedite request is new information that re-runs the tree |
 | Requirements v1 | Frozen on the outcome (D5 handling ruling) |
 
-### Prompts
+### D1. Recap and ask (3 min)
 
 | # | Prompt | Tag |
 |---|---|---|
-| | | |
+| D1.1 ★ | On Day 1 you said account managers should be able to fix a key account's problem the same day. Today I'm asking for one decision: the claims team owns every claim payout, and account managers no longer approve or pay. Instead they send an expedite request, which goes straight to a person on the claims team. | H4 |
+
+### D2. Evidence (7 min, speed gap first)
+
+Headline figures only (D5c). State the speed gap before the COO can raise it
+(D5b).
+
+| # | Prompt | Tag |
+|---|---|---|
+| D2.1 ★ | First, the case for the current way: account managers pay faster. The median is 20 days from receipt to payment, against 28 for the claims team (Q11). | BC |
+| D2.2 ★ | The speed comes from paying before the documents are in: 61% of account-manager payments, against none for the claims team (Q11). | H4, H5 |
+| D2.3 ★ | Without the documents, the money is rarely recovered from the carrier: 3% of what account managers paid, against 29% for the claims team (Q11). | H5, BC |
+| D2.4 ★ | One claim shows the insurance risk. A $60,296 claim was paid by an account manager before the insurer was told, and the insurer declined cover (Q12). It is one claim, not a rate. | H4 |
+| D2.5 | The redesign goes after the claims team's delay: finance pre-approval goes (subject to the CFO's agreement), so does the Thursday payment batch, and documents are requested up front (E1, E2, E3, E5). We'll measure how close it gets to 20 days; I'm not promising it. | BC |
+| D2.6 | *Probe:* How does that compare with what you'd heard? | H4 |
+
+### D3. What account managers keep or gain (3 min)
+
+| # | Prompt | Tag |
+|---|---|---|
+| D3.1 ★ | Account managers keep a fast lane. An expedite request goes straight to a person and never waits on the agent. Key-account claims are worked first, and the account manager is told the outcome as soon as the claim is decided. Every denial still goes to a person. | Scope |
+
+### D4. Objections and conditions (10 min)
+
+Classify any condition against D5a as it is stated. Do not negotiate payment
+authority; record it.
+
+| # | Prompt | Tag |
+|---|---|---|
+| D4.1 ★ | What concerns do you have about this? | H4 |
+| D4.2 ★ | What would need to be true for you to agree? | Acceptance |
+| D4.3 | *Probe, if a condition is given:* Is that about how fast expedite requests are handled, or how account managers are kept informed? Or about account managers being able to pay? | Acceptance |
+| D4.4 | *Probe, if a speed condition is given:* What response time would you hold the claims team to on an expedite request? | Acceptance |
+| D4.5 | *Probe, if the answer is "not yet":* What would you need to see, and from whom? | — |
+
+### D5. Close (2 min)
+
+| # | Prompt | Tag |
+|---|---|---|
+| D5.1 ★ | To confirm in one sentence: the claims team owns every claim payout, account managers cannot approve or pay, and they send expedite requests instead [plus any condition stated in D4]. Is that your decision? | H4 |
+
+### Outcome (record after the session, per D5a)
+
+| COO answer | Ratified? | Next step |
+|---|---|---|
+| Yes | Yes | Requirements v1 |
+| Yes, with a service or communication condition | Yes | The condition becomes an expedite service-level requirement in v1 |
+| Yes, with any payment authority for account managers | No | A new ruling amending C4/E4 before v1 |
+| No, deferred, or no convergence by the hard stop | No | v1 with C4 flagged as an open dependency |
+
+**Recorded outcome:** · **Condition (verbatim, with transcript line):** · **Classification:**
 
 ---
 

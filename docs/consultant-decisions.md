@@ -557,3 +557,56 @@ drafted by Claude and confirmed by the consultant without edits on
 - **Rejected options:** (a) Report in the Day 2 summary and freeze v1 with C4/E4 marked pending. (b) Freeze v1 with C4/E4 pending and take ratification into Day 3.
 - **Rationale:** SOW §8 makes the sponsor summary the route for ratifying conflict rulings. A live session tests the ruling against the sponsor's stated preference for account-manager authority (T1:L10) before engineering builds on it. Freezing on a pending ruling would risk a v2 change driven by governance rather than by the cold-FDE test.
 - **Citations:** T1:L10; SOW §8, §10; C4, E4
+
+---
+
+## Ratification rulings (Day 2): COO session on C4/E4, D5a–D5d
+
+These rulings set the terms of the D5 ratification session (Interview D in
+`engagement/01-discovery/interview-guide.md`) before it runs. Decisions,
+rejected options and rationale are the consultant's, recorded as given on
+2026-10-26. The consultant gave them as R1–R4; they are logged as D5a–D5d
+because scope-table rows use R1–R16. The D5 revision note in D5a was drafted
+by Claude for confirmation. D5 handling is not edited; D5a revises it.
+
+### D5a. What counts as ratified
+
+- **Date / step:** 2026-10-26, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Refines:** D5 handling. **Revises** its rejected options (a) and (b) for the "not ratified" outcome
+- **Decision:** A conditional yes counts only if the condition can be written as a requirement without changing the core of C4/E4: the claims team owns all payouts and account managers cannot pay.
+  - **Yes** → ratified; proceed to requirements v1.
+  - **Yes with a service or communication condition** (for example, same-day handling of key-account expedite requests) → ratified; the condition becomes an expedite service-level requirement in v1.
+  - **Yes with any payment authority returned to account managers** → not ratified; write a new ruling amending C4/E4 before v1.
+  - **No, or deferred** → not ratified; write v1 with C4 flagged as an open dependency.
+- **Rejected options:** (a) Count any conditional yes. (b) Require an unconditional yes.
+- **Rationale:** Fixing the rule before the session prevents rationalizing a weak yes afterwards. The test is whether the requirements keep a single payout path.
+- **Revision of D5 handling:** D5 rejected freezing v1 with C4/E4 pending, to avoid a v2 change driven by governance rather than by the cold-FDE test. For "no" or "deferred", and for a session that does not converge (D5d), v1 now proceeds with C4 open and that risk is accepted.
+- **Citations:** SOW §8; C4, E4; D5 handling
+
+### D5b. Payment speed raised by the consultant
+
+- **Date / step:** 2026-10-26, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Decision:** The consultant raises the payment-speed gap (account managers a median of 20 days from receipt to payment, the claims team 28; Q11) early in the session, with its cause.
+- **Rejected options:** (a) Leave it for the COO to raise. (b) Omit it.
+- **Rationale:** It is the COO's strongest counterargument, and hiding it damages credibility. The speed comes from paying before documents are complete (61% vs 0%; Q11), the same behaviour behind lower filing and recovery (Q11) and the declined insurer claim (Q12). The redesign targets the claims team's delay (E1, E2, E3, E5), and E4 expedite requests give key accounts a fast lane. The redesign is not promised to reach 20 days; that is a target to measure.
+- **Citations:** T1:L10; Q11, Q12; E1, E2, E3, E4, E5
+
+### D5c. Data shown: headline figures only
+
+- **Date / step:** 2026-10-26, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Decision:** Show headline figures only: paid before documents complete, recovered ÷ paid, and median days to payment (Q11), plus the single insurer case (Q12) presented as one claim, not a rate. The full Q8, Q11 and Q12 tables are backup, shown only if challenged.
+- **Rejected options:** (a) Present the full tables.
+- **Rationale:** The sponsor is making one decision, and full tables invite a debate about method instead.
+- **Citations:** Q8, Q11, Q12
+
+### D5d. Timebox: 25 minutes with a hard stop
+
+- **Date / step:** 2026-10-26, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Decision:** 25-minute session: 3 min recap and ask; 7 min evidence, speed gap first (D5b); 3 min what account managers keep or gain; 10 min objections and conditions; 2 min close with an explicit one-sentence restatement and confirmation. Hard stop: if the session does not converge, log "not ratified" and proceed under D5a.
+- **Rejected options:** (a) An open-ended session.
+- **Rationale:** Matches the discovery interviews; a single executive decision should not need more.
+- **Citations:** interview guide (Interviews A and B, 25 min); D5a
