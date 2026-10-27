@@ -16,12 +16,12 @@ r2 = {r["claim_id"]: r for r in csv.DictReader(open(REL / "claims_r2_fields.csv"
 sample = {r["claim_id"] for r in csv.DictReader(open(REL / "eval_sample.csv"))}
 
 CASES = [
-    ("K01", "Cold-chain customer (R2)", "NLC-26-0001", "`cold_chain_customer` = Y", "—"),
+    ("K01", "Cold-chain customer (R2)", "NLC-26-0001", "`customer_id` = C-K01 (constructed; the only ID on the eval cold-chain list)", "—"),
     ("K02", "Expedite request, only trigger (R3; G7f)", "NLC-26-0021", "`expedite_request` = Y", "Request time"),
     ("K03", "Claimed amount above the deductible (R4)", "NLC-26-0123", "None (real claim above the assumed $25k)", "—"),
     ("K04", "Invoice mismatch (R8)", "NLC-26-0003", "`invoice_amount` differs from the claimed amount", "Invoice amount"),
     ("K05", "Outside the customer filing window (R9)", "NLC-26-0006", "Receipt date outside the window", "Window length (v1) and receipt date"),
-    ("K06", "Possible duplicate (R7; G13)", "NLC-26-0013", "`prior_payment_same_shipment` = Y; `shipment_ref` and `prior_payment_claim_id` from NLC-26-0001", "—"),
+    ("K06", "Possible duplicate (R7; G13)", "NLC-26-0013", "`shipment_ref` = SHP-0001, shared with NLC-26-0001, open (not paid) at both snapshots; no prior payment (EV5)", "—"),
     ("K07", "Between $10k and the deductible (R13)", "NLC-26-0023", "None (real claim)", "—"),
     ("K08", "Loss claim (R16; G1, S1)", "NLC-26-0054", "`claim_type` = loss", "—"),
     ("K09", "Temperature allegation without reefer flag (R1; G5)", "NLC-26-0014", "`temperature_allegation` = Y; `reefer_flag` stays N", "Allegation wording"),
@@ -44,5 +44,6 @@ for k, tests, base, change, sets in CASES:
     print(f"| {k} | {tests} | {base} | {c['claim_type']} | {float(c['amount_claimed']):,.2f} | {x['key_account']} | "
           f"{c['received_at'][:10]} | {c['docs_completed_at'][:10]} | {change} | {sets} |  |  |")
 assert r2["NLC-26-0001"]["shipment_ref"]
-print(f"\nK06 shares `shipment_ref` {r2['NLC-26-0001']['shipment_ref']} with NLC-26-0001 (paid {float(claims['NLC-26-0001']['amount_paid']):,.2f}).")
+print(f"\nK06 shares `shipment_ref` {r2['NLC-26-0001']['shipment_ref']} with NLC-26-0001 (received {claims['NLC-26-0001']['received_at'][:10]}; "
+      f"paid {claims['NLC-26-0001']['paid_at'][:10]}, after both K06 snapshots).")
 print("\nThe hindsight rule applies (`spike/README.md`): no outcome, payment, recovery or later documents in any snapshot.")

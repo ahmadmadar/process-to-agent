@@ -349,3 +349,23 @@ Claims that completed: 300. Claims never complete: 63 (Q13).
 | shortage | (none missing, but no completion date) | 2 | 16 | 12% |
 
 "Of" is claims with a completion date, except the last row per type, where it is claims without one. `docs_missing` shows flag status at extract, not at receipt, and IT does not check that the flags agree with the completion date (release 1 README; release 2 §4 Q1). There is no delivery-receipt document flag (release 2 §4 Q4).
+
+## Q21. Filing-window denials: is there a single day threshold? (R9; Q14)
+
+Claims denied as "outside customer filing window": 12.
+
+| Basis (calendar days) | Denied: claims | Denied: range | All other claims | Others: range | One threshold separates them? |
+|---|---|---|---|---|---|
+| Delivery → receipt | 12 | 0–14 | 351 | 0–20 | No |
+| Delivery → documents complete | 12 | 2–23 | 288 | 1–43 | No |
+| Receipt → documents complete | 12 | 1–10 | 288 | 1–29 | No |
+
+| Customer | Filing-window denials | Their delivery → receipt days | Approved or partial claims | Longest delivery → receipt, approved or partial |
+|---|---|---|---|---|
+| C001 | 3 | 0, 11, 14 | 39 | 18 |
+| C002 | 3 | 0, 1, 4 | 38 | 19 |
+| C006 | 1 | 13 | 18 | 16 |
+| C008 | 3 | 2, 6, 13 | 18 | 17 |
+| C009 | 2 | 5, 5 | 21 | 19 |
+
+"Separates" means every denied claim's gap is longer than every other claim's gap on that basis. Dates are as released; the system holds no contract terms (release 2 §2, `cold_chain_customer`).

@@ -909,3 +909,146 @@ reasoning in the wrong place and leave the repo contradicting itself.
 - **Rejected options:** (a) Leave G5's allegation signal untested; the sample tests `reefer_flag` only. (b) Invent amounts for constructed cases.
 - **Rationale:** One change per base claim isolates the rule under test. Basing cases on released claims keeps every amount sourced (ground rule 2).
 - **Citations:** G5; EV3; `analysis/eval-sample-triggers.md`
+- **Wording:** rejected options and rationale drafted by Claude and confirmed by the consultant without edits on 2026-10-27.
+
+---
+
+## v1 freeze blockers (Day 2): G19–G23, EV4–EV7
+
+Claude's review of requirements v1 found six blockers and three optional
+fixes. Claude drafted recommended rulings with exact edits
+(`engagement/03-requirements/v1-blocker-fixes.md`). The consultant approved
+all nine without edits on 2026-10-27, and they were applied to v1, the
+expected outcomes and the constructed cases.
+
+### G19. Re-evaluation re-runs the tree from step 0
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Design ruling
+- **Refines:** G10a
+- **Decision:** Every re-evaluation (documents arrive, new information) re-runs the decision tree from step 0.
+- **Rejected options:** (a) Re-run from step 3.
+- **Rationale:** A step-1 trigger can first appear in late documents, such as a temperature allegation or an amount above the deductible. Re-running from step 3 would miss it.
+- **Citations:** G2, G10a; v1 `stories.md` US-06, `edge-cases.md` EC6
+
+### G20. An expedite request is a persistent trigger
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Design ruling
+- **Refines:** R3, E4
+- **Decision:** Once made, an expedite request is a step-1 trigger on every later evaluation, whether or not it has been answered. Answering it closes the SLA clock only.
+- **Rejected options:** (a) R3 fires only while the request is open.
+- **Rationale:** The claim stays escalated anyway (G10b). A trigger that disappears when the request is answered would change `rule_applied` and `triggers` without any change in risk.
+- **Citations:** G10b, P3; K02
+
+### G21. Step-1 trigger after an autonomous decision escalates
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Design ruling
+- **Refines:** G10a
+- **Decision:** New information after an autonomous decision sends the claim to sign-off, unless the re-run fires a step-1 trigger, in which case the claim escalates. An expedite request after an autonomous decision escalates (R3).
+- **Rejected options:** (a) Always sign-off after an autonomous decision.
+- **Rationale:** The higher tier wins (G2), and re-routing goes only up (G10a). Sign-off would put an expedite request below its own always-escalate rule (R3, E4).
+- **Citations:** G2, G10a, R3, E4; v1 `edge-cases.md` EC25
+
+### G22. Loss claims: step-1 triggers evaluated for the fact pack
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Design ruling
+- **Refines:** G1, G7d
+- **Decision:** A loss claim still escalates at step 0 (`rule_applied` = R16) with no decision. Step-1 triggers are still evaluated and listed in `triggers` and the fact pack, without changing the route. If R1 is among them, the claim is handled as a reefer/temperature escalation: picked up on the day of receipt, with the 72-hour download clock.
+- **Rejected options:** (a) Skip step 1 for loss claims.
+- **Rationale:** Skipping step 1 would lose the 72-hour download window on a reefer loss claim.
+- **Citations:** T2:L44; G1, G7d; v1 `edge-cases.md` EC5
+
+### G23. Agent input schema in v1
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Design ruling
+- **Decision:** `rules.md` gains an "Agent input" table listing what the agent receives at each evaluation, limited to what is known at the evaluation time. It includes the claim fields, `claim_text`, the documents with their content and dates, `shipment_record`, other claims on the same shipment, the cold-chain list, expedite requests, the current state, payment and withdrawal.
+- **Rejected options:** (a) Leave the inputs implicit.
+- **Rationale:** Without it, an engineer cannot build the agent without guessing, and RB1, R7, R2 and R3 have no stated data source.
+- **Citations:** G13, G18, EV1; release 2 §2
+
+### EV4. K01 uses a constructed customer ID
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Eval design ruling
+- **Refines:** EV3a
+- **Decision:** K01 uses customer `C-K01`, which no released claim uses. The eval cold-chain list is `["C-K01"]` only.
+- **Rejected options:** (a) Keep C010.
+- **Rationale:** Sample case NLC-26-0016 is also customer C010, so keeping it would force a sample case to escalate under R2.
+- **Citations:** EV3a; `spike/constructed-cases.md`
+
+### EV5. K06: the earlier claim is open, not paid
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Eval design ruling
+- **Refines:** EV3a
+- **Decision:** K06 shares `shipment_ref` SHP-0001 with NLC-26-0001, which is open, not paid, at both K06 snapshots. There is no prior-payment input. R7 fires under the "paid or open" duplicate definition.
+- **Rejected options:** (a) Keep `prior_payment_same_shipment` = Y.
+- **Rationale:** NLC-26-0001 was paid on 2026-04-09, after both K06 snapshots, so a prior-payment input would break the hindsight rule (EV1).
+- **Citations:** EV1, EV3a
+
+### EV6. Sample eval assumptions labelled
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Eval design ruling
+- **Decision:** The expected outcomes state that no sample case has a cold-chain customer, a temperature allegation or an expedite request, and that the eval cold-chain list is `["C-K01"]`.
+- **Rejected options:** (a) Leave the assumption implicit.
+- **Rationale:** None of these inputs is held in the released data (release 2 §2), so the sample expectations rest on an assumption that must be visible.
+- **Citations:** release 2 §2; EV4
+
+### EV7. R10 or R13 accepted where the draft decision sets the row
+
+- **Date / step:** 2026-10-27, Day 2 / v1 freeze
+- **Type:** Eval design ruling
+- **Decision:** For NLC-26-0231 and K07 (claimed amount above $10,000), `rule_applied` is scored as correct if it is R13, or R10 when the agent drafts a denial.
+- **Rejected options:** (a) Expect R13 only.
+- **Rationale:** Step 5 sends a denial to R10 before step 6 is reached. The route (sign-off) is the same either way.
+- **Citations:** v1 `rules.md` rule table
+
+---
+
+## v1 values (Day 2): V1–V24, E-a to E-d
+
+Values Claude proposed while drafting requirements v1 with the consultant
+(`engagement/03-requirements/v1-draft-notes.md`). The consultant approved
+all of them on 2026-10-27, with two corrections from Claude's review:
+
+- **V2:** the comparison figure is 16–19 days for the same customers (20 across all other claims), from Q21, not "19–20".
+- **V22:** the basis cites W2:L2, and v1 `README.md` no longer says the team has no such title.
+
+IDs are kept as given. Where the table says "Unset", that is the option
+rejected: leaving the value open and letting the engineer choose.
+
+| ID | Decision (as stated in v1) | Rejected | Rationale | Citations |
+|---|---|---|---|---|
+| V1 | Hold status field: `hold_reason`, `missing_items`, `reminders_sent`, `fallback_date`, `duplicate_flag` | G18's three fields only | Reminders need the missing items, and G13's intake flag needs a field | G3a, G13, G18 |
+| V2 | `FILING_WINDOW_DAYS` = 270 calendar days, delivery to receipt, all customers (assumption A5). Raised as D13 | Derive a window from the denials | No single threshold reproduces the 12 historical denials on any date basis (Q21). The window may vary by contract or was applied inconsistently | Q14, Q21 |
+| V3 | K02 request time 2026-03-11 15:30 ET, while the claim is held | — | Tests up-only re-routing (G10a) and the after-14:00 SLA path | G10a, P3 |
+| V4 | K04 invoice amount 3,406.70 (80% of claimed) | — | An unambiguous mismatch | R8 |
+| V5 | K05 `delivered_at` = 2025-05-31 (276 days to receipt) | Move the receipt date | Keeps the released document dates | A5 |
+| V6 | K09 allegation wording as in the expected outcomes | — | States an excursion without the word "reefer" | G5 |
+| V7 | Rubric checklist RB1–RB6 | Unset | G11 left the checklist to v1 | G11 |
+| V8 | `RUBRIC_SCORE_THRESHOLD` = 1.00 for the pilot | A partial-pass threshold | An all-pass checklist gate is clearest | G11, P1 |
+| V9 | `SELF_REPORTED_CONFIDENCE_THRESHOLD` = 0.80, provisional; recalibrated from the eval | Unset | A starting value is needed to run the eval | G11, P1 |
+| V10 | Reminders on days 3, 7 and 11; the day-11 reminder states the fallback date | Unset | E5 automates reminders but set no cadence | E5, P2 |
+| V11 | "End of business day" = 17:00 ET | Unset | P3 named no time | P3 |
+| V12 | Expedite request on a non-business day: due 12:00 the next business day | Unset | P3 covers business days only | P3, P3a |
+| V13 | Fallback check at 23:59 ET on the fallback date | Unset | P2 said "day 14" without a time | P2 |
+| V14 | Invoice mismatch: claimed amount above the invoice value, to the cent, or invoice unreadable | Any difference | A claim may cover part of a shipment | C5c |
+| V15 | Possible duplicate: same `shipment_ref`, other claim paid or open | Paid only | An open claim on the same shipment can still be paid twice | C5c, G13; T2:L68 |
+| V16 | Temperature allegation: any excursion statement; if unsure, treat it as one | Literal keywords only | The cautious reading protects the 72-hour window | G5; T2:L44 |
+| V17 | Cold-chain identification: a list of customer IDs kept by the claims lead; no go-live with an empty list (D12) | Infer from customer names | IT holds no contract terms | C5c; T2:L44; release 2 §2 |
+| V18 | Missing delivery date: treated as outside the filing window (R9) | Treat as inside | The cautious reading sends the claim to a person | R9 |
+| V19 | Carrier filing on incomplete documents: no package; the person may file manually | Package anyway | "With evidence" needs documents | G8a, E6a |
+| V20 | Autonomous reviewer: a specialist designated by the claims lead | Unset | G8b left the reviewer open | G8b |
+| V21 | Insurer consent recorded by the claims lead | Unset | G9b left it open; the claims lead works claims above the deductible | G9b, G7c |
+| V22 | Senior specialist: a designation within the specialist team, named by the claims lead | Unset | G7c names the role without defining it | G7c; W2:L2 |
+| V23 | Output fields beyond G17: `claim_id`, `status`, `amount`, `triggers`, `rubric_items`, `hold`, `fact_pack` | G17's six fields only | Six fields cannot carry the hold, the fact pack or which rubric item failed | G17, G18, G7b |
+| V24 | New dependency IDs: D12 (cold-chain list), D13 (filing-window rule) | — | Not in the index | V2, V17 |
+| E-a | `autonomous*` scoring: autonomous, or sign-off via R14, both count; R14 reported as "gate-held" | Score autonomous only | The confidence thresholds are uncalibrated | G11, P1 |
+| E-b | The decision is not scored on sign-off | Score the draft decision | The draft is not a routing outcome | G7a |
+| E-c | 8 "info gap" sample cases reported separately | Fold into the headline | Their snapshots lack the evidence behind the historical outcome | EV1 |
+| E-d | `invoice_amount` = `amount_claimed` for sample snapshots, labelled an assumption | Leave blank | IT holds no invoice values; otherwise R8 fires on every sample case | release 2 §2 |

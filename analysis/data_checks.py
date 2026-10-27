@@ -433,12 +433,44 @@ def q_docs_by_type(claims):
     ])
 
 
+def q_filing_window(claims):
+    fw = "outside customer filing window"
+    denied = [c for c in claims if c["denial_reason"] == fw]
+    others = [c for c in claims if c["denial_reason"] != fw]
+    bases = [("Delivery → receipt", "delivered_at", "received_at"),
+             ("Delivery → documents complete", "delivered_at", "docs_completed_at"),
+             ("Receipt → documents complete", "received_at", "docs_completed_at")]
+    rows = []
+    for label, a, b in bases:
+        dg = [days(c[a], c[b]) for c in denied if c[a] and c[b]]
+        og = [days(c[a], c[b]) for c in others if c[a] and c[b]]
+        separable = bool(dg) and min(dg) > max(og)
+        rows.append((label, len(dg), f"{min(dg)}–{max(dg)}", len(og), f"{min(og)}–{max(og)}",
+                     "Yes" if separable else "No"))
+    cust = sorted({c["customer_id"] for c in denied})
+    crow = []
+    for cid in cust:
+        dg = [days(c["delivered_at"], c["received_at"]) for c in denied if c["customer_id"] == cid]
+        ok = [days(c["delivered_at"], c["received_at"]) for c in others
+              if c["customer_id"] == cid and c["outcome"] in ("approved", "partially_approved")]
+        crow.append((cid, len(dg), ", ".join(str(x) for x in sorted(dg)), len(ok), max(ok) if ok else "—"))
+    return ("Q21. Filing-window denials: is there a single day threshold? (R9; Q14)", [
+        f"Claims denied as \"{fw}\": {len(denied)}.",
+        table(["Basis (calendar days)", "Denied: claims", "Denied: range", "All other claims", "Others: range",
+               "One threshold separates them?"], rows),
+        table(["Customer", "Filing-window denials", "Their delivery → receipt days",
+               "Approved or partial claims", "Longest delivery → receipt, approved or partial"], crow),
+        "\"Separates\" means every denied claim's gap is longer than every other claim's gap on that basis. "
+        "Dates are as released; the system holds no contract terms (release 2 §2, `cold_chain_customer`).",
+    ])
+
+
 def main():
     claims = load()
     load_r2(claims)
     sections = [q(claims) for q in (q_volume, q_mix, q_cycle, q_stages, q_finance, q_weekday,
                                     q_size, q_approval, q_recovery, q_recovery_by_type, q_am,
-                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod, q_docs_deadline, q_docs_by_type)]
+                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod, q_docs_deadline, q_docs_by_type, q_filing_window)]
     parts = [
         "# Data-vs-claims results (releases 1 and 2)",
         "> Fictional engagement for portfolio purposes. All data is synthetic.",
