@@ -332,3 +332,20 @@ Eval sample only (`temp_log_obtained` is N/A where no temperature log is require
 | Longest, days | 29 |  |
 
 Claims that completed: 300. Claims never complete: 63 (Q13).
+
+## Q20. Documents missing on claims marked complete, by claim type (E5 checklist; T2:L18)
+
+| Type | Document missing (as of extract) | Claims | Of | Share |
+|---|---|---|---|---|
+| damage | photos | 5 | 196 | 3% |
+| damage | invoice | 0 | 196 | 0% |
+| damage | bol | 0 | 196 | 0% |
+| damage | temp_log | 13 | 196 | 7% |
+| damage | (none missing, but no completion date) | 6 | 47 | 13% |
+| shortage | photos | 68 | 104 | 65% |
+| shortage | invoice | 0 | 104 | 0% |
+| shortage | bol | 0 | 104 | 0% |
+| shortage | temp_log | 0 | 104 | 0% |
+| shortage | (none missing, but no completion date) | 2 | 16 | 12% |
+
+"Of" is claims with a completion date, except the last row per type, where it is claims without one. `docs_missing` shows flag status at extract, not at receipt, and IT does not check that the flags agree with the completion date (release 1 README; release 2 §4 Q1). There is no delivery-receipt document flag (release 2 §4 Q4).

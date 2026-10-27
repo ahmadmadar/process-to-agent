@@ -414,12 +414,31 @@ def q_docs_deadline(claims):
     ])
 
 
+def q_docs_by_type(claims):
+    rows = []
+    for ctype in ("damage", "shortage"):
+        group = [c for c in claims if c["claim_type"] == ctype]
+        done = [c for c in group if c["docs_completed_at"]]
+        notdone = [c for c in group if not c["docs_completed_at"]]
+        for doc in ("photos", "invoice", "bol", "temp_log"):
+            n = sum(1 for c in done if doc in c["docs_missing"].split(";"))
+            rows.append((ctype, doc, n, len(done), pct(n, len(done))))
+        clean = sum(1 for c in notdone if not c["docs_missing"])
+        rows.append((ctype, "(none missing, but no completion date)", clean, len(notdone), pct(clean, len(notdone))))
+    return ("Q20. Documents missing on claims marked complete, by claim type (E5 checklist; T2:L18)", [
+        table(["Type", "Document missing (as of extract)", "Claims", "Of", "Share"], rows),
+        "\"Of\" is claims with a completion date, except the last row per type, where it is claims without one. "
+        "`docs_missing` shows flag status at extract, not at receipt, and IT does not check that the flags agree with "
+        "the completion date (release 1 README; release 2 §4 Q1). There is no delivery-receipt document flag (release 2 §4 Q4).",
+    ])
+
+
 def main():
     claims = load()
     load_r2(claims)
     sections = [q(claims) for q in (q_volume, q_mix, q_cycle, q_stages, q_finance, q_weekday,
                                     q_size, q_approval, q_recovery, q_recovery_by_type, q_am,
-                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod, q_docs_deadline)]
+                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod, q_docs_deadline, q_docs_by_type)]
     parts = [
         "# Data-vs-claims results (releases 1 and 2)",
         "> Fictional engagement for portfolio purposes. All data is synthetic.",

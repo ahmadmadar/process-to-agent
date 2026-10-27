@@ -11,6 +11,7 @@ Open gaps are listed in `open-gaps.md`.
 - Both thresholds are measured on the claimed amount (G4).
 - `CONFIDENCE_THRESHOLD`: two thresholds, rubric score and self-reported confidence; both must pass (G11). Unset; calibrated in the Day 2 eval (P1).
 - `FALLBACK_DEADLINE_DAYS`: 14 calendar days from receipt (P2; Q19).
+- `EXPEDITE_RESPONSE_SLA`: business days, Eastern Time, company holidays excluded (US federal as provisional default); before 14:00 → end of that day; at or after 14:00 → 12:00 next business day. Provisional assumption (P3, P3a; D11).
 
 **Precedence (G2):** the first step that matches decides. This gives
 always escalate > hold > human sign-off > autonomous. **Hold is a state, not a
@@ -91,6 +92,20 @@ Each one routes to **always escalate**.
 
 The duplicate check runs at intake and raises a flag that specialists see on
 the "awaiting documents" list. Routing on the flag stays at step 3 (G13).
+
+## Expedite requests (after routing)
+
+An expedite request always escalates (T3); routing does not change. What
+follows the escalation (G15):
+
+| Item | Rule | Ruling |
+|---|---|---|
+| Who answers | The specialist already working the claim; if no one is, the claims lead assigns or answers. The claims lead owns the on-time answer. No named backup | G7f |
+| Who decides | If the expedite request is the only escalation trigger: specialists ≤ $10k, claims lead > $10k. Any other trigger: claims lead (G7c) | G7f |
+| When | Within `EXPEDITE_RESPONSE_SLA` | P3, P3a |
+| What the answer may say | Status, next step, expected date where known. A payment commitment only on a claim already approved by the claims team; none before a decision, complete documents, or insurer consent (G9b) | D5e |
+| Record | Request time, answer time, answer content, outcome | D5f |
+| SLA missed | Automatic notice to the claims lead and the requesting account manager; no route to the COO | D5g |
 
 ## Re-routing and withdrawals
 

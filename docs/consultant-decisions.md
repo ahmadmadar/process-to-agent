@@ -241,7 +241,7 @@ Set by the consultant. Claude does not set or change them.
 
 | Parameter | Used in | Status | Set when |
 |---|---|---|---|
-| `CONFIDENCE_THRESHOLD` | C5c; autonomous tier (C5) | Unset; provisional value to be calibrated in the Day 2 eval | Day 2 |
+| `CONFIDENCE_THRESHOLD` → `RUBRIC_SCORE_THRESHOLD`, `SELF_REPORTED_CONFIDENCE_THRESHOLD` (G11, G17) | C5c; autonomous tier (C5) | Unset; provisional values to be calibrated in the Day 2 eval | Day 2 |
 | `FALLBACK_DEADLINE_DAYS` | C5b, E5 | **14 days** (set 2026-10-19; see P2 below) | Requirements v1 |
 | `EXPEDITE_RESPONSE_SLA` | D5 outcome, D5g | **Business days; before 14:00 → end of that day; at or after 14:00 → 12:00 next business day** (Eastern Time; company holidays excluded, US federal as provisional default (P3a); provisional assumption, set 2026-10-27; see P3 below; awaits claims-lead capacity D10 and COO written confirmation) | Requirements v1 |
 
@@ -415,6 +415,7 @@ entries refine them.
 - **Type:** Design ruling
 - **Refines:** C4, C5 (autonomous tier)
 - **Decision:** On an autonomous approval, the agent sends the customer letter and issues the payment instruction to finance, with no pre-approval (E1). It prepares the carrier filing package, and a claims specialist submits it. For a shortage with a clean POD, the agent marks the claim "do not file" (E6) instead of preparing a package, and the specialist confirms.
+- **Superseded in part (G16, 2026-10-27):** the clean-POD "do not file" clause above is superseded by E6a. Clean-POD shortages are filed like any other paid claim with evidence.
 - **Rejected options:** (a) Full straight-through: the agent also submits the carrier filing. (b) The agent drafts the letter and payment instruction, and a specialist releases both.
 - **Rationale:** The claims team owns payouts (C4). An autonomous approval is the team's decision made by its agent within the scope table, so the letter and payment follow from it, and no pre-approval applies at or below $10k (E1). Carrier filing is where recovery is won or lost (Q11), and the clean-POD rule the agent would apply is untested (E6). A person submitting the filing keeps that exposure with the team.
 - **Citations:** T2:L18, T2:L20, T2:L64; Q10, Q11; C4, C5, E1, E6
@@ -766,3 +767,145 @@ confirmed all of it without edits on 2026-10-27.
 - **Rejected options:** (a) Leave "public holidays" undefined.
 - **Rationale:** The SLA cannot be measured without a defined calendar. The company's own holidays are what the team actually observes, and the federal list is a stated placeholder until they are confirmed.
 - **Citations:** W1:L3, W2:L4; P3
+
+---
+
+## Pre-v1 rulings (Day 2): design-doc alignment, document checklist, eval design
+
+Rulings given on 2026-10-27, before requirements v1 is written. Each
+decision is the consultant's, recorded as given. Before logging, Claude
+raised three conflicts and the consultant resolved them:
+
+- **1.1:** align the always-escalate row by trigger, rather than removing the backup outright.
+- **4:** the loss case tests escalation under G1, not a "rejected" outcome.
+- **3b:** a rule for setting each sample case's decision moment from the released data.
+
+The rejected options for G14, G15, G16, G18, E5a, EV1 and EV2, and the
+rationale for G16, G18, EV1 and EV2, were drafted by Claude and confirmed by
+the consultant without edits on 2026-10-27. The same day the consultant
+approved the G17 schema, approved the constructed cases K01–K08, added K09
+(EV3a), and asked for the future-state swimlane to be aligned to G14.
+
+**Principle (applies to G14–G18):** contradictions between the rulings and
+the design docs are ruled on here, and the design docs are updated to
+match. Requirements v1 cites rulings and does not resolve contradictions
+inline. **Rejected:** resolving them inline in v1, which would put the
+reasoning in the wrong place and leave the repo contradicting itself.
+
+### G14. Always-escalate operations aligned by trigger
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Design-doc alignment
+- **Aligns:** `scope-table.md` "Operations by tier", always-escalate row, with G7c, G7d, G7f, P3
+- **Decision:** The row is split by trigger:
+  - **Expedite request:** the specialist working the claim answers; if no one is, the claims lead assigns it or answers. The claims lead owns the on-time answer. No named backup. Response time: `EXPEDITE_RESPONSE_SLA` (G7f, P3).
+  - **Reefer/temperature:** the claims lead, with the senior specialist as backup. Picked up the same day as receipt (G7c, G7d).
+  - **Other escalations** (loss, cold-chain, above the deductible): the claims lead, with the senior specialist as backup. No response-time target in v1 (G7c, G7d).
+- **Rejected options:** (a) Remove the senior-specialist backup from every escalation. That would revise G7c and G7f and reopen 72-hour reefer coverage (T2:L44).
+- **Rationale:** G7f changed ownership and timing for expedite requests only, and kept G7c's backup for every other escalation. The row has to show both.
+- **Citations:** T2:L44; G7c, G7d, G7f, P3
+
+### G15. Expedite rulings carried into the design docs
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Design-doc alignment
+- **Decision:** `decision-tree.md` and `scope-table.md` carry G7f, D5e, D5f, D5g and P3/P3a. No routing change: expedite requests still always escalate (R3, T3).
+- **Rejected options:** (a) Leave them in the decisions log only.
+- **Rationale:** The scope table and the decision tree are the design references that v1 cites, so they must not contradict the log.
+- **Citations:** G7f, D5e, D5f, D5g, P3, P3a
+
+### G16. G8a clean-POD clause superseded by E6a
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Supersession record
+- **Decision:** G8a's clause "For a shortage with a clean POD, the agent marks the claim 'do not file' (E6) instead of preparing a package, and the specialist confirms" is superseded by E6a. The clause is marked superseded in G8a and is not deleted. The rest of G8a stands.
+- **Rejected options:** (a) Delete the clause. (b) Leave G8a unmarked.
+- **Rationale:** The log keeps originals. A visible marker stops v1 or the agent from reintroducing a reversed rule.
+- **Citations:** G8a, E6, E6a; Q18
+
+### G17. Agent output carries one field per G11 gate
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Design ruling (schema)
+- **Decision:** G11 governs. The single `confidence` field in the agent output is replaced by one field per G11 gate, named to match G11. The output schema in `CLAUDE.md` and `.claude/skills/claims-agent/SKILL.md` is updated accordingly. **Status:** approved by the consultant on 2026-10-27 and applied to `CLAUDE.md`. `SKILL.md` does not exist yet; it is built from v1 with this schema.
+- **Schema:** `decision` (`approve` | `partial` | `deny` | null), `rule_applied` (rule-table step or scope-table row), `rubric_score` (0–1; G11 gate 1, fixed checklist), `self_reported_confidence` (0–1; G11 gate 2), `route` (`autonomous` | `sign_off` | `escalate` | null), `rationale`. On a hold, `route` is null and the hold status field (G18) is defined in v1. On escalate, `decision` is null, with no amount (G7b). P1 becomes `RUBRIC_SCORE_THRESHOLD` and `SELF_REPORTED_CONFIDENCE_THRESHOLD`.
+- **Rejected options:** (a) Keep one combined `confidence` field (G11 rejected combining the two signals).
+- **Rationale:** G11 requires each signal to pass its own threshold. A single field cannot show which gate failed.
+- **Citations:** G11, P1
+
+### G18. Hold status field: defined in v1
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Scope record
+- **Decision:** This is not an inconsistency: G3a deferred the hold status field to v1. v1 will define it as the hold reason, the reminders sent, and the fallback date. It is not defined in the design docs.
+- **Rejected options:** (a) Define it in the design docs first.
+- **Rationale:** G3a placed the definition in v1. Defining it twice would create a second source.
+- **Citations:** G3a, E5, P2
+
+### E5a. "Documents complete": required checklist by claim type
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Design ruling
+- **Refines:** E5 (structured checklist), C5b (documents complete as a precondition)
+- **Decision:**
+
+  | Claim type | Required |
+  |---|---|
+  | Damage | Photos, invoice, BOL, delivery receipt/POD |
+  | Shortage | Invoice, BOL, delivery receipt/POD; photos optional |
+  | Reefer/temperature | The damage or shortage list, plus the temperature download (T2:L44) |
+  | Loss | Out of the agent pilot (S1) |
+
+  The agent applies this checklist, not a historical completion date. The historical date reflects past practice, not this rule.
+- **"Photos optional for shortage":** the consultant's ruling, based on observed practice (for example, NLC-26-0052). Of the shortage claims with a completion date, 68 of 104 (65%) have photos missing, against 5 of 196 (3%) for damage (Q20). **Data-quality caveat:** IT has no answer on which field is authoritative. The document flags show status at extract, not at receipt, and IT does not check that they agree with the completion date (release 2 §4 Q1; Q13). The observed practice is therefore indicative only.
+- **Rejected options:** (a) Use the historical completion date as "documents complete". (b) Require photos for shortages.
+- **Rationale:** The claims lead's own list for a damage claim is photos, invoice, bill of lading and delivery receipt (T2:L18). For a shortage, photos of missing goods show little, and the team already treats shortage files as complete without them (Q20). Temperature claims cannot be judged from photos, and the download is the evidence (T2:L44).
+- **Citations:** T2:L18, T2:L44; Q13, Q20; release 2 §4 Q1; E5, C5b, S1
+
+### EV1. Eval decision moments: two snapshots, hindsight rule
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Eval design ruling
+- **Decision:** Every eval case is evaluated at two moments:
+  - **(a) Intake.** The expected outcome is the hold (state, no route; G3a) or escalate. The reefer rule is tested here (T2:L58).
+  - **(b) Decision point.** The document-completion moment under the E5a checklist (see EV2). If documents never complete, the snapshot is taken at `FALLBACK_DEADLINE_DAYS`, where the expected route is human sign-off (C5b), unless a higher tier applies (G2).
+  - **Hindsight rule:** each snapshot contains only what was knowable at that moment. No outcome, payment date or recovery, and no documents received later. This rule is stated in the eval README.
+  - **Cost:** before any run, Claude states the estimated cost for 2 snapshots × all cases × 2 models.
+- **Rejected options:** (a) A single snapshot at the decision point, which would leave the intake rules (hold, reefer) untested. (b) Snapshots built from the full historical record.
+- **Rationale:** The routing rules fire at two different moments. Testing both is the only way to check the hold and the intake escalations. Hindsight would leak the outcome into the input.
+- **Citations:** T2:L58; G2, G3a, C5b, P2, E5a
+
+### EV2. Setting the decision point for sample cases
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Eval design ruling
+- **Refines:** EV1(b)
+- **Decision:** A sample case's decision point is its historical completion date, but only if every E5a checklist item for its claim type is flagged as received. The delivery receipt/POD is treated as received when that date is set, because no flag exists for it. Otherwise the documents never complete, and the decision-point snapshot is taken at `FALLBACK_DEADLINE_DAYS` (day 14). Each case records which rule set its moment.
+- **Rejected options:** (a) Exclude claims whose flags and completion date disagree. (b) Set each case's moment by hand.
+- **Rationale:** The release has no per-document dates and no delivery-receipt flag (release 2 §4 Q4), and the flags and the date can disagree (Q20). A fixed, recorded rule keeps the snapshots reproducible and keeps the full sample.
+- **Citations:** Q20; release 2 §4 Q1, Q4; E5a, P2
+
+### EV3. Must-escalate coverage: constructed cases
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Eval design ruling
+- **Decision:** A small set of consultant-built synthetic cases is added to the eval set, each labelled `constructed` in a `source` field, with one or two cases per check:
+  - **Always escalate:** cold-chain customer, expedite request, above the deductible.
+  - **Human sign-off:** invoice mismatch, outside the filing window, possible duplicate.
+  - **Routing boundary:** one claim between $10k and the deductible.
+  - **Out of scope:** one loss claim. Expected: escalate at step 0, with no decision (G1, S1).
+  - **Expected outcomes:** the consultant writes them from requirements v1, before any run. Claude prepares the case inputs only, with the expected-outcome fields blank.
+  - **Reporting:** results are reported in two groups, sample and constructed, and never combined into one headline. The report states that constructed cases test rule coverage, not real-world frequency.
+- **Rejected options:** (a) Accept the gap: with only reefer testable, the 100% escalation-correctness target cannot be verified.
+- **Rationale:** The released sample contains no cold-chain, expedite, above-deductible, loss, duplicate, invoice or filing-window inputs (`analysis/eval-sample-triggers.md`).
+- **Citations:** G1, S1; `analysis/eval-sample-triggers.md`
+
+### EV3a. Constructed cases K01–K09
+
+- **Date / step:** 2026-10-27, Day 2 / pre-v1
+- **Type:** Eval design ruling
+- **Refines:** EV3
+- **Decision:** The constructed cases are K01–K08 as proposed, plus K09: a temperature allegation without a reefer flag, which tests G5's second signal. Each case starts from a clean claim in release 1, outside the sample (approved, documents complete, not reefer, not decided by an account manager), and changes one input, so amounts come from the data. Case inputs are in `spike/constructed-cases.md`. The consultant sets the inputs marked as theirs and writes every expected outcome from v1.
+- **Rejected options:** (a) Leave G5's allegation signal untested; the sample tests `reefer_flag` only. (b) Invent amounts for constructed cases.
+- **Rationale:** One change per base claim isolates the rule under test. Basing cases on released claims keeps every amount sourced (ground rule 2).
+- **Citations:** G5; EV3; `analysis/eval-sample-triggers.md`

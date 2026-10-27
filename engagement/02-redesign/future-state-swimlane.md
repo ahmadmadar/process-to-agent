@@ -22,6 +22,7 @@ flowchart LR
     subgraph AM["Account manager"]
         A1["Submits expedite request only;<br/>cannot approve or pay<br/>(C4, E4)"]
         A2["Notified of key-account<br/>outcomes (G6)"]
+        A3["Receives expedite answer:<br/>status, next step, date;<br/>payment only if approved (D5e)"]
     end
 
     subgraph AG["Claims agent (new; pilot: damage and shortage)"]
@@ -40,7 +41,8 @@ flowchart LR
 
     subgraph CT["Claims team: sign-off and escalation queue (C4, C5)"]
         T1["Human sign-off: approve, edit<br/>or override the agent's full draft;<br/>reason logged (G7a)<br/>specialists ≤ $10k, lead > $10k (G7c)<br/>key accounts first (G6)"]
-        T2["Escalation: lead (backup:<br/>senior specialist) works<br/>the agent's fact pack (G7b, G7c)<br/>reefer: same day (G7d)"]
+        T2["Escalation (reefer, loss, cold-chain,<br/>> deductible): lead (backup:<br/>senior specialist) works<br/>the agent's fact pack (G7b, G7c, G14)<br/>reefer: same day (G7d)"]
+        T6["Expedite: specialist on the claim<br/>answers, else lead assigns or answers;<br/>lead owns the answer, no named backup;<br/>within EXPEDITE_RESPONSE_SLA<br/>(G7f, G14, P3); request and answer<br/>recorded (D5f); miss → notice to<br/>lead and AM (D5g)"]
         T3["Lead phones reefer carrier<br/>dispatcher same day<br/>(C5; T2:L44)"]
         T4["Notify insurer within 30 days;<br/>record consent: payment gated<br/>until recorded (C5, G9b; T2:L16)"]
         T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1, G1; agent pilot excludes)"]
@@ -80,6 +82,9 @@ flowchart LR
     G0 -- no --> G1
     A1 --> G1
     G1 -- yes --> T2
+    G1 -- "yes: expedite" --> T6
+    T6 --> A3
+    T6 --> T8
     G1 -. "> deductible" .-> G10 -.-> T4
     T2 -. reefer .-> T3 -. same day .-> D1
     G1 -- no --> G2 --> C2 --> G3
@@ -112,7 +117,9 @@ flowchart LR
   filed with the carrier.
 - **E3 is a recommendation to finance**, not an agent step (E3).
 - **Account managers** only submit expedite requests, which always escalate
-  (C4, E4). C4 and E4 still need the COO's ratification (D5).
+  (C4, E4; ratified, D5 closed). The answer comes within
+  `EXPEDITE_RESPONSE_SLA` from the specialist on the claim or the lead
+  (G7f, G14, P3), and may promise payment only on an approved claim (D5e).
 - **Insurer consent** is a hard gate: no payment instruction on a claim above
   the deductible until consent is recorded (G9b). The 30-day clock start is
   unset until the CFO confirms it (G9a).

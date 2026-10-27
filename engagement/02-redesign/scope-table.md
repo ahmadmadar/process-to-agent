@@ -6,7 +6,7 @@ Rows match `coverage_test.py` (R1–R16), and the coverage results are in
 `coverage-test.md`. Open gaps are listed in `open-gaps.md`.
 
 Thresholds: $10k provisional (D3); deductible assumed $25k (D1). Both are measured on the claimed amount (G4).
-Parameters: `CONFIDENCE_THRESHOLD` (P1; two thresholds under G11, rubric and self-report), `FALLBACK_DEADLINE_DAYS` = 14 days from receipt (P2; Q19). The confidence thresholds are unset.
+Parameters: `CONFIDENCE_THRESHOLD` (P1; two thresholds under G11, rubric and self-report), `FALLBACK_DEADLINE_DAYS` = 14 days from receipt (P2; Q19), `EXPEDITE_RESPONSE_SLA` (P3, P3a; provisional). The confidence thresholds are unset.
 
 **Precedence (G2).** Rows are not mutually exclusive. When a claim matches
 more than one row, the highest wins: always escalate > hold > human sign-off >
@@ -47,6 +47,9 @@ the "awaiting documents" list until its documents are complete or
 | Possible duplicate at intake | Flag raised on the claim, visible on the "awaiting documents" list; routing stays at R7 after documents are complete | T2:L68 | G13 |
 | Key-account claim in the sign-off or escalation queue | Worked first in that queue | T1:L10 | G6 |
 | Key-account claim decided | Account manager notified of the outcome; no approval or payment rights | T1:L10; C4 | G6 |
+| Expedite request received | Answered within `EXPEDITE_RESPONSE_SLA`: status, next step and expected date where known. A payment commitment only on a claim the claims team has already approved; none before a decision, complete documents, or insurer consent where required | T3:L22, T3:L30; W1:L3–L4; T2:L16 | D5e, P3, P3a, G9b |
+| Expedite request answered | Request time, answer time, answer content and outcome recorded | T3:L30 | D5f |
+| `EXPEDITE_RESPONSE_SLA` missed | Automatic notice to the claims lead and the requesting account manager. No route to the COO | T3:L28 | D5g |
 
 ## Re-routing and withdrawals
 
@@ -65,5 +68,7 @@ the "awaiting documents" list until its documents are complete or
 |---|---|---|---|---|
 | Autonomous | Decision, customer letter and payment instruction (no pre-approval, E1). Carrier filing package prepared for every paid claim with evidence, clean-POD shortages included (E6a) | Specialist submits the carrier filing. Pilot: a person reviews every autonomous decision after it is made | — | C5, G8a, G8b, E6a |
 | Human sign-off | Full draft: decision, amount, rule applied, rationale, customer letter. The person approves, edits or overrides; every edit or override is logged with a reason | Specialists: claimed amount ≤ $10k. Claims lead: > $10k | No target in v1; measured in the pilot | G7a, G7c, G7d |
-| Always escalate | Fact pack: trigger(s), document checklist status, running clocks (72h reefer; insurer 30-day dates, G9a). No decision, no amount | Claims lead; the senior specialist as backup | Reefer/temperature: same day as receipt. Others: no target in v1 | G7b, G7c, G7d |
+| Always escalate: expedite request | Fact pack, as for all escalations. No decision, no amount | The specialist already working the claim answers; if no one is, the claims lead assigns or answers. The claims lead owns the on-time answer. No named backup. If the expedite request is the only escalation trigger, specialists decide claims ≤ $10k and the claims lead > $10k; any other trigger keeps the claim with the claims lead | `EXPEDITE_RESPONSE_SLA` (business days, Eastern Time; before 14:00 → end of that day; at or after 14:00 → 12:00 next business day) | G7b, G7f, G14, P3, P3a |
+| Always escalate: reefer/temperature | Fact pack: trigger(s), document checklist status, 72h reefer clock. No decision, no amount | Claims lead; the senior specialist as backup | Same day as receipt | G7b, G7c, G7d, G14 |
+| Always escalate: other (loss, cold-chain, above the deductible) | Fact pack: trigger(s), document checklist status, insurer 30-day dates where above the deductible (G9a). No decision, no amount | Claims lead; the senior specialist as backup | No target in v1 | G7b, G7c, G7d, G14 |
 | Hold (state, no route) | Automated reminders; at `FALLBACK_DEADLINE_DAYS`, routes to sign-off | Claims specialists own the "awaiting documents" list | — | G3a, G7e, E5 |
