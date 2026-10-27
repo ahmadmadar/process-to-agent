@@ -317,7 +317,7 @@ authority; record it.
 | Yes, with any payment authority for account managers | No | A new ruling amending C4/E4 before v1 |
 | No, deferred, or no convergence by the hard stop | No | v1 with C4 flagged as an open dependency |
 
-**Recorded outcome:** · **Condition (verbatim, with transcript line):** · **Classification:**
+**Recorded outcome:** Yes, with a condition (T3:L30) · **Condition (verbatim, with transcript line):** "every expedite request gets an answer the same day, with Priya on the hook for it" (T3:L30); owner named by the consultant as the claims lead with the senior specialist as backup (T3:L25) · **Classification:** ratified with a service condition (D5a branch 2), conditional on D5e, D5h and the COO's written confirmation. See "D5 outcome" in `docs/consultant-decisions.md`
 
 ---
 

@@ -243,6 +243,7 @@ Set by the consultant. Claude does not set or change them.
 |---|---|---|---|
 | `CONFIDENCE_THRESHOLD` | C5c; autonomous tier (C5) | Unset; provisional value to be calibrated in the Day 2 eval | Day 2 |
 | `FALLBACK_DEADLINE_DAYS` | C5b, E5 | **14 days** (set 2026-10-19; see P2 below) | Requirements v1 |
+| `EXPEDITE_RESPONSE_SLA` | D5 outcome, D5g | **Business days; before 14:00 → end of that day; at or after 14:00 → 12:00 next business day** (Eastern Time; company holidays excluded, US federal as provisional default (P3a); provisional assumption, set 2026-10-27; see P3 below; awaits claims-lead capacity D10 and COO written confirmation) | Requirements v1 |
 
 ---
 
@@ -567,7 +568,8 @@ These rulings set the terms of the D5 ratification session (Interview D in
 rejected options and rationale are the consultant's, recorded as given on
 2026-10-26. The consultant gave them as R1–R4; they are logged as D5a–D5d
 because scope-table rows use R1–R16. The D5 revision note in D5a was drafted
-by Claude for confirmation. D5 handling is not edited; D5a revises it.
+by Claude and confirmed by the consultant without edits on 2026-10-26. D5
+handling is not edited; D5a revises it.
 
 ### D5a. What counts as ratified
 
@@ -610,3 +612,157 @@ by Claude for confirmation. D5 handling is not edited; D5a revises it.
 - **Rejected options:** (a) An open-ended session.
 - **Rationale:** Matches the discovery interviews; a single executive decision should not need more.
 - **Citations:** interview guide (Interviews A and B, 25 min); D5a
+
+---
+
+## Ratification outcome (Day 2): D5, D5e–D5h, P3
+
+The consultant's rulings on the outcome of the COO ratification session
+(T3), recorded as given on 2026-10-27. The consultant referred to D5a by its
+original ID, R1. One conflict was raised before logging: P3's 14:00 cut-off
+promises less than the "same day" in T3:L30. The consultant resolved it by
+putting P3 in the sponsor follow-up note for the COO's written confirmation.
+The rejected options for D5e, P3, D5f, D5g and D5h, the D5h rationale and
+this note were drafted by Claude and confirmed by the consultant without
+edits on 2026-10-27. On the same day the consultant set P3's "local time" to
+headquarters time (Eastern), asked for D5e to be included in the follow-up
+note, and chose a written note to the claims lead for D10.
+
+### D5 outcome. Ratified with a service condition
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Governance outcome
+- **Resolves:** D5 (COO ratification of C4, E4)
+- **Classification:** **Ratified with a service condition**, under D5a branch 2 ("Yes with a service or communication condition"). C4 and E4 stand unchanged.
+- **Conditional on:** D5e (what counts as an answer) and D5h ("approve" is covered), and on the COO confirming in writing, in the sponsor follow-up note, both the restated decision and P3.
+- **The COO's condition, verbatim (T3:L30):** "Yes. The claims team owns every payout, AMs don't pay, and every expedite request gets an answer the same day, with Priya on the hook for it. If that same-day answer isn't happening, I want to hear about it, because that's the part I'm agreeing to."
+- **The consultant's interpretation:** the condition is about service and accountability: a same-day answer to every expedite request, a named owner, and the sponsor being told about misses. It returns no approval or payment authority to account managers, so the single payout path that D5a tests for holds. The COO rejected a fallback payment right for account managers (T3:L26–L28).
+- **Citations:** T3:L20–L30; C4, E4, D5a
+
+### D5e. What counts as an expedite "answer"
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Refines:** D5 outcome (the T3:L30 condition)
+- **Decision:** The same-day answer to an expedite request is limited to the current status, the next step, and the expected date where known. A payment commitment is allowed only if the claims team has already approved the claim (for example, "approved, payment going out [date]"). There is no commitment to pay before the claim is decided, before documents are complete, or before the insurer has consented where that is required.
+- **Rejected options:** (a) Allow an answer such as "we're paying, it's in hand" before a decision (T3:L22).
+- **Rationale:** "We're paying, it's in hand" before a decision obliges the claims team to pay. That is the account-manager bypass at one remove, and under D5a it would make the outcome "not ratified". Reporting a decision already made gives the account manager something concrete for the customer without returning payment authority.
+- **Citations:** T3:L22; T2:L16; G9b, D5a
+
+### P3. `EXPEDITE_RESPONSE_SLA` (provisional)
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Parameter ruling (consultant-owned, provisional)
+- **Sets:** the expedite service-level requirement in D5a branch 2
+- **Decision:** Measured in business days, not calendar days. A request received before 14:00 local time is answered by the end of that business day. "Local time" means headquarters time: Eastern Time. Public holidays are not business days (consultant, 2026-10-27). A request received at or after 14:00 is answered by 12:00 the next business day.
+- **Assumption:** No data supports these values. They are labelled an assumption. The headquarters location is also an assumption: Northline Freight is fictional, and it is assumed to be headquartered in the Eastern time zone.
+- **Open dependency:** the claims lead must confirm capacity (D10). The claims lead splits time roughly 60/40 between claims and dispatch (T2:L24) and was not party to this commitment. Route: a written note to the claims lead (`engagement/00-governance/claims-lead-capacity-d10.md`).
+- **Sponsor confirmation:** The cut-off promises less than "the same day" in T3:L30. P3 goes in the sponsor follow-up note for the COO's written confirmation (see the conflict note above).
+- **Rejected options:** (a) Calendar days. (b) No cut-off.
+- **Rationale:** The team works business hours, and nobody has discussed weekend cover. A cut-off makes the promise achievable, and a missed promise erodes trust faster than a slightly weaker one.
+- **Citations:** T3:L30; T2:L24; D5a
+
+### D5f. Expedite miss reporting: recorded in v1, reported through governance
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Refines:** D5 outcome (T3:L30, "I want to hear about it")
+- **Decision:** Split.
+  - **v1 requirement:** for every expedite request, the system records the request time, the answer time, the answer content and the outcome.
+  - **Governance item (not v1):** the miss report, its cadence and the COO's review of it.
+- **Rejected options:** (a) Put the miss report in v1.
+- **Rationale:** Requirements define what the system captures, not how management reviews it.
+- **Citations:** T3:L30
+
+### D5g. COO as arbiter, not an escalation route
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Refines:** D5 outcome (T3:L28, "the AM rings me")
+- **Decision:** Logged as a sponsor commitment, not a v1 escalation path. The COO arbitrates disputes between the claims team and account managers, with no approval or payment authority.
+  - **v1 requirement:** if `EXPEDITE_RESPONSE_SLA` is missed, the system automatically notifies the claims lead and the requesting account manager.
+  - Misses reach the COO through the report (D5f), not as a live route.
+- **Rejected options:** (a) A v1 escalation path from the account manager to the COO.
+- **Rationale:** Routing escalations to the COO puts the bypass back one level higher and undoes C4.
+- **Citations:** T3:L28; C4, D5f, P3
+
+### D5h. "Cannot approve" treated as covered
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Interpretation
+- **Refines:** D5 outcome (T3:L29–L30)
+- **Decision:** "Cannot approve" is treated as covered for v1. Interpreted: payout ownership includes the approval decision (T3:L29–30). The sponsor follow-up note restates "Account managers cannot approve or pay claims; they may submit expedite requests" for the COO's written confirmation. The session is not re-run.
+- **Rejected options:** (a) Re-run the session.
+- **Rationale:** At the close the consultant restated "owns every payout" (T3:L29), and the COO confirmed "AMs don't pay" (T3:L30). Neither said "approve". The written confirmation closes that gap without another session. The miss is recorded in the miss review (`docs/scoring.md`).
+- **Citations:** T3:L29–L30; C4
+
+---
+
+## Written replies (Day 2): D5 closed, G7f, D5i, P3a
+
+The consultant's rulings on the written replies W1 (COO) and W2 (claims
+lead), recorded as given on 2026-10-27. In the consultant's text, "R1" means
+D5a and "D5 point 2" means D5e. Two conflicts with G7c were raised before
+logging, and the consultant resolved both:
+
+- **Decision authority:** a specialist decides an expedite claim only when the expedite request is its only escalation trigger.
+- **Backup:** the "no formal backup" instruction applies only to expedite answers.
+
+Claude reworded G7f's rejected option (b), added the T3:L25 note to G7f, and
+drafted the rationales for D5 closed, D5i and P3a, the clause in G7f on why
+the T2:L14 line can apply, and D11's "before go-live" timing. The consultant
+confirmed all of it without edits on 2026-10-27.
+
+### D5 closed
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Governance outcome
+- **Closes:** D5 (the conditions in "D5 outcome")
+- **Decision:** D5 is closed. The COO's written confirmation covers all three points in the sponsor follow-up note, including "cannot approve or pay" (W1:L2–L4), which settles D5h. The outcome stays in D5a branch 2. Requirements v1 is frozen on C4 and E4 as ratified.
+- **The 14:00 caveat (W1:L3):** a preference, not a reversal, and it does not touch payout authority. It is handled as governance (D5i).
+- **Rejected options:** (a) Treat the caveat as a condition that reopens P3.
+- **Rationale:** Each point the ratification depended on (D5e, D5h, P3) is now confirmed in writing by the sponsor. The caveat asks that the after-14:00 path not become routine, which is a monitoring point, not a change to the decision.
+- **Citations:** W1:L2–L4; D5 outcome, D5a, D5e, D5h, P3
+
+### G7f. Expedite requests: the specialist on the claim answers, the lead owns it
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Design ruling
+- **Resolves:** D10 (claims-lead capacity)
+- **Refines:** G7c, for expedite requests only
+- **Decision:**
+  - **Ownership:** the claims lead owns every expedite escalation and the on-time answer under `EXPEDITE_RESPONSE_SLA`.
+  - **Who answers:** the specialist already working the claim gives the answer (G10a). If no one is working the claim, the claims lead assigns it or answers.
+  - **Who decides, when the expedite request is the claim's only escalation trigger:** the T2:L14 line applies. Specialists decide claims at or below $10k, and the claims lead decides above $10k. This is an explicit exception to G7c ("all escalations" go to the lead).
+  - **When any other escalation trigger has fired** (loss, temperature or reefer, cold-chain, above the deductible): G7c applies unchanged, and the claims lead works the claim.
+  - **Answer content:** every answer is bound by D5e: status, next step and expected date only, and a payment commitment only on a claim that is already approved.
+  - **Routing:** the expedite request still always routes to a person, never the agent (C5, R3).
+  - **Backup:** no formal backup is named for expedite answers. G7c's senior-specialist backup still applies to every other escalation.
+- **Open capacity risk:** dispatch-day coverage (W2:L2). On days the claims lead is tied up with dispatch and no one is working the claim, the answer depends on the lead. This is monitored through the miss report (D5f), with no target.
+- **Note:** at T3:L25 the COO was told the owner is the claims lead, with the senior specialist as backup. G7f keeps the claims lead as owner. For expedite answers, it replaces the named backup with the specialist working the claim.
+- **Rejected options:**
+  - (a) Reject the condition. That would bottleneck on dispatch days (W2:L2).
+  - (b) Specialists answer and the lead decides, as G7c applies today. It keeps decisions at or below $10k on expedite-only claims with the lead, away from the approval line the team works to (T2:L14), and it keeps the bottleneck.
+- **Rationale:** The specialist working the claim knows the file best (W2:L3), and G10a already keeps a claim with the person who has it. When the expedite request is the only trigger, the claim carries no risk that makes the escalation tier necessary. The trigger is commercial urgency, so the T2:L14 line can apply. Every other escalation trigger keeps the claim with the lead.
+- **Citations:** W2:L2–L4; T2:L14, T2:L24; T3:L25; C5, R3, G7c, G10a, D5e, D5f, P3
+
+### D5i. Miss report: after-14:00 share
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Governance ruling
+- **Refines:** D5f (governance item)
+- **Decision:** The governance miss report adds one metric: the share of expedite answers given under the after-14:00 path. This is monitoring only, with no target. It needs no new requirement, because D5f already records request and answer times.
+- **Rejected options:** (a) Set a target. (b) Add a v1 requirement.
+- **Rationale:** It answers the COO's caveat (W1:L3) with evidence rather than a promise. No target is set because there is no baseline data on when requests arrive.
+- **Citations:** W1:L3; D5f, P3
+
+### P3a. Holiday calendar
+
+- **Date / step:** 2026-10-27, Day 2 / pre-freeze
+- **Type:** Parameter ruling (refines P3)
+- **Decision:** For `EXPEDITE_RESPONSE_SLA`, the holidays that are not business days are the client's observed company holidays. US federal holidays are the provisional default.
+- **Assumption:** The calendar is labelled an assumption, alongside the Eastern Time assumption, because the client's location was never stated in discovery.
+- **Open dependency:** the COO confirms the company holiday list (D11). No further round with the claims lead is needed, because the holiday rule was accepted at W2:L4.
+- **Rejected options:** (a) Leave "public holidays" undefined.
+- **Rationale:** The SLA cannot be measured without a defined calendar. The company's own holidays are what the team actually observes, and the federal list is a stated placeholder until they are confirmed.
+- **Citations:** W1:L3, W2:L4; P3

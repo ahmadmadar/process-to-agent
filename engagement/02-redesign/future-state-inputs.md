@@ -5,14 +5,14 @@
 Checklist for the consultant's future-state swimlane, drawn from the Day 1
 rulings in `docs/consultant-decisions.md` ("Discovery rulings" and "Redesign
 rulings"). The swimlane is not drawn yet. Items marked **⚠** depend on
-something still open (see Open dependencies D1–D8 and Open parameters P1–P2).
+something still open (see Open dependencies D1–D11 and Open parameters P1–P3).
 
 ## Lanes
 
 - [ ] Customer
 - [ ] Claims agent (new)
 - [ ] Claims team: sign-off and escalation queue (C5)
-- [ ] Account manager: expedite requests only, no approve or pay (C4, E4) **⚠ D5**
+- [ ] Account manager: expedite requests only, no approve or pay (C4, E4; ratified, D5 closed)
 - [ ] Finance: pre-approval above $10k only (C2, E1, E2) **⚠ D1, D2, D4**; payments (E3)
 - [ ] Carrier
 - [ ] Cargo insurer
@@ -28,7 +28,11 @@ something still open (see Open dependencies D1–D8 and Open parameters P1–P2)
 - [ ] Automated reminders replace manual email chasing (E5)
 - [ ] Written fallback rule replaces "judgment" (E5; T2:L34): the agent holds the claim and sends reminders; at `FALLBACK_DEADLINE_DAYS` it routes to human sign-off (C5b) **⚠ P2**
 - [ ] Temperature/reefer claims escalate to a person at intake, never queued (C5; T2:L44, T2:L58)
-- [ ] Account-manager expedite requests enter at intake and route to a person, never auto-approved (C4, E4) **⚠ D5**
+- [ ] Account-manager expedite requests enter at intake and route to a person, never auto-approved (C4, E4; ratified, D5 closed)
+- [ ] Expedite answer within `EXPEDITE_RESPONSE_SLA`: status, next step and expected date; a payment commitment only once the claims team has approved (D5e, P3, P3a) **⚠ D11**
+- [ ] Expedite answer given by the specialist already working the claim; if no one is, the claims lead assigns or answers. The claims lead owns the on-time answer. If the expedite is the only escalation trigger, specialists decide claims at or below $10k and the lead above; any other trigger stays with the lead (G7f)
+- [ ] Each expedite request records request time, answer time, answer content and outcome (D5f)
+- [ ] A missed `EXPEDITE_RESPONSE_SLA` notifies the claims lead and the requesting account manager; no route to the COO (D5g) **⚠ P3**
 
 ## Decision routing (C5)
 
@@ -70,11 +74,13 @@ Show these as removed, with the ruling ID:
 | D2 | Agree removal of pre-approval at or below $10k and for denials, and the payment-run change | CFO (control owner) | C2, E1, E2, E3 | Day 3 |
 | D3 | CFO challenge on the $10k thresholds; revisions logged as new decisions | CFO | C2, C5, E1 | Day 3 |
 | D4 | Confirm the recovery definition and the source of the COO's ~70% (T1:L18) | CFO | C3 | Day 3 |
-| D5 | Ratify claims-team ownership of payouts and the expedite path (SOW §8). Route: Day 2 sponsor summary, then a COO `/interview` session | COO (sponsor) | C4, E4 | Before requirements v1 is frozen |
+| D5 | ~~Ratify claims-team ownership of payouts and the expedite path (SOW §8)~~ **Closed 2026-10-27:** ratified with a service condition (T3:L30), confirmed in writing (W1:L2–L4) | COO (sponsor) | C4, E4 | Done |
 | D6 | ~~Rule on C5 open points~~ **Resolved 2026-10-18:** see C5a (partials), C5b (incomplete documents), C5c (special flags) | Consultant | C5 | Done |
 | D7 | ~~POD-exception field to test the clean-POD rule~~ **Resolved:** release 2; tested in Q18; E6 reversed by E6a | Follow-up data request | E6, E6a | Done |
 | D8 | Late-notice discrepancy: "two other" late notices (T2:L16) vs one in Q12 | CFO | C6 | Day 3 |
 | D9 | Confirm when the insurer's 30-day notice period starts (policy wording; Q17) | CFO | G9a | Day 3 |
+| D10 | ~~Confirm capacity to meet `EXPEDITE_RESPONSE_SLA`; the claims lead splits time ~60/40 claims/dispatch (T2:L24) and was not party to the commitment. Route: written note (`claims-lead-capacity-d10.md`)~~ **Resolved 2026-10-27 by G7f** (W2:L3). Open risk: dispatch-day coverage (W2:L2), monitored via the miss report (D5f, D5i) | Claims lead | P3, D5 outcome | Done |
+| D11 | Confirm the company holiday list for `EXPEDITE_RESPONSE_SLA` (US federal holidays as provisional default) | COO | P3a | Before go-live |
 
 ## Open parameters
 
@@ -85,3 +91,4 @@ Consultant-owned and unset (see "Consultant-owned parameters" in
 |---|---|---|---|
 | P1 | `CONFIDENCE_THRESHOLD`: two thresholds under G11 (rubric score, self-reported confidence); calibrated in the Day 2 eval | Autonomous tier (C5), C5c, G11 | Day 2 |
 | P2 | `FALLBACK_DEADLINE_DAYS`: **14 days** (set 2026-10-19; Q19) | C5b, E5 | Done |
+| P3 | `EXPEDITE_RESPONSE_SLA`: business days excluding company holidays (US federal as provisional default, P3a), Eastern Time (headquarters, assumed); before 14:00 → end of that day; at or after 14:00 → 12:00 next business day (set 2026-10-27; provisional assumption, no data) | D5 outcome, D5g | Set; holiday list pending D11 |

@@ -31,4 +31,8 @@ Result: _pending_
 
 ## Miss review
 
-_pending_
+Process misses logged as they occur:
+
+- **D5 close (T3:L29–L30):** The close restated "owns every payout" but not "cannot approve". Restate both verbs at the close next time. Mitigated by the COO's written confirmation (D5h).
+
+Full review: _pending_ (Day 3)
