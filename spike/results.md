@@ -7,7 +7,7 @@
 | Item | Setting |
 |---|---|
 | Models | `claude-sonnet-5-5`, `claude-haiku-5-5`. Opus 5.5 only if Sonnet fails |
-| Effort | Pinned to the same level on both models: **pending (consultant)** |
+| Effort | `medium`, pinned on both models (EV8) |
 | Agent prompt | `.claude/skills/claims-agent/SKILL.md`, built from requirements v1 |
 | Eval set | `spike/eval_set.jsonl`, 78 snapshots (39 cases × 2) |
 | Expected outcomes | `spike/expected-outcomes-v1.md` |

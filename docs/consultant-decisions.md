@@ -1067,7 +1067,7 @@ were drafted by Claude and await the consultant's confirmation.
 - **Date / step:** 2026-10-27, Day 2 / spike design
 - **Type:** Spike design ruling
 - **Decision:** The spike compares `claude-sonnet-5-5` with `claude-haiku-5-5`. Opus 5.5 is used only if Sonnet fails. Effort is pinned explicitly to the same level on both models, not left at each model's default, and is recorded in `spike/results.md`. The price table in `spike/run_eval.py` cites its source.
-- **Level:** pending (consultant).
+- **Level:** `medium` on both models (consultant, 2026-10-27).
 - **Rejected options:** *(drafted)* (a) Opus 5.5 against Sonnet 5.5. (b) Each model at its default effort.
 - **Rationale:** Routing is mostly rule application, so the question is whether the cheaper model routes correctly. Unpinned effort would compare two models at two different thinking budgets.
 - **Citations:** ground rule 9; `spike/run_eval.py` (`PRICES`)
