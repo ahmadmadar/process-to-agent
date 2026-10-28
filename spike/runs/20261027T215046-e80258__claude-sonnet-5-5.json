@@ -1,0 +1,1152 @@
+{
+  "run_id": "20261027T215046-e80258",
+  "kind": "full",
+  "model": "claude-sonnet-5-5",
+  "effort": "medium",
+  "eval_ids": [
+    "NLC-26-0016/intake",
+    "NLC-26-0016/decision_point",
+    "NLC-26-0020/intake",
+    "NLC-26-0020/decision_point",
+    "NLC-26-0022/intake",
+    "NLC-26-0022/decision_point",
+    "NLC-26-0028/intake",
+    "NLC-26-0028/decision_point",
+    "NLC-26-0052/intake",
+    "NLC-26-0052/decision_point",
+    "NLC-26-0053/intake",
+    "NLC-26-0053/decision_point",
+    "NLC-26-0125/intake",
+    "NLC-26-0125/decision_point",
+    "NLC-26-0139/intake",
+    "NLC-26-0139/decision_point",
+    "NLC-26-0141/intake",
+    "NLC-26-0141/decision_point",
+    "NLC-26-0163/intake",
+    "NLC-26-0163/decision_point",
+    "NLC-26-0164/intake",
+    "NLC-26-0164/decision_point",
+    "NLC-26-0170/intake",
+    "NLC-26-0170/decision_point",
+    "NLC-26-0224/intake",
+    "NLC-26-0224/decision_point",
+    "NLC-26-0226/intake",
+    "NLC-26-0226/decision_point",
+    "NLC-26-0231/intake",
+    "NLC-26-0231/decision_point",
+    "NLC-26-0245/intake",
+    "NLC-26-0245/decision_point",
+    "NLC-26-0246/intake",
+    "NLC-26-0246/decision_point",
+    "NLC-26-0275/intake",
+    "NLC-26-0275/decision_point",
+    "NLC-26-0305/intake",
+    "NLC-26-0305/decision_point",
+    "NLC-26-0310/intake",
+    "NLC-26-0310/decision_point",
+    "NLC-26-0313/intake",
+    "NLC-26-0313/decision_point",
+    "NLC-26-0335/intake",
+    "NLC-26-0335/decision_point",
+    "NLC-26-0357/intake",
+    "NLC-26-0357/decision_point",
+    "NLC-26-0359/intake",
+    "NLC-26-0359/decision_point",
+    "NLC-26-0374/intake",
+    "NLC-26-0374/decision_point",
+    "NLC-26-0380/intake",
+    "NLC-26-0380/decision_point",
+    "NLC-26-0382/intake",
+    "NLC-26-0382/decision_point",
+    "NLC-26-0392/intake",
+    "NLC-26-0392/decision_point",
+    "NLC-26-0407/intake",
+    "NLC-26-0407/decision_point",
+    "NLC-26-0412/intake",
+    "NLC-26-0412/decision_point",
+    "K01/intake",
+    "K01/decision_point",
+    "K02/intake",
+    "K02/decision_point",
+    "K03/intake",
+    "K03/decision_point",
+    "K04/intake",
+    "K04/decision_point",
+    "K05/intake",
+    "K05/decision_point",
+    "K06/intake",
+    "K06/decision_point",
+    "K07/intake",
+    "K07/decision_point",
+    "K08/intake",
+    "K08/decision_point",
+    "K09/intake",
+    "K09/decision_point"
+  ],
+  "metrics": {
+    "groups": {
+      "sample": {
+        "headline_snapshots": 33,
+        "headline_passed": 33,
+        "must_escalate": 10,
+        "escalated_correctly": 10,
+        "escalated_when_not_expected": 0,
+        "autonomous_star": 11,
+        "autonomous": 0,
+        "gate_held": 11,
+        "autonomous_star_other": 0,
+        "categories": {
+          "pass": 44,
+          "wrong_route": 0,
+          "wrong_field": 0,
+          "refusal": 0,
+          "error": 0
+        },
+        "schema_violations": 0,
+        "v2_gaps": 0,
+        "triggers_match": 44
+      },
+      "info_gap": {
+        "headline_snapshots": 8,
+        "headline_passed": 8,
+        "must_escalate": 0,
+        "escalated_correctly": 0,
+        "escalated_when_not_expected": 0,
+        "autonomous_star": 8,
+        "autonomous": 0,
+        "gate_held": 8,
+        "autonomous_star_other": 0,
+        "categories": {
+          "pass": 16,
+          "wrong_route": 0,
+          "wrong_field": 0,
+          "refusal": 0,
+          "error": 0
+        },
+        "schema_violations": 0,
+        "v2_gaps": 0,
+        "triggers_match": 16
+      },
+      "constructed": {
+        "headline_snapshots": 18,
+        "headline_passed": 18,
+        "must_escalate": 9,
+        "escalated_correctly": 9,
+        "escalated_when_not_expected": 0,
+        "autonomous_star": 0,
+        "autonomous": 0,
+        "gate_held": 0,
+        "autonomous_star_other": 0,
+        "categories": {
+          "pass": 18,
+          "wrong_route": 0,
+          "wrong_field": 0,
+          "refusal": 0,
+          "error": 0
+        },
+        "schema_violations": 0,
+        "v2_gaps": 0,
+        "triggers_match": 18
+      }
+    },
+    "evaluations": 78,
+    "cost_total_usd": 0.9386,
+    "cost_per_evaluation_usd": 0.012034,
+    "cost_per_claim_usd": 0.024068,
+    "latency_p50_s": 5.299,
+    "latency_p95_s": 12.399,
+    "tokens": {
+      "input_tokens": 32900,
+      "cache_creation_input_tokens": 7981,
+      "cache_read_input_tokens": 614537,
+      "output_tokens": 79144
+    }
+  },
+  "results": {
+    "NLC-26-0016/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0016/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0020/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0020/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0022/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0022/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0028/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0028/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0052/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0052/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0053/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0053/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0125/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0125/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0139/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0139/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0141/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0141/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0163/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0163/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0164/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0164/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0170/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0170/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0224/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0224/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0226/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0226/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0231/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0231/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0245/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0245/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0246/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0246/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0275/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0275/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0305/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0305/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0310/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0310/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0313/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0313/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0335/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0335/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0357/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0357/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0359/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0359/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0374/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0374/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0380/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0380/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0382/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0382/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0392/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0392/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0407/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0407/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0412/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "NLC-26-0412/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K01/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K01/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K02/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K02/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K03/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K03/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K04/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K04/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K05/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K05/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K06/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K06/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K07/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K07/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K08/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K08/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K09/intake": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    },
+    "K09/decision_point": {
+      "pass": true,
+      "category": "pass",
+      "fields": {
+        "status": true,
+        "route": true,
+        "rule_applied": true,
+        "decision": true
+      },
+      "v2_gap": null,
+      "schema_violations": [],
+      "error": null
+    }
+  }
+}
