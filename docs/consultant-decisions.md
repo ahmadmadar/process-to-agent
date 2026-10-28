@@ -1052,3 +1052,72 @@ rejected: leaving the value open and letting the engineer choose.
 | E-b | The decision is not scored on sign-off | Score the draft decision | The draft is not a routing outcome | G7a |
 | E-c | 8 "info gap" sample cases reported separately | Fold into the headline | Their snapshots lack the evidence behind the historical outcome | EV1 |
 | E-d | `invoice_amount` = `amount_claimed` for sample snapshots, labelled an assumption | Leave blank | IT holds no invoice values; otherwise R8 fires on every sample case | release 2 §2 |
+
+---
+
+## Spike design (Day 2): EV8–EV13
+
+Rulings given on 2026-10-27, after the claims-agent Skill and harness were
+built and before any model run. Each decision is the consultant's, recorded
+as given. **Wording:** the rejected options and rationale marked *(drafted)*
+were drafted by Claude and await the consultant's confirmation.
+
+### EV8. Spike models: Sonnet 5.5 against Haiku 5.5, effort pinned
+
+- **Date / step:** 2026-10-27, Day 2 / spike design
+- **Type:** Spike design ruling
+- **Decision:** The spike compares `claude-sonnet-5-5` with `claude-haiku-5-5`. Opus 5.5 is used only if Sonnet fails. Effort is pinned explicitly to the same level on both models, not left at each model's default, and is recorded in `spike/results.md`. The price table in `spike/run_eval.py` cites its source.
+- **Level:** pending (consultant).
+- **Rejected options:** *(drafted)* (a) Opus 5.5 against Sonnet 5.5. (b) Each model at its default effort.
+- **Rationale:** Routing is mostly rule application, so the question is whether the cheaper model routes correctly. Unpinned effort would compare two models at two different thinking budgets.
+- **Citations:** ground rule 9; `spike/run_eval.py` (`PRICES`)
+
+### EV9. Unheld fields sent as null; headline is routing on escalate, hold and sign-off
+
+- **Date / step:** 2026-10-27, Day 2 / spike design
+- **Type:** Eval design ruling
+- **Refines:** E-a, EV6
+- **Decision:**
+  - `claim_text` (except K09), `shipment_record` and the content of photos, BOL and POD are sent as null.
+  - Gate-held (R14) cases are reported as their own line and excluded from the headline pass rate. The headline is routing correctness on escalate, hold and sign-off snapshots.
+  - The report states plainly that the autonomous tier is untested on released data, because document content is not held.
+  - Any escalation caused by a null `claim_text` under "if unsure, treat it as an allegation" is logged as a v2 gap (v1 does not say what missing claim text means), not as a harness bug.
+- **Rejected options:** *(drafted)* (a) Fill the unheld fields with text built from the held fields. (b) Keep autonomous* snapshots in the headline.
+- **Rationale:** *(drafted)* Null tests v1 as written and invents no claim content. With no document content, the rubric cannot pass, so autonomous* results measure missing data rather than routing.
+- **Citations:** release 2 §2; E-a, EV6; v1 `rules.md` (temperature allegation)
+
+### EV10. Harness snapshot conventions accepted
+
+- **Date / step:** 2026-10-27, Day 2 / spike design
+- **Type:** Eval design ruling
+- **Decision:** Accepted as built: intake at 09:00 ET and the documents check at 12:00 ET; `current_state` at the decision point carried from the intake result; fallback snapshots list flagged items without a date and the POD as missing. `spike/README.md` carries a caveat: the flags show status at extract, so a fallback snapshot may show a document as received that arrived after day 14. No expected outcome changes, because the POD is missing and the claim routes to R6 either way.
+- **Rejected options:** *(drafted)* (a) Fallback snapshots with no documents listed. (b) `current_state` reset to new at every snapshot.
+- **Rationale:** *(drafted)* The release holds dates only and no per-document dates (release 2 §4 Q4). Fixed, recorded conventions keep the snapshots reproducible.
+- **Citations:** EV1, EV2; release 2 §4 Q1, Q4; `spike/README.md`
+
+### EV11. No refusal fallback; refusals are their own failure category
+
+- **Date / step:** 2026-10-27, Day 2 / spike design
+- **Type:** Spike design ruling
+- **Decision:** The server-side refusal fallback stays off. A refusal counts as a failure, reported as its own category, separate from a wrong route.
+- **Rejected options:** *(drafted)* (a) Enable the fallback to another model.
+- **Rationale:** *(drafted)* A fallback would answer some snapshots with a different model and mix two models into one model's results.
+- **Citations:** EV8
+
+### EV12. Smoke test before the full run
+
+- **Date / step:** 2026-10-27, Day 2 / spike design
+- **Type:** Spike design ruling
+- **Decision:** Before the full run, a smoke test on both models with three snapshots: K04/decision_point, NLC-26-0016/decision_point and K09/intake. Every output is validated against the v1 output schema. Measured input, cached and output tokens are reported per call. The full-run estimate is made from the measured numbers (snapshots × models × measured cost). The hard spend limit on the key stays. The full run waits for the consultant's approval.
+- **Rejected options:** *(drafted)* (a) Estimate from an assumed output size. (b) Go straight to the full run.
+- **Rationale:** *(drafted)* Output size, including thinking tokens, is unknown until measured. Three snapshots cover sign-off, autonomous* and escalate paths at small cost.
+- **Citations:** ground rule 8; EV1; NF-16
+
+### EV13. Expected outcomes marked approved and committed before any run
+
+- **Date / step:** 2026-10-27, Day 2 / spike design
+- **Type:** Process ruling
+- **Decision:** The "(draft for consultant review)" label on `spike/expected-outcomes-v1.md` is removed only after V1–V24 and E-a to E-d are logged in this file, and replaced with "approved [date]". The approved file is committed before any run, the smoke test included.
+- **Rejected options:** *(drafted)* (a) Remove the label at once.
+- **Rationale:** *(drafted)* EV1 requires expected outcomes written before any run. A committed, approved file shows they were not changed after seeing results.
+- **Citations:** EV1

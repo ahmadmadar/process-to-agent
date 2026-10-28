@@ -1,4 +1,4 @@
-# Expected Outcomes for Requirements v1 (draft for consultant review)
+# Expected Outcomes for Requirements v1 (approved 2026-10-27)
 
 > Fictional engagement for portfolio purposes. The client, stakeholders and data are synthetic.
 
