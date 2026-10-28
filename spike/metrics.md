@@ -29,7 +29,7 @@ snapshots are reported on their own line, and gate-held (R14) cases are excluded
 
 ## Autonomous* snapshots (not in the headline)
 
-| Model | Group | Autonomous* | Autonomous (R15) | Gate-held (R14) | Other route (fail) |
+| Model | Group | Autonomous* | Autonomous (R15) | Gate-held (R14) | Other (fail) |
 |---|---|---|---|---|---|
 | claude-haiku-5-5 | Sample (excl. info gap) | 11 | 0 | 10 | 1 |
 | claude-haiku-5-5 | Info gap (E-c) | 8 | 0 | 8 | 0 |
@@ -38,16 +38,17 @@ snapshots are reported on their own line, and gate-held (R14) cases are excluded
 
 ## Outcome categories, all snapshots
 
-Refusals are counted separately from wrong routes (EV11).
+Refusals are counted separately from wrong routes (EV11). Wrong rule: the right tier through the wrong
+scope-table row, e.g. an autonomous* snapshot sent to sign-off by R10 instead of R14 (EV14).
 
-| Model | Group | Pass | Wrong route | Wrong field | Refusal | Error | Schema/v1 violations | v2 gaps | Triggers match |
-|---|---|---|---|---|---|---|---|---|---|
-| claude-haiku-5-5 | Sample (excl. info gap) | 43 | 1 | 0 | 0 | 0 | 1 | 0 | 44 |
-| claude-haiku-5-5 | Info gap (E-c) | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 16 |
-| claude-haiku-5-5 | Constructed (rule coverage) | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 18 |
-| claude-sonnet-5-5 | Sample (excl. info gap) | 44 | 0 | 0 | 0 | 0 | 0 | 0 | 44 |
-| claude-sonnet-5-5 | Info gap (E-c) | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 16 |
-| claude-sonnet-5-5 | Constructed (rule coverage) | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 18 |
+| Model | Group | Pass | Wrong route | Wrong rule | Wrong field | Refusal | Error | Schema/v1 violations | v2 gaps | Triggers match |
+|---|---|---|---|---|---|---|---|---|---|---|
+| claude-haiku-5-5 | Sample (excl. info gap) | 43 | 0 | 1 | 0 | 0 | 0 | 1 | 0 | 44 |
+| claude-haiku-5-5 | Info gap (E-c) | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 16 |
+| claude-haiku-5-5 | Constructed (rule coverage) | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 18 |
+| claude-sonnet-5-5 | Sample (excl. info gap) | 44 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 44 |
+| claude-sonnet-5-5 | Info gap (E-c) | 16 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 16 |
+| claude-sonnet-5-5 | Constructed (rule coverage) | 18 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 18 |
 
 ## Cost and latency
 
@@ -62,12 +63,13 @@ Prices: `spike/run_eval.py`, `PRICES` (source cited there).
 
 | Model | Eval id | Category | Fields wrong | Error |
 |---|---|---|---|---|
-| claude-haiku-5-5 | NLC-26-0053/decision_point | wrong_route | route, rule_applied |  |
+| claude-haiku-5-5 | NLC-26-0053/decision_point | wrong_rule | rule_applied |  |
 
 ## v2 gaps found by the eval (EV9)
 
 Escalations caused by a null `claim_text` under "if unsure, treat it as an allegation".
 v1 does not say what missing claim text means. Logged as v2 gaps, not harness bugs.
+Every v2 gap from the eval is carried to `engagement/03-requirements/v2-gaps.md`.
 
 | Model | Eval id | Gap |
 |---|---|---|

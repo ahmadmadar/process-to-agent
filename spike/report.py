@@ -56,20 +56,21 @@ def metrics_md(runs):
             out.append(f"| {m} | {GROUP_LABEL[g]} | {pct(x['headline_passed'], x['headline_snapshots'])} | "
                        f"{pct(x['escalated_correctly'], x['must_escalate'])} | {x['escalated_when_not_expected']} |")
     out += ["", "## Autonomous* snapshots (not in the headline)", "",
-            "| Model | Group | Autonomous* | Autonomous (R15) | Gate-held (R14) | Other route (fail) |", "|---|---|---|---|---|---|"]
+            "| Model | Group | Autonomous* | Autonomous (R15) | Gate-held (R14) | Other (fail) |", "|---|---|---|---|---|---|"]
     for m in models:
         for g, x in runs[m]["metrics"]["groups"].items():
             if x["autonomous_star"]:
                 out.append(f"| {m} | {GROUP_LABEL[g]} | {x['autonomous_star']} | {x['autonomous']} | "
                            f"{x['gate_held']} | {x['autonomous_star_other']} |")
     out += ["", "## Outcome categories, all snapshots", "",
-            "Refusals are counted separately from wrong routes (EV11).", "",
-            "| Model | Group | Pass | Wrong route | Wrong field | Refusal | Error | Schema/v1 violations | v2 gaps | Triggers match |",
-            "|---|---|---|---|---|---|---|---|---|---|"]
+            "Refusals are counted separately from wrong routes (EV11). Wrong rule: the right tier through the wrong",
+            "scope-table row, e.g. an autonomous* snapshot sent to sign-off by R10 instead of R14 (EV14).", "",
+            "| Model | Group | Pass | Wrong route | Wrong rule | Wrong field | Refusal | Error | Schema/v1 violations | v2 gaps | Triggers match |",
+            "|---|---|---|---|---|---|---|---|---|---|---|"]
     for m in models:
         for g, x in runs[m]["metrics"]["groups"].items():
             c = x["categories"]
-            out.append(f"| {m} | {GROUP_LABEL[g]} | {c['pass']} | {c['wrong_route']} | {c['wrong_field']} | "
+            out.append(f"| {m} | {GROUP_LABEL[g]} | {c['pass']} | {c['wrong_route']} | {c['wrong_rule']} | {c['wrong_field']} | "
                        f"{c['refusal']} | {c['error']} | {x['schema_violations']} | {x['v2_gaps']} | {x['triggers_match']} |")
     out += ["", "## Cost and latency", "",
             "Prices: `spike/run_eval.py`, `PRICES` (source cited there).", "",
@@ -89,7 +90,8 @@ def metrics_md(runs):
                 out.append(f"| {m} | {eid} | {r['category']} | {wrong} | {r['error'] or ''} |")
     out += ["", "## v2 gaps found by the eval (EV9)", "",
             "Escalations caused by a null `claim_text` under \"if unsure, treat it as an allegation\".",
-            "v1 does not say what missing claim text means. Logged as v2 gaps, not harness bugs.", "",
+            "v1 does not say what missing claim text means. Logged as v2 gaps, not harness bugs.",
+            "Every v2 gap from the eval is carried to `engagement/03-requirements/v2-gaps.md`.", "",
             "| Model | Eval id | Gap |", "|---|---|---|"]
     for m in models:
         for eid, r in runs[m]["results"].items():

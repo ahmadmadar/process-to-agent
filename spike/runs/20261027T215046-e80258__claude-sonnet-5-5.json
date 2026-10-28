@@ -98,6 +98,7 @@
         "categories": {
           "pass": 44,
           "wrong_route": 0,
+          "wrong_rule": 0,
           "wrong_field": 0,
           "refusal": 0,
           "error": 0
@@ -119,6 +120,7 @@
         "categories": {
           "pass": 16,
           "wrong_route": 0,
+          "wrong_rule": 0,
           "wrong_field": 0,
           "refusal": 0,
           "error": 0
@@ -140,6 +142,7 @@
         "categories": {
           "pass": 18,
           "wrong_route": 0,
+          "wrong_rule": 0,
           "wrong_field": 0,
           "refusal": 0,
           "error": 0
@@ -1148,5 +1151,6 @@
       "schema_violations": [],
       "error": null
     }
-  }
+  },
+  "rescored_at": "2026-10-28T04:01:06.525697+00:00"
 }

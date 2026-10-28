@@ -1121,3 +1121,13 @@ were drafted by Claude and await the consultant's confirmation.
 - **Rejected options:** *(drafted)* (a) Remove the label at once.
 - **Rationale:** *(drafted)* EV1 requires expected outcomes written before any run. A committed, approved file shows they were not changed after seeing results.
 - **Citations:** EV1
+
+### EV14. Rule errors labelled separately; NLC-26-0053 carried to v2
+
+- **Date / step:** 2026-10-27, Day 2 / spike results
+- **Type:** Eval reporting ruling
+- **Refines:** E-a, EV9
+- **Decision:** An autonomous* snapshot that reaches sign-off through a rule other than R14 is labelled `wrong_rule`, not `wrong_route`: the tier is right and the scope-table row is wrong. It still fails under E-a. Run summaries are rebuilt from the stored traces under this scoring, with no new model calls; the traces are not edited (NF-04). The NLC-26-0053 draft denial (Haiku 5.5, R10) is carried to v2 as gap EG1 in `engagement/03-requirements/v2-gaps.md`, which is also where every v2 gap found by the eval is logged.
+- **Rejected options:** *(drafted)* (a) Keep the `wrong_route` label. (b) Change E-a to accept R10 on autonomous* snapshots.
+- **Rationale:** *(drafted)* The claim reached a person, so calling it a route error overstates the miss. The scoring stays as approved before the run (EV1); the cause is a v1 gap, not the scoring.
+- **Citations:** E-a, EV1, EV9; NF-04; `spike/metrics.md`

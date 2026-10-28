@@ -184,9 +184,10 @@ def score(out, exp, inp, stop_reason, error):
     f = {"status": out.get("status") == exp["status"]}
     if exp["autonomous_star"]:
         # E-a: autonomous (R15, approve) or sign-off via a failed gate (R14) both count.
+        # Sign-off via another rule is a rule error, not a route error (EV14).
         auto = route == "autonomous" and rule == "R15"
         held = route == "sign_off" and rule == "R14"
-        f["route"] = auto or held
+        f["route"] = route in ("autonomous", "sign_off")
         f["rule_applied"] = auto or held
         if auto:
             f["decision"] = out.get("decision") == "approve"
@@ -204,7 +205,8 @@ def score(out, exp, inp, stop_reason, error):
         v2_gap = "null claim_text treated as a temperature allegation"
     return {
         "pass": passed,
-        "category": "pass" if passed else ("wrong_route" if not f["route"] else "wrong_field"),
+        "category": "pass" if passed else ("wrong_route" if not f["route"] else
+                                           "wrong_rule" if not f["rule_applied"] else "wrong_field"),
         "fields": f,
         "gate_held": exp["autonomous_star"] and route == "sign_off" and rule == "R14",
         "triggers_match": sorted(out.get("triggers") or []) == sorted(exp["triggers"]),
@@ -318,7 +320,7 @@ def metrics(traces):
             "gate_held": sum(t["score"]["gate_held"] for t in star),
             "autonomous_star_other": sum(not t["score"]["pass"] for t in star),
             "categories": {c: sum(t["score"]["category"] == c for t in ts)
-                           for c in ("pass", "wrong_route", "wrong_field", "refusal", "error")},
+                           for c in ("pass", "wrong_route", "wrong_rule", "wrong_field", "refusal", "error")},
             "schema_violations": sum(bool(t["schema_violations"]) for t in ts),
             "v2_gaps": sum(bool(t["score"]["v2_gap"]) for t in ts),
             "triggers_match": sum(t["score"]["triggers_match"] for t in ts),
@@ -364,14 +366,47 @@ def make_client():
     return anthropic.Anthropic(api_key=key, max_retries=4)
 
 
+def summarise(run_id, kind, model, effort, traces):
+    return {"run_id": run_id, "kind": kind, "model": model, "effort": effort,
+            "eval_ids": [t["eval_id"] for t in traces], "metrics": metrics(traces),
+            "results": {t["eval_id"]: {"pass": t["score"]["pass"], "category": t["score"]["category"],
+                                       "fields": t["score"]["fields"], "v2_gap": t["score"]["v2_gap"],
+                                       "schema_violations": t["schema_violations"], "error": t["error"]}
+                        for t in traces}}
+
+
+def rescore(run_id):
+    """Rebuild a run summary from its traces under the current scoring. No API call.
+    Traces are append-only (NF-04): their stored `score` is left as first written."""
+    path = next((SPIKE / "runs").glob(f"{run_id}__*.json"))
+    old = json.loads(path.read_text())
+    traces = [t for t in map(json.loads, open(SPIKE / "traces" / f"{old['model']}.jsonl")) if t["run_id"] == run_id]
+    for t in traces:
+        out = None if t["output"] is None else {**t["output"], "steps": t["steps"], "checks": t["checks"]}
+        t["score"] = score(out, t["expected"], t["inputs"], t["stop_reason"], t["error"])
+    new = summarise(run_id, old["kind"], old["model"], old["effort"], traces)
+    for k in ("full_run_estimate",):
+        if k in old:
+            new[k] = old[k]
+    new["rescored_at"] = datetime.now(timezone.utc).isoformat()
+    path.write_text(json.dumps(new, indent=2))
+    changed = [e for e in new["results"] if new["results"][e] != old["results"][e]]
+    print(f"rescored {run_id}: {len(changed)} result(s) changed: {changed}")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", required=True, choices=sorted(PRICES))
-    ap.add_argument("--effort", required=True, choices=["low", "medium", "high", "xhigh", "max"],
+    ap.add_argument("--model", choices=sorted(PRICES))
+    ap.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"],
                     help="pinned explicitly, same level on both models (EV8)")
     ap.add_argument("--smoke", action="store_true", help=f"run only {SMOKE_IDS} and estimate the full run")
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--rescore", metavar="RUN_ID", help="rebuild a run summary from its traces; no API call")
     args = ap.parse_args()
+    if args.rescore:
+        return rescore(args.rescore)
+    if not (args.model and args.effort):
+        ap.error("--model and --effort are required for a run")
 
     all_cases = [json.loads(l) for l in open(SPIKE / "eval_set.jsonl")]
     cases = [c for c in all_cases if c["id"] in SMOKE_IDS] if args.smoke else all_cases
@@ -397,12 +432,7 @@ def main():
         for t in traces:
             f.write(json.dumps(t, ensure_ascii=False) + "\n")
 
-    summary = {"run_id": run_id, "kind": kind, "model": args.model, "effort": args.effort,
-               "eval_ids": [c["id"] for c in cases], "metrics": metrics(traces),
-               "results": {t["eval_id"]: {"pass": t["score"]["pass"], "category": t["score"]["category"],
-                                          "fields": t["score"]["fields"], "v2_gap": t["score"]["v2_gap"],
-                                          "schema_violations": t["schema_violations"], "error": t["error"]}
-                           for t in traces}}
+    summary = summarise(run_id, kind, args.model, args.effort, traces)
     if args.smoke:
         summary["full_run_estimate"] = full_run_estimate(args.model, traces, len(all_cases))
     (SPIKE / "runs").mkdir(exist_ok=True)
