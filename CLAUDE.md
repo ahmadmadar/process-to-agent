@@ -175,10 +175,11 @@ data request I actually write.
 ### `claims-agent`
 - The prototype agent, built only from the current requirements version.
 - For each claim, it outputs a structured decision:
-  - `decision`
+  - `decision` (`approve` | `partial` | `deny` | null; null on escalate)
   - `rule_applied`
-  - `confidence`
-  - `route` (`autonomous` | `sign_off` | `escalate`)
+  - `rubric_score` (0–1; G11 gate 1)
+  - `self_reported_confidence` (0–1; G11 gate 2)
+  - `route` (`autonomous` | `sign_off` | `escalate` | null; null on a hold)
   - `rationale`
 - It never decides outside its scope table. Anything outside scope goes to
   `escalate`.

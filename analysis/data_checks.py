@@ -1,4 +1,4 @@
-"""Data-vs-claims checks on IT data release 1.
+"""Data-vs-claims checks on IT data releases 1 and 2.
 
 Northline Freight is a fictional client. All data is synthetic.
 
@@ -239,7 +239,7 @@ def q_recovery_by_type(claims):
         resp = Counter(c["recovery_outcome"] for c in group)
         out.append(table(["Carrier response", "Claims"], resp.most_common()))
     out.append("Release 1 has no POD-exception field, so the clean-POD shortage "
-               "rule (T2:L20, T2:L64) cannot be tested directly.")
+               "rule (T2:L20, T2:L64) cannot be tested here. It is tested in Q18 (release 2).")
     return ("Q10. Carrier recovery by claim type (H5; T2:L20, T2:L64)", out)
 
 
@@ -315,13 +315,164 @@ def q_outcomes(claims):
     ])
 
 
+def load_r2(claims):
+    r2 = {r["claim_id"]: r for r in csv.DictReader(open(RELEASE / "claims_r2_fields.csv"))}
+    sample = {r["claim_id"]: r for r in csv.DictReader(open(RELEASE / "eval_sample.csv"))}
+    for c in claims:
+        c.update({k: v for k, v in r2.get(c["claim_id"], {}).items() if k != "claim_id"})
+        c["temp_log_required"] = (sample[c["claim_id"]]["temp_log_obtained"] != "N/A"
+                                  if c["claim_id"] in sample else None)
+
+
+def q_threshold_basis(claims):
+    lines = [(APPROVAL_LINE, "$10k approval line"), (DEDUCTIBLE_ASSUMED, "assumed deductible")]
+    paid = [c for c in claims if c["outcome"] in ("approved", "partially_approved")]
+    rows, detail = [], []
+    for line, name in lines:
+        cross = [c for c in paid if c["amount_claimed"] > line >= c["amount_paid"]]
+        rows.append((f"{name} ({money(line)})", sum(c["amount_claimed"] > line for c in claims), len(cross)))
+        detail += [(c["claim_id"], name, money(c["amount_claimed"]), money(c["amount_paid"]), c["outcome"])
+                   for c in cross]
+    return ("Q15. Threshold basis: claimed vs paid amount (G4; T2:L14, T2:L16, T2:L62)", [
+        table(["Threshold", "Claims with claimed amount above it", "Paid claims claimed above, paid at or below"], rows),
+        table(["Claim", "Threshold crossed", "Claimed", "Paid", "Outcome"], detail),
+    ])
+
+
+def q_reefer(claims):
+    reefer = [c for c in claims if c.get("reefer_flag") == "Y"]
+    temp_missing = lambda c: "temp_log" in c["docs_missing"].split(";")
+    sampled = [c for c in claims if c["temp_log_required"] is not None]
+    return ("Q16. Reefer equipment vs temperature claims (G5; T2:L44, T2:L58)", [
+        table(["Measure", "Value"], [
+            ("Claims on reefer equipment (`reefer_flag` = Y)", f"{len(reefer)} of {len(claims)}"),
+            ("…damage", sum(c["claim_type"] == "damage" for c in reefer)),
+            ("…shortage", sum(c["claim_type"] == "shortage" for c in reefer)),
+            ("Reefer claims with a temperature log missing (required, not obtained)", sum(map(temp_missing, reefer))),
+            ("Non-reefer claims with a temperature log missing", sum(temp_missing(c) for c in claims if c not in reefer)),
+        ]),
+        "Eval sample only (`temp_log_obtained` is N/A where no temperature log is required):",
+        table(["`reefer_flag`", "Temperature log required", "Claims"],
+              [(r, "yes" if t else "no", n) for (r, t), n in sorted(Counter(
+                  (c.get("reefer_flag"), c["temp_log_required"]) for c in sampled).items())]),
+    ])
+
+
+def q_insurer_clock(claims):
+    notified = [c for c in claims if c["insurer_at"]]
+    rows = []
+    for c in sorted(notified, key=lambda c: c["claim_id"]):
+        from_receipt = days(c["received_at"], c["insurer_at"])
+        from_delivery = days(c["delivered_at"], c["insurer_at"])
+        rows.append((c["claim_id"], from_delivery, from_receipt,
+                     "Y" if from_delivery > INSURER_NOTICE_DAYS else "N",
+                     "Y" if from_receipt > INSURER_NOTICE_DAYS else "N", c["insurer_status"]))
+    over = lambda i: [r for r in rows if r[i] == "Y"]
+    return ("Q17. Insurer 30-day clock: from delivery vs from receipt (G9; T2:L16, T2:L48)", [
+        table(["Measure", "From delivery", "From receipt"], [
+            ("Notified more than 30 days after", len(over(3)), len(over(4))),
+            ("…of which insurer consented to settle", sum(r[5] == "consent_to_settle" for r in over(3)),
+             sum(r[5] == "consent_to_settle" for r in over(4))),
+        ]),
+        table(["Claim", "Days delivery → notified", "Days receipt → notified", "> 30 from delivery",
+               "> 30 from receipt", "Insurer status"], rows),
+    ])
+
+
+def q_clean_pod(claims):
+    responses = ["paid", "partial", "denied", "pending", "not_filed"]
+    rows, resp_rows = [], []
+    for t in ("shortage", "damage"):
+        for pod, label in (("N", "clean POD"), ("Y", "POD exception")):
+            g = [c for c in claims if c["claim_type"] == t and c.get("pod_exception") == pod]
+            paid = [c for c in g if c["amount_paid"] > 0]
+            filed = [c for c in paid if c["recovery_filed"] == "Y"]
+            answered = [c for c in filed if c["recovery_outcome"] in ("paid", "partial", "denied")]
+            accepted = [c for c in answered if c["recovery_outcome"] in ("paid", "partial")]
+            rec = sum(c["amount_recovered"] for c in filed)
+            rows.append((t, label, len(g), len(paid), len(filed), len(answered), len(accepted),
+                         money(rec), pct(rec, sum(c["amount_paid"] for c in filed))))
+            r = Counter(c["recovery_outcome"] for c in paid)
+            resp_rows.append((t, label, *(r.get(x, 0) for x in responses)))
+    return ("Q18. Clean-POD rule: carrier response by POD status (E6; T2:L20, T2:L64)", [
+        table(["Type", "POD", "Claims", "Paid", "Filed", "Carrier answered", "Carrier accepted (paid or partial)",
+               "Recovered (filed)", "Recovered ÷ paid (filed)"], rows),
+        table(["Type", "POD", *responses], resp_rows),
+        "`pod_exception` from release 2: `N` is a clean POD. Paid claims only in the response table.",
+    ])
+
+
+def q_docs_deadline(claims):
+    lag = [days(c["received_at"], c["docs_completed_at"]) for c in claims if c["docs_completed_at"]]
+    never = sum(1 for c in claims if not c["docs_completed_at"])
+    rows = [(f"Within {n} days", sum(1 for x in lag if x <= n), pct(sum(1 for x in lag if x <= n), len(lag)))
+            for n in (7, 10, 14, 21, 30, 45)]
+    rows.append(("Longest, days", max(lag), ""))
+    return ("Q19. Days from receipt to documents complete (FALLBACK_DEADLINE_DAYS; C5b, E5; T2:L28, T2:L34)", [
+        table(["Documents complete", "Claims", "Share of claims that completed"], rows),
+        f"Claims that completed: {len(lag)}. Claims never complete: {never} (Q13).",
+    ])
+
+
+def q_docs_by_type(claims):
+    rows = []
+    for ctype in ("damage", "shortage"):
+        group = [c for c in claims if c["claim_type"] == ctype]
+        done = [c for c in group if c["docs_completed_at"]]
+        notdone = [c for c in group if not c["docs_completed_at"]]
+        for doc in ("photos", "invoice", "bol", "temp_log"):
+            n = sum(1 for c in done if doc in c["docs_missing"].split(";"))
+            rows.append((ctype, doc, n, len(done), pct(n, len(done))))
+        clean = sum(1 for c in notdone if not c["docs_missing"])
+        rows.append((ctype, "(none missing, but no completion date)", clean, len(notdone), pct(clean, len(notdone))))
+    return ("Q20. Documents missing on claims marked complete, by claim type (E5 checklist; T2:L18)", [
+        table(["Type", "Document missing (as of extract)", "Claims", "Of", "Share"], rows),
+        "\"Of\" is claims with a completion date, except the last row per type, where it is claims without one. "
+        "`docs_missing` shows flag status at extract, not at receipt, and IT does not check that the flags agree with "
+        "the completion date (release 1 README; release 2 §4 Q1). There is no delivery-receipt document flag (release 2 §4 Q4).",
+    ])
+
+
+def q_filing_window(claims):
+    fw = "outside customer filing window"
+    denied = [c for c in claims if c["denial_reason"] == fw]
+    others = [c for c in claims if c["denial_reason"] != fw]
+    bases = [("Delivery → receipt", "delivered_at", "received_at"),
+             ("Delivery → documents complete", "delivered_at", "docs_completed_at"),
+             ("Receipt → documents complete", "received_at", "docs_completed_at")]
+    rows = []
+    for label, a, b in bases:
+        dg = [days(c[a], c[b]) for c in denied if c[a] and c[b]]
+        og = [days(c[a], c[b]) for c in others if c[a] and c[b]]
+        separable = bool(dg) and min(dg) > max(og)
+        rows.append((label, len(dg), f"{min(dg)}–{max(dg)}", len(og), f"{min(og)}–{max(og)}",
+                     "Yes" if separable else "No"))
+    cust = sorted({c["customer_id"] for c in denied})
+    crow = []
+    for cid in cust:
+        dg = [days(c["delivered_at"], c["received_at"]) for c in denied if c["customer_id"] == cid]
+        ok = [days(c["delivered_at"], c["received_at"]) for c in others
+              if c["customer_id"] == cid and c["outcome"] in ("approved", "partially_approved")]
+        crow.append((cid, len(dg), ", ".join(str(x) for x in sorted(dg)), len(ok), max(ok) if ok else "—"))
+    return ("Q21. Filing-window denials: is there a single day threshold? (R9; Q14)", [
+        f"Claims denied as \"{fw}\": {len(denied)}.",
+        table(["Basis (calendar days)", "Denied: claims", "Denied: range", "All other claims", "Others: range",
+               "One threshold separates them?"], rows),
+        table(["Customer", "Filing-window denials", "Their delivery → receipt days",
+               "Approved or partial claims", "Longest delivery → receipt, approved or partial"], crow),
+        "\"Separates\" means every denied claim's gap is longer than every other claim's gap on that basis. "
+        "Dates are as released; the system holds no contract terms (release 2 §2, `cold_chain_customer`).",
+    ])
+
+
 def main():
     claims = load()
+    load_r2(claims)
     sections = [q(claims) for q in (q_volume, q_mix, q_cycle, q_stages, q_finance, q_weekday,
                                     q_size, q_approval, q_recovery, q_recovery_by_type, q_am,
-                                    q_insurer, q_docs, q_outcomes)]
+                                    q_insurer, q_docs, q_outcomes, q_threshold_basis, q_reefer, q_insurer_clock, q_clean_pod, q_docs_deadline, q_docs_by_type, q_filing_window)]
     parts = [
-        "# Data-vs-claims results (release 1)",
+        "# Data-vs-claims results (releases 1 and 2)",
         "> Fictional engagement for portfolio purposes. All data is synthetic.",
         "Generated by `analysis/data_checks.py` from `data/released/`. Do not edit by hand.",
         f"Claims in release: {len(claims)} (damage and shortage, received 2026-03-01 to 2026-08-31).",

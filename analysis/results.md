@@ -1,4 +1,4 @@
-# Data-vs-claims results (release 1)
+# Data-vs-claims results (releases 1 and 2)
 
 > Fictional engagement for portfolio purposes. All data is synthetic.
 
@@ -166,7 +166,7 @@ The rate depends on the denominator. Neither interviewee stated one (T1:L20, T2:
 | denied | 9 |
 | pending | 8 |
 
-Release 1 has no POD-exception field, so the clean-POD shortage rule (T2:L20, T2:L64) cannot be tested directly.
+Release 1 has no POD-exception field, so the clean-POD shortage rule (T2:L20, T2:L64) cannot be tested here. It is tested in Q18 (release 2).
 
 ## Q11. Account-manager decisions vs claims team (H4, H5; T1:L10, T2:L14, T2:L52, T2:L54)
 
@@ -245,3 +245,127 @@ Release 1 has no POD-exception field, so the clean-POD shortage rule (T2:L20, T2
 | not on shipment record | 6 |
 
 Claims with no `closed_at` (still open): 9.
+
+## Q15. Threshold basis: claimed vs paid amount (G4; T2:L14, T2:L16, T2:L62)
+
+| Threshold | Claims with claimed amount above it | Paid claims claimed above, paid at or below |
+|---|---|---|
+| $10k approval line ($10,000) | 30 | 5 |
+| assumed deductible ($25,000) | 11 | 1 |
+
+| Claim | Threshold crossed | Claimed | Paid | Outcome |
+|---|---|---|---|---|
+| NLC-26-0231 | $10k approval line | $10,340 | $5,683 | partially_approved |
+| NLC-26-0237 | $10k approval line | $10,555 | $8,306 | partially_approved |
+| NLC-26-0248 | $10k approval line | $10,106 | $5,744 | partially_approved |
+| NLC-26-0296 | $10k approval line | $10,018 | $5,087 | partially_approved |
+| NLC-26-0346 | $10k approval line | $10,147 | $7,169 | partially_approved |
+| NLC-26-0061 | assumed deductible | $33,080 | $18,043 | partially_approved |
+
+## Q16. Reefer equipment vs temperature claims (G5; T2:L44, T2:L58)
+
+| Measure | Value |
+|---|---|
+| Claims on reefer equipment (`reefer_flag` = Y) | 48 of 363 |
+| …damage | 39 |
+| …shortage | 9 |
+| Reefer claims with a temperature log missing (required, not obtained) | 16 |
+| Non-reefer claims with a temperature log missing | 0 |
+
+Eval sample only (`temp_log_obtained` is N/A where no temperature log is required):
+
+| `reefer_flag` | Temperature log required | Claims |
+|---|---|---|
+| N | no | 25 |
+| Y | no | 2 |
+| Y | yes | 3 |
+
+## Q17. Insurer 30-day clock: from delivery vs from receipt (G9; T2:L16, T2:L48)
+
+| Measure | From delivery | From receipt |
+|---|---|---|
+| Notified more than 30 days after | 2 | 2 |
+| …of which insurer consented to settle | 0 | 0 |
+
+| Claim | Days delivery → notified | Days receipt → notified | > 30 from delivery | > 30 from receipt | Insurer status |
+|---|---|---|---|---|---|
+| NLC-26-0061 | 14 | 14 | N | N | consent_to_settle |
+| NLC-26-0082 | 25 | 21 | N | N | consent_to_settle |
+| NLC-26-0123 | 8 | 4 | N | N | consent_to_settle |
+| NLC-26-0136 | 23 | 11 | N | N | consent_to_settle |
+| NLC-26-0162 | 22 | 21 | N | N | consent_to_settle |
+| NLC-26-0169 | 55 | 41 | Y | Y | coverage_declined |
+| NLC-26-0222 | 22 | 12 | N | N | consent_to_settle |
+| NLC-26-0260 | 20 | 19 | N | N | consent_to_settle |
+| NLC-26-0267 | 5 | 5 | N | N | consent_to_settle |
+| NLC-26-0298 | 37 | 37 | Y | Y | reservation_of_rights |
+| NLC-26-0299 | 27 | 16 | N | N | consent_to_settle |
+
+## Q18. Clean-POD rule: carrier response by POD status (E6; T2:L20, T2:L64)
+
+| Type | POD | Claims | Paid | Filed | Carrier answered | Carrier accepted (paid or partial) | Recovered (filed) | Recovered ÷ paid (filed) |
+|---|---|---|---|---|---|---|---|---|
+| shortage | clean POD | 70 | 61 | 17 | 12 | 8 | $20,442 | 50% |
+| shortage | POD exception | 50 | 40 | 29 | 26 | 21 | $37,331 | 66% |
+| damage | clean POD | 109 | 87 | 51 | 32 | 16 | $128,877 | 38% |
+| damage | POD exception | 134 | 101 | 83 | 58 | 43 | $122,625 | 37% |
+
+| Type | POD | paid | partial | denied | pending | not_filed |
+|---|---|---|---|---|---|---|
+| shortage | clean POD | 4 | 4 | 4 | 5 | 44 |
+| shortage | POD exception | 13 | 8 | 5 | 3 | 11 |
+| damage | clean POD | 13 | 3 | 16 | 19 | 36 |
+| damage | POD exception | 31 | 12 | 15 | 25 | 18 |
+
+`pod_exception` from release 2: `N` is a clean POD. Paid claims only in the response table.
+
+## Q19. Days from receipt to documents complete (FALLBACK_DEADLINE_DAYS; C5b, E5; T2:L28, T2:L34)
+
+| Documents complete | Claims | Share of claims that completed |
+|---|---|---|
+| Within 7 days | 203 | 68% |
+| Within 10 days | 243 | 81% |
+| Within 14 days | 275 | 92% |
+| Within 21 days | 296 | 99% |
+| Within 30 days | 300 | 100% |
+| Within 45 days | 300 | 100% |
+| Longest, days | 29 |  |
+
+Claims that completed: 300. Claims never complete: 63 (Q13).
+
+## Q20. Documents missing on claims marked complete, by claim type (E5 checklist; T2:L18)
+
+| Type | Document missing (as of extract) | Claims | Of | Share |
+|---|---|---|---|---|
+| damage | photos | 5 | 196 | 3% |
+| damage | invoice | 0 | 196 | 0% |
+| damage | bol | 0 | 196 | 0% |
+| damage | temp_log | 13 | 196 | 7% |
+| damage | (none missing, but no completion date) | 6 | 47 | 13% |
+| shortage | photos | 68 | 104 | 65% |
+| shortage | invoice | 0 | 104 | 0% |
+| shortage | bol | 0 | 104 | 0% |
+| shortage | temp_log | 0 | 104 | 0% |
+| shortage | (none missing, but no completion date) | 2 | 16 | 12% |
+
+"Of" is claims with a completion date, except the last row per type, where it is claims without one. `docs_missing` shows flag status at extract, not at receipt, and IT does not check that the flags agree with the completion date (release 1 README; release 2 §4 Q1). There is no delivery-receipt document flag (release 2 §4 Q4).
+
+## Q21. Filing-window denials: is there a single day threshold? (R9; Q14)
+
+Claims denied as "outside customer filing window": 12.
+
+| Basis (calendar days) | Denied: claims | Denied: range | All other claims | Others: range | One threshold separates them? |
+|---|---|---|---|---|---|
+| Delivery → receipt | 12 | 0–14 | 351 | 0–20 | No |
+| Delivery → documents complete | 12 | 2–23 | 288 | 1–43 | No |
+| Receipt → documents complete | 12 | 1–10 | 288 | 1–29 | No |
+
+| Customer | Filing-window denials | Their delivery → receipt days | Approved or partial claims | Longest delivery → receipt, approved or partial |
+|---|---|---|---|---|
+| C001 | 3 | 0, 11, 14 | 39 | 18 |
+| C002 | 3 | 0, 1, 4 | 38 | 19 |
+| C006 | 1 | 13 | 18 | 16 |
+| C008 | 3 | 2, 6, 13 | 18 | 17 |
+| C009 | 2 | 5, 5 | 21 | 19 |
+
+"Separates" means every denied claim's gap is longer than every other claim's gap on that basis. Dates are as released; the system holds no contract terms (release 2 §2, `cold_chain_customer`).

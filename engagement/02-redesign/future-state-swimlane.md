@@ -7,8 +7,9 @@ Routing detail is in `decision-tree.md` and `scope-table.md`. Open gaps are
 listed in `open-gaps.md`.
 
 The redesign applies to all claim types, because loss claims share the
-process (S1; T2:L50). The agent pilot handles damage and shortage only; loss
-claims go to the claims team through the same redesigned steps (S1).
+process (S1; T2:L50). The agent pilot handles damage and shortage only; the
+agent escalates loss claims at step 0, and the claims team handles them
+through the same redesigned steps (S1, G1).
 
 ```mermaid
 flowchart LR
@@ -20,31 +21,32 @@ flowchart LR
 
     subgraph AM["Account manager"]
         A1["Submits expedite request only;<br/>cannot approve or pay<br/>(C4, E4)"]
+        A2["Notified of key-account<br/>outcomes (G6)"]
+        A3["Receives expedite answer:<br/>status, next step, date;<br/>payment only if approved (D5e)"]
     end
 
     subgraph AG["Claims agent (new; pilot: damage and shortage)"]
-        G0{"Loss claim?<br/>(S1)"}
-        G1{"Hard escalation?<br/>reefer · cold-chain ·<br/>expedite · > deductible<br/>(C5, C5c, E4)"}
-        G2["Send structured checklist<br/>with deadline (E5)"]
+        G0{"Loss claim?<br/>(S1, G1)"}
+        G1{"Hard escalation?<br/>reefer equipment or temp allegation ·<br/>cold-chain · expedite ·<br/>claimed > deductible<br/>(C5, C5c, E4, G4, G5)"}
+        G2["Send structured checklist<br/>with deadline (E5);<br/>duplicate flag raised (G13)"]
         G3{"Documents complete?<br/>(C5b, E5)"}
-        G4["Automated reminders<br/>(E5)"]
-        G5{"FALLBACK_DEADLINE_DAYS<br/>reached? (C5b; P2)"}
+        G4["Hold: 'awaiting documents'<br/>list (state, no route), owned<br/>by specialists; automated<br/>reminders (E5, G3a, G3b, G7e)"]
+        G5{"FALLBACK_DEADLINE_DAYS<br/>(14 days) reached? (C5b; P2)"}
         G6{"Rule checks: duplicate ·<br/>invoice mismatch ·<br/>filing window (C5c)"}
-        G7["Form decision<br/>and confidence (C5c; P1)"]
-        G8{"Approval ≤ $10k and<br/>confidence ≥ threshold?<br/>(C5, C5a, C5c)"}
-        G9["Approve autonomously<br/>(C5)"]
-        G10["Urgency alert: insurer<br/>30-day clock (C5c; T2:L16)"]
+        G7["Form decision; rubric +<br/>self-reported confidence<br/>(C5c, G11; P1)"]
+        G8{"Approval ≤ $10k and<br/>both confidence gates pass?<br/>(C5, C5a, C5c, G11)"}
+        G9["Approve autonomously: letter +<br/>payment instruction; filing<br/>package prepared (C5, G8a)<br/>pilot: every decision reviewed after (G8b)"]
+        G10["Urgency alert: insurer 30-day<br/>notice; dates, no countdown<br/>until CFO (C5c, G9a)"]
     end
 
     subgraph CT["Claims team: sign-off and escalation queue (C4, C5)"]
-        T1["Human sign-off:<br/>review agent draft; decide<br/>(C5, C5a–c)"]
-        T2["Escalation: person takes<br/>the claim immediately<br/>(C5, C5c)"]
+        T1["Human sign-off: approve, edit<br/>or override the agent's full draft;<br/>reason logged (G7a)<br/>specialists ≤ $10k, lead > $10k (G7c)<br/>key accounts first (G6)"]
+        T2["Escalation (reefer, loss, cold-chain,<br/>> deductible): lead (backup:<br/>senior specialist) works<br/>the agent's fact pack (G7b, G7c, G14)<br/>reefer: same day (G7d)"]
+        T6["Expedite: specialist on the claim<br/>answers, else lead assigns or answers;<br/>lead owns the answer, no named backup;<br/>within EXPEDITE_RESPONSE_SLA<br/>(G7f, G14, P3); request and answer<br/>recorded (D5f); miss → notice to<br/>lead and AM (D5g)"]
         T3["Lead phones reefer carrier<br/>dispatcher same day<br/>(C5; T2:L44)"]
-        T4["Notify insurer within 30 days;<br/>consent before settling<br/>(C5; T2:L16, T2:L48)"]
-        T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1; agent pilot excludes)"]
-        T6{"Shortage with clean POD?<br/>(E6, UNTESTED)"}
-        T7["Do not file<br/>(E6; T2:L20, T2:L64)"]
-        T8["File with carrier with evidence<br/>(E5, E6; T2:L18)"]
+        T4["Notify insurer within 30 days;<br/>record consent: payment gated<br/>until recorded (C5, G9b; T2:L16)"]
+        T5["Loss claims: handled by team<br/>through redesigned steps<br/>(S1, G1; agent pilot excludes)"]
+        T8["File with carrier with evidence,<br/>clean-POD shortages included<br/>(E5, E6a; T2:L18; Q18)"]
     end
 
     subgraph RD["Reefer carrier dispatcher"]
@@ -76,10 +78,13 @@ flowchart LR
     end
 
     C1 --> G0
-    G0 -- "yes: outside pilot" --> T5
+    G0 -- "yes: always escalate (G1)" --> T2 -. loss .-> T5
     G0 -- no --> G1
     A1 --> G1
     G1 -- yes --> T2
+    G1 -- "yes: expedite" --> T6
+    T6 --> A3
+    T6 --> T8
     G1 -. "> deductible" .-> G10 -.-> T4
     T2 -. reefer .-> T3 -. same day .-> D1
     G1 -- no --> G2 --> C2 --> G3
@@ -92,28 +97,36 @@ flowchart LR
     G8 -- yes --> G9
     G8 -- "no (denial, partial, > $10k, low confidence)" --> T1
     T4 --> I1
-    G9 --> T6
-    T1 --> T6
-    T2 --> T6
-    T6 -- yes --> T7
-    T6 -- no --> T8 --> R1
+    G9 --> T8
+    T1 --> T8
+    T2 --> T8
+    T8 --> R1
     T1 -- "approval > $10k" --> F1 --> P1
     T2 -- "approval > $10k" --> F1
     G9 -- "approval ≤ $10k: no pre-approval (E1)" --> P1
     T1 -- "denial: no pre-approval (E2)" --> C3
     P1 --> C3
+    T1 -. "key account" .-> A2
+    T2 -. "key account" .-> A2
 ```
 
 ## Notes
 
 - **Every E ruling is visible:** E1 to E4 as changes and in the "Removed"
-  lane, E5 at intake, E6 at carrier filing (marked UNTESTED).
+  lane, E5 at intake. E6 was reversed by E6a (Q18): clean-POD shortages are
+  filed with the carrier.
 - **E3 is a recommendation to finance**, not an agent step (E3).
 - **Account managers** only submit expedite requests, which always escalate
-  (C4, E4). C4 and E4 still need the COO's ratification (D5).
-- **Insurer consent** must be obtained before payment on claims above the
-  deductible. The diagram shows the insurer step but not a gate on the
-  payment edge; see `open-gaps.md` G9.
-- **Carrier filing, letters and payment instructions** are drawn with the
-  claims team, as today, except for the autonomous route. Which of these the
-  agent performs is not ruled; see `open-gaps.md` G8.
+  (C4, E4; ratified, D5 closed). The answer comes within
+  `EXPEDITE_RESPONSE_SLA` from the specialist on the claim or the lead
+  (G7f, G14, P3), and may promise payment only on an approved claim (D5e).
+- **Insurer consent** is a hard gate: no payment instruction on a claim above
+  the deductible until consent is recorded (G9b). The 30-day clock start is
+  unset until the CFO confirms it (G9a).
+- **On the autonomous route** the agent sends the letter and the payment
+  instruction, and prepares the carrier filing for a specialist to submit
+  (G8a). During the pilot, every autonomous decision is reviewed after it is
+  made (G8b).
+- **Re-routing:** new information moves a claim up a tier, never down;
+  escalated claims are never handed back (G10a, G10b). Withdrawals take a
+  `withdrawn` status, or go to sign-off if a payment was made (G12).
