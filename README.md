@@ -34,7 +34,7 @@ Sonnet 5.5 and Haiku 5.5, effort `medium`, 78 snapshots each (39 cases × 2). So
 | Autonomous tier | Untested on released data | Untested on released data | The release holds no document content (photos, BOL, POD) and no shipment record, so the rubric cannot pass on sample cases. Reported on their own line: 19 autonomous* snapshots on Sonnet, all gate-held; Haiku 18 gate-held and 1 other |
 | Info-gap cases | 8 reported separately | 8 reported separately | Their snapshots lack the evidence behind the historical outcome (salvage, shipment record, filing-window rule). An `approve` there would pay what the historical team reduced or denied (E-c) |
 | Cold-FDE on v1 | 56 questions: 19 real-gap questions (14 firm, 5 lean real) in 12 distinct gaps | | 4 of the 12 block routing (A, B, C, K). Also 3 already known, 3 out of scope, 3 duplicates, 28 noise (including 3 that leaned noise). Counts from [`handoff-v1-classification.md`](engagement/03-requirements/handoff-v1-classification.md) via `analysis/handoff_counts.py`. **v2 and the rerun are not done**, so the v2 figure is pending |
-| Model recommendation | Pending (consultant) | | Not written yet |
+| Model recommendation | Pilot Sonnet 5.5 at effort `medium` | | Consultant's recommendation in [`spike/results.md`](spike/results.md). Reliability separates the models, not routing; one Haiku failure in 78 snapshots is too small a sample to rank them. Autonomous tier untested, thresholds uncalibrated, each model ran once |
 
 Targets and scoring method: [`docs/scoring.md`](docs/scoring.md).
 
@@ -54,7 +54,7 @@ Targets and scoring method: [`docs/scoring.md`](docs/scoring.md).
 | **Done** | Day 1 discovery and redesign. Requirements v1 (frozen). Cold-FDE test on v1, classified. Claims-agent Skill. Two-model eval run |
 | **Not done** | Requirements v2 and the cold-FDE rerun. Business case, CFO defence, platform ADR, exec memo |
 | **Sealed** | Hashed on Day 1 in commit `edb23fe` (tag `seal-day1`), [`SEAL.sha256`](SEAL.sha256). Not opened. The reveal and scoring come after the business case |
-| **Open for the consultant** | Rule on EG1 (covered by cluster B of the classification). Write the model recommendation. Confirm the drafted rationale on EV8–EV14 |
+| **Open for the consultant** | Rule on EG1 (covered by cluster B of the classification) |
 
 Branch `day2/requirements`. Planted findings, v2 gap count and ROI results are pending.
 
@@ -161,7 +161,8 @@ has the numbers and the full done and not-done list.
 - [x] [Requirements v1](engagement/03-requirements/v1/) and eval set; frozen (tag `requirements-v1`)
 - [x] [Cold-FDE handoff test on v1](engagement/03-requirements/handoff-v1.md): 56 questions, [classified](engagement/03-requirements/handoff-v1-classification.md): 19 real-gap questions, 12 distinct gaps
 - [x] `claims-agent` Skill, eval harness and two-model run: [`spike/metrics.md`](spike/metrics.md)
-- [ ] Rule on EG1, write the model recommendation ([`spike/results.md`](spike/results.md)), confirm the drafted rationale on EV8–EV14
+- [x] Model recommendation: [`spike/results.md`](spike/results.md)
+- [ ] Rule on EG1
 - [ ] Confidence-threshold calibration (inputs in [`spike/metrics.md`](spike/metrics.md))
 - [ ] Requirements v2 and second handoff test (tag `requirements-v2`)
 

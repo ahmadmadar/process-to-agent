@@ -265,6 +265,4 @@ Total questions: 56
 
 ## Classification (consultant)
 
-| Q | Real gap / noise | Note |
-|---|---|---|
-| | | |
+Classified in [`handoff-v1-classification.md`](handoff-v1-classification.md) under rulings CF1–CF5.

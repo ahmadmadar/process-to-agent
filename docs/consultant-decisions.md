@@ -1059,8 +1059,8 @@ rejected: leaving the value open and letting the engineer choose.
 
 Rulings given on 2026-10-27, after the claims-agent Skill and harness were
 built and before any model run. Each decision is the consultant's, recorded
-as given. **Wording:** the rejected options and rationale marked *(drafted)*
-were drafted by Claude and await the consultant's confirmation.
+as given. **Wording:** the rejected options and rationale for EV8–EV14 were
+drafted by Claude and confirmed by the consultant without edits on 2026-11-22.
 
 ### EV8. Spike models: Sonnet 5.5 against Haiku 5.5, effort pinned
 
@@ -1068,7 +1068,7 @@ were drafted by Claude and await the consultant's confirmation.
 - **Type:** Spike design ruling
 - **Decision:** The spike compares `claude-sonnet-5-5` with `claude-haiku-5-5`. Opus 5.5 is used only if Sonnet fails. Effort is pinned explicitly to the same level on both models, not left at each model's default, and is recorded in `spike/results.md`. The price table in `spike/run_eval.py` cites its source.
 - **Level:** `medium` on both models (consultant, 2026-10-27).
-- **Rejected options:** *(drafted)* (a) Opus 5.5 against Sonnet 5.5. (b) Each model at its default effort.
+- **Rejected options:** (a) Opus 5.5 against Sonnet 5.5. (b) Each model at its default effort.
 - **Rationale:** Routing is mostly rule application, so the question is whether the cheaper model routes correctly. Unpinned effort would compare two models at two different thinking budgets.
 - **Citations:** ground rule 9; `spike/run_eval.py` (`PRICES`)
 
@@ -1082,8 +1082,8 @@ were drafted by Claude and await the consultant's confirmation.
   - Gate-held (R14) cases are reported as their own line and excluded from the headline pass rate. The headline is routing correctness on escalate, hold and sign-off snapshots.
   - The report states plainly that the autonomous tier is untested on released data, because document content is not held.
   - Any escalation caused by a null `claim_text` under "if unsure, treat it as an allegation" is logged as a v2 gap (v1 does not say what missing claim text means), not as a harness bug.
-- **Rejected options:** *(drafted)* (a) Fill the unheld fields with text built from the held fields. (b) Keep autonomous* snapshots in the headline.
-- **Rationale:** *(drafted)* Null tests v1 as written and invents no claim content. With no document content, the rubric cannot pass, so autonomous* results measure missing data rather than routing.
+- **Rejected options:** (a) Fill the unheld fields with text built from the held fields. (b) Keep autonomous* snapshots in the headline.
+- **Rationale:** Null tests v1 as written and invents no claim content. With no document content, the rubric cannot pass, so autonomous* results measure missing data rather than routing.
 - **Citations:** release 2 §2; E-a, EV6; v1 `rules.md` (temperature allegation)
 
 ### EV10. Harness snapshot conventions accepted
@@ -1091,8 +1091,8 @@ were drafted by Claude and await the consultant's confirmation.
 - **Date / step:** 2026-10-27, Day 2 / spike design
 - **Type:** Eval design ruling
 - **Decision:** Accepted as built: intake at 09:00 ET and the documents check at 12:00 ET; `current_state` at the decision point carried from the intake result; fallback snapshots list flagged items without a date and the POD as missing. `spike/README.md` carries a caveat: the flags show status at extract, so a fallback snapshot may show a document as received that arrived after day 14. No expected outcome changes, because the POD is missing and the claim routes to R6 either way.
-- **Rejected options:** *(drafted)* (a) Fallback snapshots with no documents listed. (b) `current_state` reset to new at every snapshot.
-- **Rationale:** *(drafted)* The release holds dates only and no per-document dates (release 2 §4 Q4). Fixed, recorded conventions keep the snapshots reproducible.
+- **Rejected options:** (a) Fallback snapshots with no documents listed. (b) `current_state` reset to new at every snapshot.
+- **Rationale:** The release holds dates only and no per-document dates (release 2 §4 Q4). Fixed, recorded conventions keep the snapshots reproducible.
 - **Citations:** EV1, EV2; release 2 §4 Q1, Q4; `spike/README.md`
 
 ### EV11. No refusal fallback; refusals are their own failure category
@@ -1100,8 +1100,8 @@ were drafted by Claude and await the consultant's confirmation.
 - **Date / step:** 2026-10-27, Day 2 / spike design
 - **Type:** Spike design ruling
 - **Decision:** The server-side refusal fallback stays off. A refusal counts as a failure, reported as its own category, separate from a wrong route.
-- **Rejected options:** *(drafted)* (a) Enable the fallback to another model.
-- **Rationale:** *(drafted)* A fallback would answer some snapshots with a different model and mix two models into one model's results.
+- **Rejected options:** (a) Enable the fallback to another model.
+- **Rationale:** A fallback would answer some snapshots with a different model and mix two models into one model's results.
 - **Citations:** EV8
 
 ### EV12. Smoke test before the full run
@@ -1109,8 +1109,8 @@ were drafted by Claude and await the consultant's confirmation.
 - **Date / step:** 2026-10-27, Day 2 / spike design
 - **Type:** Spike design ruling
 - **Decision:** Before the full run, a smoke test on both models with three snapshots: K04/decision_point, NLC-26-0016/decision_point and K09/intake. Every output is validated against the v1 output schema. Measured input, cached and output tokens are reported per call. The full-run estimate is made from the measured numbers (snapshots × models × measured cost). The hard spend limit on the key stays. The full run waits for the consultant's approval.
-- **Rejected options:** *(drafted)* (a) Estimate from an assumed output size. (b) Go straight to the full run.
-- **Rationale:** *(drafted)* Output size, including thinking tokens, is unknown until measured. Three snapshots cover sign-off, autonomous* and escalate paths at small cost.
+- **Rejected options:** (a) Estimate from an assumed output size. (b) Go straight to the full run.
+- **Rationale:** Output size, including thinking tokens, is unknown until measured. Three snapshots cover sign-off, autonomous* and escalate paths at small cost.
 - **Citations:** ground rule 8; EV1; NF-16
 
 ### EV13. Expected outcomes marked approved and committed before any run
@@ -1118,8 +1118,8 @@ were drafted by Claude and await the consultant's confirmation.
 - **Date / step:** 2026-10-27, Day 2 / spike design
 - **Type:** Process ruling
 - **Decision:** The "(draft for consultant review)" label on `spike/expected-outcomes-v1.md` is removed only after V1–V24 and E-a to E-d are logged in this file, and replaced with "approved [date]". The approved file is committed before any run, the smoke test included.
-- **Rejected options:** *(drafted)* (a) Remove the label at once.
-- **Rationale:** *(drafted)* EV1 requires expected outcomes written before any run. A committed, approved file shows they were not changed after seeing results.
+- **Rejected options:** (a) Remove the label at once.
+- **Rationale:** EV1 requires expected outcomes written before any run. A committed, approved file shows they were not changed after seeing results.
 - **Citations:** EV1
 
 ### EV14. Rule errors labelled separately; NLC-26-0053 carried to v2
@@ -1128,13 +1128,13 @@ were drafted by Claude and await the consultant's confirmation.
 - **Type:** Eval reporting ruling
 - **Refines:** E-a, EV9
 - **Decision:** An autonomous* snapshot that reaches sign-off through a rule other than R14 is labelled `wrong_rule`, not `wrong_route`: the tier is right and the scope-table row is wrong. It still fails under E-a. Run summaries are rebuilt from the stored traces under this scoring, with no new model calls; the traces are not edited (NF-04). The NLC-26-0053 draft denial (Haiku 5.5, R10) is carried to v2 as gap EG1 in `engagement/03-requirements/v2-gaps.md`, which is also where every v2 gap found by the eval is logged.
-- **Rejected options:** *(drafted)* (a) Keep the `wrong_route` label. (b) Change E-a to accept R10 on autonomous* snapshots.
-- **Rationale:** *(drafted)* The claim reached a person, so calling it a route error overstates the miss. The scoring stays as approved before the run (EV1); the cause is a v1 gap, not the scoring.
+- **Rejected options:** (a) Keep the `wrong_route` label. (b) Change E-a to accept R10 on autonomous* snapshots.
+- **Rationale:** The claim reached a person, so calling it a route error overstates the miss. The scoring stays as approved before the run (EV1); the cause is a v1 gap, not the scoring.
 - **Citations:** E-a, EV1, EV9; NF-04; `spike/metrics.md`
 
 ## Cold-FDE v1 classification (Day 2): CF1–CF5
 
-Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 questions, tag `requirements-v1`). The classification was drafted with Claude (chat) from the frozen v1 files and accepted by the consultant after review; the source is `engagement/03-requirements/cold-fde-v1-classification-advice.md`. Each decision is the consultant's, recorded as given. **Wording:** the rejected options and rationale marked *(drafted)* were drafted by Claude and await the consultant's confirmation. The prefix is CF, not H, because H1–H5 are the Day 1 hypotheses.
+Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 questions, tag `requirements-v1`). The classification was drafted with Claude (chat) from the frozen v1 files and accepted by the consultant after review; the source is `engagement/03-requirements/cold-fde-v1-classification-advice.md`. Each decision is the consultant's, recorded as given. **Wording:** the rejected options and rationale for CF1–CF5 were drafted by Claude and confirmed by the consultant without edits on 2026-11-22. The prefix is CF, not H, because H1–H5 are the Day 1 hypotheses.
 
 ### CF1. Classification criteria
 
@@ -1147,8 +1147,8 @@ Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 
   4. Without an answer, any behaviour v1 requires would change: agent output, or a required system action (send, block, notify, record, prepare).
   5. The business or the spec owner must answer it. Internal v1 defects count.
 - **Labels:** REAL GAP, AMBIGUOUS (lean real or lean noise), DUPLICATE, ALREADY KNOWN, OUT OF SCOPE, NOISE (answered by v1, or engineering choice). Each real gap also gets a severity tag: blocks routing, or does not.
-- **Rejected options:** *(drafted)* (a) "v1 does not answer it, even indirectly", which lets a vague sentence close a real question. (b) A two-way split of real gap and noise. (c) Count only questions about agent output fields, which leaves out the letters, reminders and filing packages that v1 makes the agent send or prepare.
-- **Rationale:** *(drafted)* The test asks what an engineer would have to guess. A vague sentence is still a guess, and a system action is still behaviour. Separate labels make the split between real gaps, known items and noise auditable.
+- **Rejected options:** (a) "v1 does not answer it, even indirectly", which lets a vague sentence close a real question. (b) A two-way split of real gap and noise. (c) Count only questions about agent output fields, which leaves out the letters, reminders and filing packages that v1 makes the agent send or prepare.
+- **Rationale:** The test asks what an engineer would have to guess. A vague sentence is still a guess, and a system action is still behaviour. Separate labels make the split between real gaps, known items and noise auditable.
 - **Citations:** `handoff-v1.md`; `engagement/03-requirements/handoff-v1-classification.md`
 
 ### CF2. Unit of count
@@ -1156,8 +1156,8 @@ Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 
 - **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
 - **Type:** Handoff-test ruling
 - **Decision:** Report both real-gap questions and distinct gaps. The v2 target of 0 is set on distinct gaps. This is decided before the counts are reported.
-- **Rejected options:** *(drafted)* (a) Set the target on questions. (b) Choose the unit after seeing the counts.
-- **Rationale:** *(drafted)* Many of the 56 questions are one gap asked several ways, so a question count rewards or punishes phrasing. Fixing the unit first keeps the metric from being tuned to the result.
+- **Rejected options:** (a) Set the target on questions. (b) Choose the unit after seeing the counts.
+- **Rationale:** Many of the 56 questions are one gap asked several ways, so a question count rewards or punishes phrasing. Fixing the unit first keeps the metric from being tuned to the result.
 - **Citations:** CLAUDE.md success metrics (cold-FDE real-gap questions on v2: 0, v1 count reported too)
 
 ### CF3. Ambiguous items take their lean
@@ -1165,8 +1165,8 @@ Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 
 - **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
 - **Type:** Handoff-test ruling
 - **Decision:** Lean real (Q2, Q19, Q32, Q33, Q46) count as REAL GAP. Lean noise (Q39, Q51, Q56) count as NOISE.
-- **Rejected options:** *(drafted)* (a) Report ambiguous items as a separate count outside both totals. (b) Count all ambiguous items as real gaps.
-- **Rationale:** *(drafted)* A fixed rule applied before v2 stops ambiguous items being moved to suit the v2 result.
+- **Rejected options:** (a) Report ambiguous items as a separate count outside both totals. (b) Count all ambiguous items as real gaps.
+- **Rationale:** A fixed rule applied before v2 stops ambiguous items being moved to suit the v2 result.
 - **Citations:** CF1; `handoff-v1-classification.md`
 
 ### CF4. Classification of the 56 questions
@@ -1174,8 +1174,8 @@ Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 
 - **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
 - **Type:** Handoff-test ruling
 - **Decision:** The classification in `engagement/03-requirements/handoff-v1-classification.md` is accepted as given, one row per question. Counts, computed in code (`analysis/handoff_counts.py`): 56 questions; 19 real-gap questions (14 firm, 5 lean real); 12 distinct gaps (clusters A–M, with I/J counted once), of which 4 block routing (A, B, C, K); 3 already known; 3 out of scope; 3 duplicates; 28 noise, including the 3 that leaned noise. The v1 line citations were checked against the frozen files; two did not match (`edge-cases.md` EC16 and EC26, cited at L189 and L209 in the source; the file has 60 lines, and they are at L36 and L56) and are corrected in the saved file. No label changed.
-- **Rejected options:** *(drafted)* (a) Re-label the ambiguous items after reading v1 again. (b) Leave the two line citations as drafted.
-- **Rationale:** *(drafted)* The labels were reviewed before acceptance. A citation that does not resolve cannot be audited.
+- **Rejected options:** (a) Re-label the ambiguous items after reading v1 again. (b) Leave the two line citations as drafted.
+- **Rationale:** The labels were reviewed before acceptance. A citation that does not resolve cannot be audited.
 - **Citations:** CF1–CF3; `handoff-v1.md`; `analysis/handoff_counts.py`
 
 ### CF5. Already-known items need wider dependencies
@@ -1183,6 +1183,6 @@ Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 
 - **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
 - **Type:** Requirements ruling (applies in v2)
 - **Decision:** D1 is widened to "deductible amount and basis" (Q41: per claim, per shipment, per customer or aggregate). D11 is widened to include the rule for observed holidays (Q18). v1 is not edited; both changes go into v2.
-- **Rejected options:** *(drafted)* (a) Count Q41 and Q18 as real gaps. (b) Edit v1 README now.
-- **Rationale:** *(drafted)* Each has an interim behaviour (A1, A4), so each is a known open item, but the dependency does not cover the part the question exposed. Ground rule 7 keeps v1 unedited.
+- **Rejected options:** (a) Count Q41 and Q18 as real gaps. (b) Edit v1 README now.
+- **Rationale:** Each has an interim behaviour (A1, A4), so each is a known open item, but the dependency does not cover the part the question exposed. Ground rule 7 keeps v1 unedited.
 - **Citations:** v1 `README.md` A1, A4, D1, D11; ground rule 7
