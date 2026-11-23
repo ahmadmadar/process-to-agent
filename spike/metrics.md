@@ -27,6 +27,20 @@ snapshots are reported on their own line, and gate-held (R14) cases are excluded
 | claude-sonnet-5-5 | Info gap (E-c) | 8/8 (100%) | — | 0 |
 | claude-sonnet-5-5 | Constructed (rule coverage) | 18/18 (100%) | 9/9 (100%) | 0 |
 
+### What the headline contains
+
+The headline counts intake snapshots (held or escalated on receipt) as well as decision-point
+snapshots. At intake no documents have arrived yet, so the expected route is a hold or an escalation.
+
+| Model | Group | Intake: passed/total | Decision point: passed/total |
+|---|---|---|---|
+| claude-haiku-5-5 | Sample (excl. info gap) | 22/22 | 11/11 |
+| claude-haiku-5-5 | Info gap (E-c) | 8/8 | 0/0 |
+| claude-haiku-5-5 | Constructed (rule coverage) | 9/9 | 9/9 |
+| claude-sonnet-5-5 | Sample (excl. info gap) | 22/22 | 11/11 |
+| claude-sonnet-5-5 | Info gap (E-c) | 8/8 | 0/0 |
+| claude-sonnet-5-5 | Constructed (rule coverage) | 9/9 | 9/9 |
+
 ## Autonomous* snapshots (not in the headline)
 
 | Model | Group | Autonomous* | Autonomous (R15) | Gate-held (R14) | Other (fail) |

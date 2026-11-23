@@ -55,6 +55,26 @@ def metrics_md(runs):
         for g, x in runs[m]["metrics"]["groups"].items():
             out.append(f"| {m} | {GROUP_LABEL[g]} | {pct(x['headline_passed'], x['headline_snapshots'])} | "
                        f"{pct(x['escalated_correctly'], x['must_escalate'])} | {x['escalated_when_not_expected']} |")
+    cases = {}
+    for line in (SPIKE / "eval_set.jsonl").read_text().splitlines():
+        c = json.loads(line)
+        cases[c["id"]] = c
+    out += ["", "### What the headline contains", "",
+            "The headline counts intake snapshots (held or escalated on receipt) as well as decision-point",
+            "snapshots. At intake no documents have arrived yet, so the expected route is a hold or an escalation.", "",
+            "| Model | Group | Intake: passed/total | Decision point: passed/total |", "|---|---|---|---|"]
+    for m in models:
+        res = runs[m]["results"]
+        for g in runs[m]["metrics"]["groups"]:
+            tally = {"intake": [0, 0], "decision_point": [0, 0]}
+            for eid in runs[m]["eval_ids"]:
+                c = cases[eid]
+                if c["group"] != g or c["expected"].get("autonomous_star"):
+                    continue
+                tally[c["snapshot"]][1] += 1
+                tally[c["snapshot"]][0] += bool(res[eid]["pass"])
+            out.append(f"| {m} | {GROUP_LABEL[g]} | {tally['intake'][0]}/{tally['intake'][1]} | "
+                       f"{tally['decision_point'][0]}/{tally['decision_point'][1]} |")
     out += ["", "## Autonomous* snapshots (not in the headline)", "",
             "| Model | Group | Autonomous* | Autonomous (R15) | Gate-held (R14) | Other (fail) |", "|---|---|---|---|---|---|"]
     for m in models:
