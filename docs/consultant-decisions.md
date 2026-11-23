@@ -1131,3 +1131,58 @@ were drafted by Claude and await the consultant's confirmation.
 - **Rejected options:** *(drafted)* (a) Keep the `wrong_route` label. (b) Change E-a to accept R10 on autonomous* snapshots.
 - **Rationale:** *(drafted)* The claim reached a person, so calling it a route error overstates the miss. The scoring stays as approved before the run (EV1); the cause is a v1 gap, not the scoring.
 - **Citations:** E-a, EV1, EV9; NF-04; `spike/metrics.md`
+
+## Cold-FDE v1 classification (Day 2): CF1–CF5
+
+Rulings given on 2026-11-22, after the cold-FDE test on v1 (`handoff-v1.md`, 56 questions, tag `requirements-v1`). The classification was drafted with Claude (chat) from the frozen v1 files and accepted by the consultant after review; the source is `engagement/03-requirements/cold-fde-v1-classification-advice.md`. Each decision is the consultant's, recorded as given. **Wording:** the rejected options and rationale marked *(drafted)* were drafted by Claude and await the consultant's confirmation. The prefix is CF, not H, because H1–H5 are the Day 1 hypotheses.
+
+### CF1. Classification criteria
+
+- **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
+- **Type:** Handoff-test ruling
+- **Decision:** A question is a REAL GAP only if all of these hold:
+  1. v1 does not answer it unambiguously. If two competent engineers could build different behaviour from the text, it counts as a gap.
+  2. It is not already recorded as an assumption or open dependency with interim behaviour.
+  3. It is in scope.
+  4. Without an answer, any behaviour v1 requires would change: agent output, or a required system action (send, block, notify, record, prepare).
+  5. The business or the spec owner must answer it. Internal v1 defects count.
+- **Labels:** REAL GAP, AMBIGUOUS (lean real or lean noise), DUPLICATE, ALREADY KNOWN, OUT OF SCOPE, NOISE (answered by v1, or engineering choice). Each real gap also gets a severity tag: blocks routing, or does not.
+- **Rejected options:** *(drafted)* (a) "v1 does not answer it, even indirectly", which lets a vague sentence close a real question. (b) A two-way split of real gap and noise. (c) Count only questions about agent output fields, which leaves out the letters, reminders and filing packages that v1 makes the agent send or prepare.
+- **Rationale:** *(drafted)* The test asks what an engineer would have to guess. A vague sentence is still a guess, and a system action is still behaviour. Separate labels make the split between real gaps, known items and noise auditable.
+- **Citations:** `handoff-v1.md`; `engagement/03-requirements/handoff-v1-classification.md`
+
+### CF2. Unit of count
+
+- **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
+- **Type:** Handoff-test ruling
+- **Decision:** Report both real-gap questions and distinct gaps. The v2 target of 0 is set on distinct gaps. This is decided before the counts are reported.
+- **Rejected options:** *(drafted)* (a) Set the target on questions. (b) Choose the unit after seeing the counts.
+- **Rationale:** *(drafted)* Many of the 56 questions are one gap asked several ways, so a question count rewards or punishes phrasing. Fixing the unit first keeps the metric from being tuned to the result.
+- **Citations:** CLAUDE.md success metrics (cold-FDE real-gap questions on v2: 0, v1 count reported too)
+
+### CF3. Ambiguous items take their lean
+
+- **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
+- **Type:** Handoff-test ruling
+- **Decision:** Lean real (Q2, Q19, Q32, Q33, Q46) count as REAL GAP. Lean noise (Q39, Q51, Q56) count as NOISE.
+- **Rejected options:** *(drafted)* (a) Report ambiguous items as a separate count outside both totals. (b) Count all ambiguous items as real gaps.
+- **Rationale:** *(drafted)* A fixed rule applied before v2 stops ambiguous items being moved to suit the v2 result.
+- **Citations:** CF1; `handoff-v1-classification.md`
+
+### CF4. Classification of the 56 questions
+
+- **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
+- **Type:** Handoff-test ruling
+- **Decision:** The classification in `engagement/03-requirements/handoff-v1-classification.md` is accepted as given, one row per question. Counts, computed in code (`analysis/handoff_counts.py`): 56 questions; 19 real-gap questions (14 firm, 5 lean real); 12 distinct gaps (clusters A–M, with I/J counted once), of which 4 block routing (A, B, C, K); 3 already known; 3 out of scope; 3 duplicates; 28 noise, including the 3 that leaned noise. The v1 line citations were checked against the frozen files; two did not match (`edge-cases.md` EC16 and EC26, cited at L189 and L209 in the source; the file has 60 lines, and they are at L36 and L56) and are corrected in the saved file. No label changed.
+- **Rejected options:** *(drafted)* (a) Re-label the ambiguous items after reading v1 again. (b) Leave the two line citations as drafted.
+- **Rationale:** *(drafted)* The labels were reviewed before acceptance. A citation that does not resolve cannot be audited.
+- **Citations:** CF1–CF3; `handoff-v1.md`; `analysis/handoff_counts.py`
+
+### CF5. Already-known items need wider dependencies
+
+- **Date / step:** 2026-11-22, Day 2 / cold-FDE v1
+- **Type:** Requirements ruling (applies in v2)
+- **Decision:** D1 is widened to "deductible amount and basis" (Q41: per claim, per shipment, per customer or aggregate). D11 is widened to include the rule for observed holidays (Q18). v1 is not edited; both changes go into v2.
+- **Rejected options:** *(drafted)* (a) Count Q41 and Q18 as real gaps. (b) Edit v1 README now.
+- **Rationale:** *(drafted)* Each has an interim behaviour (A1, A4), so each is a known open item, but the dependency does not cover the part the question exposed. Ground rule 7 keeps v1 unedited.
+- **Citations:** v1 `README.md` A1, A4, D1, D11; ground rule 7
